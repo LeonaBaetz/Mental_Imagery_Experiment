@@ -2,7 +2,7 @@
 This repository is used for the final group project in Experimental Psychology Lab, Summer term 2019. 
 
 ### Files in this folder
-Hayakawa&Keysar(2018)...pdf: The study from which we will replicate the first experiment.\ 
+Hayakawa&Keysar(2018)...pdf: The study from which we will replicate the first experiment.<br/>
 sentences_imagine.txt: A collection of expressions like "imagine the taste of coffee" we are gonna show in the experiment. 
 
 ### Meetings
