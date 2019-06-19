@@ -107,9 +107,7 @@ var sentences = [
     }
 ]
 
-const generate_trial_views = function(){
-    var languages =["English","German"];
-    var language = myArray[Math.floor(Math.random() * languages.length)];
+const generate_trial_views = function(language){
     if (language ="English"){
         var object_list=[];
         for (i=0; i<=sentences.length;i++){
@@ -139,52 +137,10 @@ const generate_trial_views = function(){
     }
     return object_list;
 }
-const generate_path = function(){
-    var rot_list=[];
-    var type_list=[];
-    var object_list=[]
-    var rot = ""
-    var type = ""
 
-    for (i = 1;i < 16;i++) { 
-        for(j=0;j<2;j++){        
-            if(j===0){ 
-                rot_list.push('50'); 
-                rot = "50"
-            }
-            if (j===1){
-                rot_list.push('150'); 
-                rot = "150"
-            }
-            for(k=0;k<2;k++){
-                if(k===0){
-                    type_list.push('different'); 
-                    type = "different"
-                }
-                if(k===1){
-                    type_list.push('same'); 
-                    type = "same"
-                }
-                var object = {
-                    question: "Are the two pictures shown containing the <strong>same</strong> or <strong>different</strong> objects?",
-                    picture: "images/" + i + "_" + rot + "_" + type + ".jpg",
-                    key1: 'f',
-                    key2: 'j',
-                    f: 'same',
-                    j: 'different',
-                    rotation: rot,
-                    expected: type,
-                    correct: type,
-                }
-                object_list.push(object)
-            }
-        }
-    }
-    return object_list;
-}
 
-const get_trials = function(from, to){
-    all_trails = generate_path();
+const get_trials = function(from, to, language){
+    all_trails = generate_trial_views(language);
     num_trials = all_trails.slice(from,to);
     return shuffle(num_trials)
 }

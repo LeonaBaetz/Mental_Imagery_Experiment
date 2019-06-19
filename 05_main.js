@@ -18,10 +18,9 @@ $("document").ready(function() {
         views_seq: [
             intro,
             instructions_practice,
-            key_press_1A,
+            ratingScaleTrial,
             instructions_main,
-            //loop([key_press_2A, 48]),
-            key_press_2A,
+            ratingScaleTask,
             post_test,
             thanks,
         ],

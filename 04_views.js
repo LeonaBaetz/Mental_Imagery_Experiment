@@ -138,3 +138,21 @@ const key_press_2A = babeViews.view_generator('key_press',{
 });
 // There are many more templates available:
 // forcedChoice, sliderRating, dropdownChoice, testboxInput, ratingScale, imageSelection, sentenceChoice, keyPress, selfPacedReading and selfPacedReading_ratingScale
+
+const ratingScaleTrial = babeViews.view_generator('rating_scale',{
+    // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
+    trials: trial_info.rating_scale_trial.length,
+    // name and trial_type should be identical to the variable name
+    name: 'ratingScaleTrial',
+    trial_type: 'ratingScaleTrial',
+    data: trial_info.ratin_scale_trial,
+});
+
+const ratingScaleTask = babeViews.view_generator('rating_scale',{
+    // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
+    trials: trial_info.rating_scale_task.length,
+    // name and trial_type should be identical to the variable name
+    name: 'ratingScaleTask',
+    trial_type: 'ratingScaleTask',
+    data: trial_info.ratin_scale_task,
+});
