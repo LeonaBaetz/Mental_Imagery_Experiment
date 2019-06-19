@@ -110,32 +110,6 @@ const thanks = babeViews.view_generator('thanks',{
 * All about the properties of trial - https://github.com/babe-project/babe-project/blob/master/docs/views.md#properties-of-trial
 */
 
-
-// Here, we initialize a forcedChoice view
-const key_press_1A = babeViews.view_generator('key_press',{
-    // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
-    trials: trial_info.key_press_trials.length,
-    // name and trial_type should be identical to the variable name
-    name: 'key_press_1A',
-    trial_type: 'key_press_1A',
-    data: trial_info.key_press_trials,
-    pause: 1000,
-    fix_duration: 500,
-    hook: {
-        after_response_enabled: check_response
-    }
-});
-
-const key_press_2A = babeViews.view_generator('key_press',{
-    // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
-    trials: trial_info.key_press_task.length,
-    // name and trial_type should be identical to the variable name
-    name: 'key_press_2A',
-    trial_type: 'key_press_2A',
-    data: trial_info.key_press_task,
-    pause: 1000,
-    fix_duration: 500,
-});
 // There are many more templates available:
 // forcedChoice, sliderRating, dropdownChoice, testboxInput, ratingScale, imageSelection, sentenceChoice, keyPress, selfPacedReading and selfPacedReading_ratingScale
 
@@ -145,7 +119,7 @@ const ratingScaleTrial = babeViews.view_generator('rating_scale',{
     // name and trial_type should be identical to the variable name
     name: 'ratingScaleTrial',
     trial_type: 'ratingScaleTrial',
-    data: trial_info.ratin_scale_trial,
+    data: trial_info.rating_scale_trial,
 });
 
 const ratingScaleTask = babeViews.view_generator('rating_scale',{
@@ -154,5 +128,5 @@ const ratingScaleTask = babeViews.view_generator('rating_scale',{
     // name and trial_type should be identical to the variable name
     name: 'ratingScaleTask',
     trial_type: 'ratingScaleTask',
-    data: trial_info.ratin_scale_task,
+    data: trial_info.rating_scale_task,
 });

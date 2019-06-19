@@ -72,45 +72,39 @@ var sentences = [
     {
         english: "Imagine the taste of sea water",
         german: "Stelle dir den Geschmack von Meerwasser vor",
-        type: "gustatory",
-        
+        type: "gustatory"
     },
     {
         english: "Imagine the feeling of a headache",
         german: "Stelle dir das Gefühl von Kopfschmerzen vor",
-        type: "organic",
-        
+        type: "organic"
     },
     {
         english: "Imagine the seeing a deep blue lake",
         german: "Stelle dir einen tief blauen See vor",
-        type: "visual",
-        
+        type: "visual"
     },
     {
         english: "Imagine hearing a mouse",
         german: "Stelle dir vor eine Maus zu hören",
-        type: "auditory",
-        
+        type: "auditory" 
     },
     {
         english: "Imagine running down the stairs",
         german: "Stelle dir vor die Treppen herunter zu rennen",
-        type: "Motor",
-        
+        type: "Motor"
     },
     {
         english: "Imagine the taste of an orange",
         german: "Stelle dir den Gechmack einer Orange vor",
-        type: "gustatory",
-        
+        type: "gustatory" 
     }
 ]
 
 const generate_trial_views = function(language){
-    if (language ="English"){
+    if (language =="English"){
         var object_list=[];
-        for (i=0; i<=sentences.length;i++){
+        for (i=0; i<sentences.length;i++){
             var object = {
                 optionLeft:"no image",
                 optionRight:"perfectly clear",
@@ -123,25 +117,25 @@ const generate_trial_views = function(language){
         }
     }else{
         var object_list=[];
-        for (i=0; i<=sentences.length;i++){
+        for (i=0; i<sentences.length;i++){
             var object = {
-                optionLeft:"no image",
-                optionRight:"perfectly clear",
+                optionLeft:"keine Vorstellung",
+                optionRight:"eine perfekt klare Vorstellung",
                 question:sentences[i].german,
                 language: language,
                 id: i,
                 type: sentences[i].type,
             }
+            object_list.push(object)
         }
-        object_list.push(object)
     }
     return object_list;
 }
 
 
 const get_trials = function(from, to, language){
-    all_trails = generate_trial_views(language);
-    num_trials = all_trails.slice(from,to);
+    all_trials = generate_trial_views(language);
+    num_trials = all_trials.slice(from,to);
     return shuffle(num_trials)
 }
 
