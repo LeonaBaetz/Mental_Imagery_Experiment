@@ -14,6 +14,7 @@ $("document").ready(function() {
     // in all other modes null will be returned
     window.babe_monitor = babeInit({
         // You have to specify all views you want to use in this experiment and the order of them
+        
         views_seq: [
             intro,
             instructions_practice,

@@ -4,6 +4,6 @@
 
 
 const trial_info = {
-    key_press_trials : get_trials(0,12),
-    key_press_task: get_trials(12,61)
+    key_press_trials : get_trials(0,5),
+    key_press_task: get_trials(5,36)
 };
