@@ -1,6 +1,6 @@
 Fragen die ans Ende des Experiments kommen:
 
-Welche Sprache sprechen Sie muttersprachlich? [Englisch/Deutsch]
+Welche Sprache sprechen Sie muttersprachlich? [Englisch/Deutsch/andere/beide]
 
 Wie gut schätzen Sie ihr Leseverstehen in [der nicht Muttersprache] ein? [Skala 1 - 10]
 
@@ -8,17 +8,18 @@ Wie gut schätzen Sie ihr Hörverständnis in [der nicht Muttersprache] ein? [Sk
 
 Wir gut schätzen Sie können sie [die nicht Muttersprache] sprechen? [Skala 1 - 10]
 
-Sind Sie komfortabel [die nicht Muttersprache] im Dialog zu verwenden? [ja/nein]
+Wie gut schätzen Sie können Sie in [der nicht Muttersprache] schreiben? [Skala 1 - 10]
 
-Benutzen Sie [Die nicht Muttersprache] dominant im Alltag? [ja/nein]
+##Sind Sie komfortabel [die nicht Muttersprache] im Dialog zu verwenden? [ja/nein]
 
-Wie häufig sprechen Sie [Die nicht Muttersprache] im Alltag? [Stunden/Tag]
+##Benutzen Sie [Die nicht Muttersprache] dominant im Alltag? [ja/nein]
 
-Wie häufig hören Sie [Die nicht Muttersprache] im Alltag, (zum Beispiel in Filmen, Serien, Hörbüchern, Videospielen, Videos, Radio, Freunde die die Sprache verwenden)? [Stunden pro Tag]
+Wie häufig sprechen Sie [Die nicht Muttersprache] im Alltag? *[nie/<1 Stunde pro Tag/2-4 Stunden pro Tag/4-8 Stunden pro Tag/ >8 Stunden pro Tag/1 Tag die Woche/3 Tage die Woche/mehr als 3 Tage die Woche/ paar mal im Monat/seltener]
 
-Wie häufig lesen Sie häufig in [Der nicht Muttersprache]? [Stunden/Tag]
+Wie häufig hören Sie [Die nicht Muttersprache] im Alltag, (zum Beispiel in Filmen, Serien, Hörbüchern, Videospielen, Videos auf YouTube oder social media, Radio, Freunde die die Sprache verwenden)? [*]
 
-Waren Sie für einen längeren Zeitraum im [nicht muttersprachlichen] Ausland?
+Wie häufig lesen Sie häufig in [Der nicht Muttersprache]? [*]
 
+Waren Sie für einen längeren Zeitraum (mehr als 3 Monate) im [nicht muttersprachlichen] Ausland?
 
 **Überall wo [nicht Muttersprache] steht, soll nachher (per code eingefügt) die Sprache stehen [Deutsch/Englisch] die zu Anfang nicht als Muttersprache angegeben wurde in Form von "Wie häufig sprechen Sie Englisch im Alltag?". 
