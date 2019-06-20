@@ -35,6 +35,11 @@ data %>% glimpse()
 ```
 
 
+```{r}
+# + native_language = languages, + trial_type, + the language test results
+(s_data <- select(data, experiment_id, id, type, response, language, languages, RT ))
+
+```
 
 
 
