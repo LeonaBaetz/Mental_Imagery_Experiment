@@ -2,13 +2,21 @@ Fragen die ans Ende des Experiments kommen:
 
 Welche Sprache sprechen Sie muttersprachlich? [Englisch/Deutsch]
 
-Benutzen Sie [Die nicht Muttersprache] dominant im Alltag?
+Wie gut schätzen Sie ihr Leseverstehen in [der nicht Muttersprache] ein? [Skala 1 - 10]
 
-Wie häufig sprechen Sie [Die nicht Muttersprache] im Alltag? (definiere wie regelmäßig) [Stunden/Tag
+Wie gut schätzen Sie ihr Hörverständnis in [der nicht Muttersprache] ein? [Skala 1 - 10]
+
+Wir gut schätzen Sie können sie [die nicht Muttersprache] sprechen? [Skala 1 - 10]
+
+Sind Sie komfortabel [die nicht Muttersprache] im Dialog zu verwenden? [ja/nein]
+
+Benutzen Sie [Die nicht Muttersprache] dominant im Alltag? [ja/nein]
+
+Wie häufig sprechen Sie [Die nicht Muttersprache] im Alltag? [Stunden/Tag]
 
 Wie häufig hören Sie [Die nicht Muttersprache] im Alltag, (zum Beispiel in Filmen, Serien, Hörbüchern, Videospielen, Videos, Radio, Freunde die die Sprache verwenden)? [Stunden pro Tag]
 
-Lesen Sie häufig in [Der nicht Muttersprache]?
+Wie häufig lesen Sie häufig in [Der nicht Muttersprache]? [Stunden/Tag]
 
 Waren Sie für einen längeren Zeitraum im [nicht muttersprachlichen] Ausland?
 
