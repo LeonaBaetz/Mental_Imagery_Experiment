@@ -1,0 +1,16 @@
+Fragen die ans Ende des Experiments kommen:
+
+Welche Sprache sprechen Sie muttersprachlich? [Englisch/Deutsch]
+
+Benutzen Sie [Die nicht Muttersprache] dominant im Alltag?
+
+Wie häufig sprechen Sie [Die nicht Muttersprache] im Alltag? (definiere wie regelmäßig) [Stunden/Tag
+
+Wie häufig hören Sie [Die nicht Muttersprache] im Alltag, (zum Beispiel in Filmen, Serien, Hörbüchern, Videospielen, Videos, Radio, Freunde die die Sprache verwenden)? [Stunden pro Tag]
+
+Lesen Sie häufig in [Der nicht Muttersprache]?
+
+Waren Sie für einen längeren Zeitraum im [nicht muttersprachlichen] Ausland?
+
+
+**Überall wo [nicht Muttersprache] steht, soll nachher (per code eingefügt) die Sprache stehen [Deutsch/Englisch] die zu Anfang nicht als Muttersprache angegeben wurde in Form von "Wie häufig sprechen Sie Englisch im Alltag?". 
