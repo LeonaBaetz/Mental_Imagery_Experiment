@@ -22,4 +22,6 @@ Wie häufig lesen Sie häufig in [Der nicht Muttersprache]? [*]
 
 Waren Sie für einen längeren Zeitraum (mehr als 3 Monate) im [nicht muttersprachlichen] Ausland?
 
+In welchem Alter haben Sie angefangen [die nicht Muttersprache] zu lernen? [0-3/3-6/6-10/10-14/14-18/>18 Jahre]
+
 **Überall wo [nicht Muttersprache] steht, soll nachher (per code eingefügt) die Sprache stehen [Deutsch/Englisch] die zu Anfang nicht als Muttersprache angegeben wurde in Form von "Wie häufig sprechen Sie Englisch im Alltag?". 
