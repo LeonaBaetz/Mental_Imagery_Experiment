@@ -23,16 +23,17 @@ const intro = babeViews.view_generator('intro',{
     trials: 1,
     name: 'intro',
     // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside
-    text:   `This is a mental rotation task experiment.
+    text:   `This is a mental imagery experiment.
             <br />
             <br />
-            The introduction view welcomes the participant and gives general information
-            about the experiment. You are in the <strong>${coin}</strong> group.
+            i
             <br />
             <br />
             This is a minimal experiment with one forced choice view. It can serve as a starting point for programming your own experiment.`,
    buttonText: 'Begin the experiment'
 });
+
+
 
 // For most tasks, you need instructions views
 const instructions_practice = babeViews.view_generator('instructions',{
@@ -130,3 +131,28 @@ const ratingScaleTask = babeViews.view_generator('rating_scale',{
     trial_type: 'ratingScaleTask',
     data: trial_info.rating_scale_task,
 });
+
+//This (customized) View is used to ask the User which language they speak
+const intro_choice = babeViews.view_generator("forced_choice",{
+    // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
+    trials: trial_info.intro_choice_info.length,
+    // name and trial_type should be identical to the variable name
+    name: 'intro_choice',
+    trial_type: 'intro_choice',
+    data: trial_info.intro_choice_info,
+},{
+    answer_container_generator: function (config, CT) {
+     return `<div class='babe-view-answer-container'>
+             <p class='babe-view-question'>${config.data[CT].question}</p>
+             <label for='o1' class='babe-response-buttons'>${config.data[CT].option1}</label>
+             <input type='radio' name='answer' id='o1' value=${config.data[CT].option1} />
+             <label for='o2' class='babe-response-buttons'>${config.data[CT].option2}</label>
+             <input type='radio' name='answer' id='o2' value=${config.data[CT].option2} />
+             <label for='o3' class='babe-response-buttons'>${config.data[CT].option3}</label>
+             <input type='radio' name='answer' id='o3' value=${config.data[CT].option3} />
+             <label for='o4' class='babe-response-buttons'>${config.data[CT].option4}</label>
+             <input type='radio' name='answer' id='o4' value=${config.data[CT].option4} />
+            
+             </div>`;
+}}
+);
