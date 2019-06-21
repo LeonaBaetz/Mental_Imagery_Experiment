@@ -10,6 +10,7 @@ const trial_info = {
     intro_choice_info:[
     {
         QUD: "Wählen Sie Ihre Mutter Sprache/Select your native language",
+        
         option1: 'German/Deutsch',
         option2: 'English/Englisch',
         option3: "Both",
