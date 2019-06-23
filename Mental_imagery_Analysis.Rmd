@@ -28,7 +28,7 @@ set.seed(123)
 
 ```{r}
 # your code here
-(data <- read_csv("results_1.csv"))
+(data <- read_csv("results.csv"))
 data %>% glimpse()
 
 
@@ -36,9 +36,32 @@ data %>% glimpse()
 
 
 ```{r}
-# + native_language = languages, + trial_type, + the language test results
-(s_data <- select(data, experiment_id, id, type, response, language, languages, RT ))
+# + native_language = languages, + the language test results
+(s_data <- select(data, experiment_id, trial_name, id, type, response, language, languages, RT ))
 
+```
+```{r}
+#here we change the types of the 
+m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), language = factor(language), subject_id = as.numeric(experiment_id), experiment_id = NULL, languages = NULL)
+
+m_data
+```
+
+
+```{r}
+#here we calculate the mean response for trial and the real task (not important)
+(s_data <- group_by(m_data, trial_name) %>% filter(trial_name=="ratingScaleTask" | trial_name=="ratingScaleTrial") %>% mutate(response = as.numeric(response)) %>% summarise(mean(response)))
+```
+
+```{r}
+#here we calculate the mean for the different types of the real task
+(s_data2 <- group_by(m_data, type) %>% filter(trial_name=="ratingScaleTask") %>% mutate(response = as.numeric(response)) %>% summarise(Mean=mean(response)))
+```
+
+```{r}
+#here we calculate the mean for the different types of the real task and include the language
+#how to compare e.g. "german/deutsch" with language and group by this (in)equality??
+(s_data3 <- group_by(m_data, type) %>% filter(trial_name=="ratingScaleTask") %>% mutate(response = as.numeric(response)) %>% summarise(Mean=mean(response)))
 ```
 
 

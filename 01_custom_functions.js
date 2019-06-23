@@ -153,3 +153,9 @@ const shuffle = function shuffle(array) {
     }
     return a;
 }
+
+const set_language = function(language) {
+    if (language == "German/Deutsch"){
+        
+    }
+}
