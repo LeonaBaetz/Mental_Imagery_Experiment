@@ -42,7 +42,7 @@ data %>% glimpse()
 ```
 ```{r}
 #here we change the types of the 
-m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), language = factor(language), subject_id = as.numeric(experiment_id), experiment_id = NULL, languages = NULL)
+m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), language = factor(language), native_language = factor(languages), subject_id = as.numeric(experiment_id), response = as.numeric(response), experiment_id = NULL, languages = NULL)
 
 m_data
 ```
@@ -59,36 +59,15 @@ m_data
 ```
 
 ```{r}
-#here we calculate the mean for the different types of the real task and include the language
-#how to compare e.g. "german/deutsch" with language and group by this (in)equality??
-(s_data3 <- group_by(m_data, type) %>% filter(trial_name=="ratingScaleTask") %>% mutate(response = as.numeric(response)) %>% summarise(Mean=mean(response)))
+m_data$language_equality <- identical(m_data[["language"]],m_data[["native_language"]])
+m_data
 ```
 
 
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r}
+#here we calculate the mean for the different types of the real task and group by language equality (set language == native_language?)
+(s_data3 <- group_by(m_data, type, language_equality) %>% filter(trial_name=="ratingScaleTask") %>% summarise(Mean=mean(response)))
 ```
 
 
-## R Markdown
-
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
