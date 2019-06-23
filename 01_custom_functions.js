@@ -5,8 +5,11 @@
 *
 */
 const coin = _.sample(["head", "tail"]); // You can flip a coin for your experiment here
-// Declare your variables here
 
+// Declare your variables here
+// determines (randomly) which language is used during the experiment
+var languages =["German","English"]
+const language = languages[Math.floor(Math.random() * languages.length)]
 
 
 /* Helper functions
@@ -108,7 +111,7 @@ var sentences = [
     }
 ]
 
-const generate_trial_views = function(language){
+const generate_trial_views = function(){
     if (language =="English"){
         var object_list=[];
         for (i=0; i<sentences.length;i++){
@@ -140,8 +143,8 @@ const generate_trial_views = function(language){
 }
 
 
-const get_trials = function(from, to, language){
-    all_trials = generate_trial_views(language);
+const get_trials = function(from, to){
+    all_trials = generate_trial_views();
     num_trials = all_trials.slice(from,to);
     return shuffle(num_trials)
 }
@@ -155,8 +158,25 @@ const shuffle = function shuffle(array) {
     return a;
 }
 
-const set_language = function(language) {
-    if (language == "German/Deutsch"){
-        
+
+
+const generate_random_view_seq = function(){
+    if (language == "German"){
+        return [intro_ger,
+            instructions_practice_ger,
+            ratingScaleTrial,
+            instructions_main_ger,
+            ratingScaleTask,
+            post_test_ger,
+            thanks_ger]
+    }else{
+        return [intro_eng,
+            instructions_practice_eng,
+            ratingScaleTrial,
+            instructions_main_eng,
+            ratingScaleTask,
+            post_test_eng,
+            thanks_eng]
     }
+    
 }
