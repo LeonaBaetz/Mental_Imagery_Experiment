@@ -154,8 +154,7 @@ const intro_choice = babeViews.view_generator("forced_choice",{
              <input type='radio' name='answer' id='o4' value=${config.data[CT].option4} />
             
              </div>`;
-}},
-{
+}},{
     handle_response_function: function(config, CT, babe, answer_container_generator, startingTime) {
 
         // create the answer container
@@ -175,10 +174,9 @@ const intro_choice = babeViews.view_generator("forced_choice",{
         };
         trial_data = babeUtils.view.save_config_trial_data(config.data[CT], trial_data);
         babe.trial_data.push(trial_data);
-        setlanguage(response);
         babe.findNextView();
         });
     
-    }    
+    }   
 }
 );
