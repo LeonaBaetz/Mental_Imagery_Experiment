@@ -5,8 +5,11 @@
 *
 */
 const coin = _.sample(["head", "tail"]); // You can flip a coin for your experiment here
-// Declare your variables here
 
+// Declare your variables here
+// determines (randomly) which language is used during the experiment
+var languages =["German","English"]
+const language = languages[Math.floor(Math.random() * languages.length)]
 
 
 /* Helper functions
@@ -72,36 +75,43 @@ var sentences = [
     {
         english: "Imagine the taste of sea water",
         german: "Stelle dir den Geschmack von Meerwasser vor",
-        type: "gustatory"
+        type: "gustatory",
+        trial_type: "practice"
     },
     {
         english: "Imagine the feeling of a headache",
         german: "Stelle dir das Gefühl von Kopfschmerzen vor",
-        type: "organic"
+        type: "organic",
+        trial_type: "practice"
     },
     {
-        english: "Imagine the seeing a deep blue lake",
+        english: "Imagine seeing a deep blue lake",
         german: "Stelle dir einen tief blauen See vor",
-        type: "visual"
+        type: "visual",
+        trial_type: "practice"
     },
     {
         english: "Imagine hearing a mouse",
         german: "Stelle dir vor eine Maus zu hören",
-        type: "auditory" 
+        type: "auditory",
+        trial_type: "practice"
     },
     {
         english: "Imagine running down the stairs",
         german: "Stelle dir vor die Treppen herunter zu rennen",
-        type: "Motor"
+        type: "Motor",
+        trial_type: "practice"
     },
+
     {
         english: "Imagine the taste of an orange",
         german: "Stelle dir den Gechmack einer Orange vor",
-        type: "gustatory" 
+        type: "gustatory",
+        trial_type: "main" 
     }
 ]
 
-const generate_trial_views = function(language){
+const generate_trial_views = function(){
     if (language =="English"){
         var object_list=[];
         for (i=0; i<sentences.length;i++){
@@ -133,8 +143,8 @@ const generate_trial_views = function(language){
 }
 
 
-const get_trials = function(from, to, language){
-    all_trials = generate_trial_views(language);
+const get_trials = function(from, to){
+    all_trials = generate_trial_views();
     num_trials = all_trials.slice(from,to);
     return shuffle(num_trials)
 }
@@ -146,4 +156,27 @@ const shuffle = function shuffle(array) {
         [a[i], a[j]] = [a[j], a[i]];
     }
     return a;
+}
+
+
+
+const generate_random_view_seq = function(){
+    if (language == "German"){
+        return [intro_ger,
+            instructions_practice_ger,
+            ratingScaleTrial,
+            instructions_main_ger,
+            ratingScaleTask,
+            post_test_ger,
+            thanks_ger]
+    }else{
+        return [intro_eng,
+            instructions_practice_eng,
+            ratingScaleTrial,
+            instructions_main_eng,
+            ratingScaleTask,
+            post_test_eng,
+            thanks_eng]
+    }
+    
 }

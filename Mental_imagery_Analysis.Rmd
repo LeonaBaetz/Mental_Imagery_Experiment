@@ -28,39 +28,46 @@ set.seed(123)
 
 ```{r}
 # your code here
-(data <- read_csv("results_1.csv"))
+(data <- read_csv("results.csv"))
 data %>% glimpse()
 
 
 ```
 
 
+```{r}
+# + native_language = languages, + the language test results
+(s_data <- select(data, experiment_id, trial_name, id, type, response, language, languages, RT ))
 
+```
+```{r}
+#here we change the types of the 
+m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), language = factor(language), native_language = factor(languages), subject_id = as.numeric(experiment_id), response = as.numeric(response), experiment_id = NULL, languages = NULL)
 
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+m_data
 ```
 
 
-## R Markdown
-
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+#here we calculate the mean response for trial and the real task (not important)
+(s_data <- group_by(m_data, trial_name) %>% filter(trial_name=="ratingScaleTask" | trial_name=="ratingScaleTrial") %>% mutate(response = as.numeric(response)) %>% summarise(mean(response)))
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+#here we calculate the mean for the different types of the real task
+(s_data2 <- group_by(m_data, type) %>% filter(trial_name=="ratingScaleTask") %>% mutate(response = as.numeric(response)) %>% summarise(Mean=mean(response)))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+m_data$language_equality <- identical(m_data[["language"]],m_data[["native_language"]])
+m_data
+```
+
+
+```{r}
+#here we calculate the mean for the different types of the real task and group by language equality (set language == native_language?)
+(s_data3 <- group_by(m_data, type, language_equality) %>% filter(trial_name=="ratingScaleTask") %>% summarise(Mean=mean(response)))
+```
+
+
 

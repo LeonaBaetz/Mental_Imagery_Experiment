@@ -15,6 +15,9 @@ $("document").ready(function() {
     window.babe_monitor = babeInit({
         // You have to specify all views you want to use in this experiment and the order of them
         
+        views_seq: generate_random_view_seq(),
+
+        /*
         views_seq: [
             intro_choice,
             instructions_practice,
@@ -23,7 +26,8 @@ $("document").ready(function() {
             ratingScaleTask,
             post_test,
             thanks,
-        ],
+        ],*/
+
         // Here, you can specify all information for the deployment
         deploy: {
             experimentID: "INSERT_A_NUMBER",
