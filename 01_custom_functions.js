@@ -73,41 +73,53 @@ const check_response = function(data, next) {
 
 var sentences = [
     {
-        english: "Imagine the taste of sea water",
-        german: "Stelle dir den Geschmack von Meerwasser vor",
-        type: "gustatory",
-        trial_type: "practice"
-    },
-    {
-        english: "Imagine the feeling of a headache",
-        german: "Stelle dir das Gefühl von Kopfschmerzen vor",
-        type: "organic",
-        trial_type: "practice"
-    },
-    {
-        english: "Imagine seeing a deep blue lake",
-        german: "Stelle dir einen tief blauen See vor",
+        q_en: "Think of the following image carefully considering the visual image that comes to your imagination. Rate how vividly you can imagine this:",
+        english: "A ball bouncing up and down",
+        q_ge: "bla",
+        german: "Ein Ball auf und ab hüpfend",
         type: "visual",
-        trial_type: "practice"
     },
     {
-        english: "Imagine hearing a mouse",
-        german: "Stelle dir vor eine Maus zu hören",
+        q_en: "Think of the following sound carefully considering the auditory image that comes to your imagination. Rate how vividly you can imagine this:",
+        english: "Rain falling on the street",
+        q_ge: "bla",
+        german: "Auf die Straße fallender Regen",
         type: "auditory",
-        trial_type: "practice"
     },
     {
-        english: "Imagine running down the stairs",
-        german: "Stelle dir vor die Treppen herunter zu rennen",
-        type: "Motor",
-        trial_type: "practice"
+        q_en: "Think of the following “feeling” or touching the following carefully considering the tactile image that comes to your imagination. Rate how vividly you can imagine this:",
+        english: "A piece of paper",
+        q_ge: "bla",
+        german: "Ein Stück papier",
+        type: "tactile",
     },
-
     {
-        english: "Imagine the taste of an orange",
-        german: "Stelle dir den Gechmack einer Orange vor",
+        q_en: "Think of performing the following act, carefully considering the image that forms in your mind of your body part(s) moving. Rate how vividly you can imagine this:",
+        english: "Sitting down on a chair",
+        q_ge: "bla",
+        german: "Auf einem Stuhl sitzen",
+        type: "motor",
+    },
+    {
+        q_en: "Think of tasting the following, carefully considering the gustatory image that is produced. Rate how vividly you can imagine this:",
+        english: "Strawberrys",
+        q_ge: "bla",
+        german: "Erdbeeren",
         type: "gustatory",
-        trial_type: "main" 
+    },
+    {
+        q_en: "Think of smelling the following,  carefully considering the olfactory image that is produced. Rate how vividly you can imagine this:",
+        english: "The smell of coffee",
+        q_ge: "bla",
+        german: "Den Geruch von Kaffee",
+        type: "olfactory",
+    },
+    {
+        q_en: "Think of smelling the following,  carefully considering the olfactory image that is produced. Rate how vividly you can imagine this:Think of the following sensation, carefully considering the image that comes to your imagination. Rate how vividly you can imagine this",
+        english: "Tiredness",
+        q_ge: "bla",
+        german: "Müdigkeit",
+        type: "organic",
     }
 ]
 
@@ -119,6 +131,7 @@ const generate_trial_views = function(){
                 optionLeft:"no image",
                 optionRight:"perfectly clear",
                 question:sentences[i].english,
+                QUD: sentences[i].q_en,
                 language: language,
                 id: i,
                 type: sentences[i].type,
@@ -132,6 +145,7 @@ const generate_trial_views = function(){
                 optionLeft:"keine Vorstellung",
                 optionRight:"eine perfekt klare Vorstellung",
                 question:sentences[i].german,
+                QUD: sentences[i].q_ge,
                 language: language,
                 id: i,
                 type: sentences[i].type,
