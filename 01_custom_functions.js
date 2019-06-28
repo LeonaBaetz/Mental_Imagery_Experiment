@@ -181,7 +181,7 @@ const generate_random_view_seq = function(){
             instructions_main_ger,
             ratingScaleTask,
             post_test_ger,
-            subjective_language_eng,
+            subjective_language_ger,
             thanks_ger]
     }else{
         return [intro_eng,
@@ -189,20 +189,20 @@ const generate_random_view_seq = function(){
             ratingScaleTrial,
             instructions_main_eng,
             ratingScaleTask,
-            post_test_eng,
-            subjective_language_eng,
+            post_test_ger,
+            subjective_language_ger,
             thanks_eng]
     }
     
 }
 
 const custom_answer_container_generators = {
-    subjective_language_native_eng: function(config, CT) {
+    subjective_language: function(config, CT) {
         return `<form>
-        <p class='babe-view-text'>${config.question}</p>
+        <p class='babe-view-text'>${config.question1}</p>
         <p class='babe-view-text'>
-            <label for="${config.class1}">${config.class1}:</label>
-            <select id="${config.class1}" name="${config.class1}">
+            <label for="${config.class1}_native">${config.class1}:</label>
+            <select id="${config.class1}_native" name="${config.class1}_native">
                 <option></option>
                 <option value="1">${config.option1}</option>
                 <option value="2">${config.option2}</option>
@@ -214,8 +214,8 @@ const custom_answer_container_generators = {
                 </select>
         </p>
         <p class='babe-view-text'>
-            <label for="${config.class2}">${config.class2}:</label>
-            <select id="${config.class2}" name="${config.class2}">
+            <label for="${config.class2}_native">${config.class2}:</label>
+            <select id="${config.class2}_native" name="${config.class2}_native">
                 <option></option>
                 <option value="1">${config.option1}</option>
                 <option value="2">${config.option2}</option>
@@ -227,8 +227,8 @@ const custom_answer_container_generators = {
                 </select>
         </p>
         <p class='babe-view-text'>
-            <label for="${config.class3}">${config.class3}:</label>
-            <select id="${config.class3}" name="${config.class3}">
+            <label for="${config.class3}_native">${config.class3}:</label>
+            <select id="${config.class3}_native" name="${config.class3}_native">
                 <option></option>
                 <option value="1">${config.option1}</option>
                 <option value="2">${config.option2}</option>
@@ -239,14 +239,56 @@ const custom_answer_container_generators = {
                 <option value="7">${config.option7}</option>
                 </select>
         </p>
+        <p class='babe-view-text'>${config.question2}</p>
+        <p class='babe-view-text'>
+            <label for="${config.class1}_foreign">${config.class1}:</label>
+            <select id="${config.class1}_foreign" name="${config.class1}_foreign">
+                <option></option>
+                <option value="1">${config.option1}</option>
+                <option value="2">${config.option2}</option>
+                <option value="3">${config.option3}</option>
+                <option value="4">${config.option4}</option>
+                <option value="5">${config.option5}</option>
+                <option value="6">${config.option6}</option>
+                <option value="7">${config.option7}</option>
+                </select>
+        </p>
+        <p class='babe-view-text'>
+            <label for="${config.class2}_foreign">${config.class2}:</label>
+            <select id="${config.class2}_foreign" name="${config.class2}_foreign">
+                <option></option>
+                <option value="1">${config.option1}</option>
+                <option value="2">${config.option2}</option>
+                <option value="3">${config.option3}</option>
+                <option value="4">${config.option4}</option>
+                <option value="5">${config.option5}</option>
+                <option value="6">${config.option6}</option>
+                <option value="7">${config.option7}</option>
+                </select>
+        </p>
+        <p class='babe-view-text'>
+            <label for="${config.class3}_foreign">${config.class3}:</label>
+            <select id="${config.class3}_foreign" name="${config.class3}_foreign">
+                <option></option>
+                <option value="1">${config.option1}</option>
+                <option value="2">${config.option2}</option>
+                <option value="3">${config.option3}</option>
+                <option value="4">${config.option4}</option>
+                <option value="5">${config.option5}</option>
+                <option value="6">${config.option6}</option>
+                <option value="7">${config.option7}</option>
+                </select>
+        </p>
+        
         <button id="next" class='babe-view-button'>${config.button}</button>
         </form>`;
     }
 }
 const custom_stimulus_container_generators = {
-    subjective_language_native_eng: function(config, CT) {
+    subjective_language: function(config, CT) {
         return `<div class='babe-view babe-post-test-view'>
                     <h1 class='babe-view-title'>${config.title}</h1>
+                    
                     <section class="babe-text-container">
                         <p class="babe-view-text">${config.text}</p>
                     </section>
@@ -255,7 +297,7 @@ const custom_stimulus_container_generators = {
 }
 
 const custom_handle_response_function = {
-    subjective_language_native_eng: function(config, CT, babe, answer_container_generator, startingTime) {
+    subjective_language: function(config, CT, babe, answer_container_generator, startingTime) {
         $(".babe-view").append(answer_container_generator(config, CT));
 
         $("#next").on("click", function(e) {
@@ -264,9 +306,13 @@ const custom_handle_response_function = {
 
             // records the post test info
             
-            babe.global_data.speaking = $("#speaking").val();
-            babe.global_data.listening = $("#listening").val();
-            babe.global_data.writing = $("#writing").val();
+            babe.global_data.speaking_native = $("#"+ config.class1 +"_native").val();
+            babe.global_data.listening_native = $("#"+config.class2+"_native").val();
+            babe.global_data.writing_native = $("#"+ config.class3 +"_native").val();
+            babe.global_data.speaking_foreign = $("#"+ config.class1 +"_foreign").val();
+            babe.global_data.listening_foreign = $("#"+ config.class2 +"_foreign").val();
+            babe.global_data.writing_foreign = $("#"+ config.class3 +"_foreign").val();
+            
             babe.global_data.endTime = Date.now();
             babe.global_data.timeSpent =
                 (babe.global_data.endTime -
@@ -277,4 +323,5 @@ const custom_handle_response_function = {
             babe.findNextView();
         });
     },
+
 }

@@ -217,7 +217,8 @@ const subjective_language_eng = babeViews.view_generator('post_test',{
     name: 'subjective_language_eng',
     title: 'Your language knowledge',
     text: 'Please answer the questions:',
-    question: "how proficient would you describe your <b>native language</b> abilities for the following areas:",
+    question1: "How proficient would you describe your language abilities of your native language for the following areas:",
+    question2:"How proficient would you describe your language abilities of your foreign language for the following areas:",
     class1:"speaking",
     class2:"writing",
     class3:"listening",
@@ -228,10 +229,32 @@ const subjective_language_eng = babeViews.view_generator('post_test',{
     option5:"good proficient",
     option6:"very good proficient",
     option7:"totally proficient",
-    
 },{
-    stimulus_container_generator: custom_stimulus_container_generators.subjective_language_native_eng,
-    answer_container_generator: custom_answer_container_generators.subjective_language_native_eng,
-    handle_response_function: custom_handle_response_function.subjective_language_native_eng
+    stimulus_container_generator: custom_stimulus_container_generators.subjective_language_eng,
+    answer_container_generator: custom_answer_container_generators.subjective_language,
+    handle_response_function: custom_handle_response_function.subjective_language_eng
+}
+);
+const subjective_language_ger = babeViews.view_generator('post_test',{
+    trials: 1,
+    name: 'subjective_language_ger',
+    title: 'Deine Sprachkenntnisse',
+    text: 'Bitte beantworte folgende Fragen: ',
+    question1: "Wie gut würdest du die Kompetenzen in deiner Muttersprache für folgende Bereiche einschätzen:",
+    question2:"Wie gut würdest du die Kompetenzen in deiner Muttersprache für folgende Bereiche einschätzen:",
+    class1:"Sprechen",
+    class2:"Schreiben",
+    class3:"Hörverstehen",
+    option1:"Überhaupt nicht gut",
+    option2:"sehr gering",
+    option3:"nicht sehr gut",
+    option4:"mittelmäßig",
+    option5:"gut",
+    option6:"sehr gut",
+    option7:"perfekt",
+},{
+    stimulus_container_generator: custom_stimulus_container_generators.subjective_language,
+    answer_container_generator: custom_answer_container_generators.subjective_language,
+    handle_response_function: custom_handle_response_function.subjective_language
 }
 );
