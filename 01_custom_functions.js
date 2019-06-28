@@ -185,6 +185,7 @@ const generate_random_view_seq = function(){
             post_test_ger,
             general_language_ger,
             subjective_language_ger,
+            objective_language_ger,
             thanks_ger]
     }else{
         return [intro_eng,
@@ -195,6 +196,7 @@ const generate_random_view_seq = function(){
             post_test_eng,
             general_language_eng,
             subjective_language_eng,
+            objective_language_eng,
             thanks_eng]
     }
     
@@ -316,7 +318,7 @@ const custom_answer_container_generators = {
 
         <p class='babe-view-text'>
             <label for="${config.class1}">${config.class1}:</label>
-            <select id="${config.class1}" name="${config.class1}">
+            <select id="native_language" name="${config.class1}">
                 <option></option>
                 <option value="German">${config.option1}</option>
                 <option value="English">${config.option2}</option>
@@ -326,7 +328,7 @@ const custom_answer_container_generators = {
         </p>
         <p class='babe-view-text'>
             <label for="${config.class2}">${config.class2}:</label>
-            <select id="${config.class2}" name="${config.class2}">
+            <select id="foreign_language" name="${config.class2}">
                 <option></option>
                 <option value="German">${config.option1}</option>
                 <option value="English">${config.option2}</option>
@@ -336,11 +338,57 @@ const custom_answer_container_generators = {
         </p>
         <p class='babe-view-text'>
             <label for="${config.class3}">${config.class3}:</label>
-            <select id="${config.class3}" name="${config.class3}">
+            <select id="foreign_dominance" name="${config.class3}">
                 <option></option>
                 <option value="yes">${config.option5}</option>
                 <option value="no">${config.option6}</option>
                 </select>
+        </p>
+        
+        <button id="next" class='babe-view-button'>${config.button}</button>
+        </form>`;
+    },
+
+    objective_language: function(config, CT) {
+        return `<form>
+
+        <p class='babe-view-text'>
+            <label for="${config.class1}">${config.class1}:</label>
+            <select id="reading_time" name="${config.class1}">
+                <option></option>
+                <option value="German">${config.option1}</option>
+                <option value="English">${config.option2}</option>
+                <option value="Both">${config.option3}</option>
+                <option value="None">${config.option4}</option>
+                <option value="None">${config.option5}</option>
+                </select>
+        </p>
+        <p class='babe-view-text'>
+            <label for="${config.class2}">${config.class2}:</label>
+            <select id="listening_time" name="${config.class2}">
+                <option></option>
+                <option value="German">${config.option1}</option>
+                <option value="English">${config.option2}</option>
+                <option value="Both">${config.option3}</option>
+                <option value="None">${config.option4}</option>
+                <option value="None">${config.option5}</option>
+                </select>
+        </p>
+        <p class='babe-view-text'>
+            <label for="${config.class3}">${config.class3}:</label>
+            <select id="speaking_time" name="${config.class3}">
+                <option></option>
+                <option value="German">${config.option1}</option>
+                <option value="English">${config.option2}</option>
+                <option value="Both">${config.option3}</option>
+                <option value="None">${config.option4}</option>
+                <option value="None">${config.option5}</option>
+                </select>
+        </p>
+        <p class='babe-view-text'>
+        <label for="${config.class4}">${config.class4}:</label>
+
+        <input type="number" name="${config.class4}" min="0" max="110" id="learning_time"/>
         </p>
         
         <button id="next" class='babe-view-button'>${config.button}</button>
@@ -407,9 +455,33 @@ const custom_handle_response_function = {
 
             // records the post test info
             
-            babe.global_data.native_language = $("#" + "config.class1").val();
-            babe.global_data.foreign_language = $("#"+"config.class2").val();
-            babe.global_data.foreign_dominance = $("#"+"config.class3").val();
+            babe.global_data.native_language = $("#native_language").val();
+            babe.global_data.foreign_language = $("#foreign_language").val();
+            babe.global_data.foreign_dominance = $("#foreign_dominance").val();
+            
+            babe.global_data.endTime = Date.now();
+            babe.global_data.timeSpent =
+                (babe.global_data.endTime -
+                    babe.global_data.startTime) /
+                60000;
+
+            // moves to the next view
+            babe.findNextView();
+        });
+    },
+    objective_language: function(config, CT, babe, answer_container_generator, startingTime) {
+        $(".babe-view").append(answer_container_generator(config, CT));
+
+        $("#next").on("click", function(e) {
+            // prevents the form from submitting
+            e.preventDefault();
+
+            // records the post test info
+            
+            babe.global_data.reading_time = $("#reading_time").val();
+            babe.global_data.listening_time = $("#listening_time").val();
+            babe.global_data.speaking_time = $("#speaking_time").val();
+            babe.global_data.learning_time = $("#learning_time").val();
             
             babe.global_data.endTime = Date.now();
             babe.global_data.timeSpent =
@@ -433,6 +505,15 @@ const custom_stimulus_container_generators = {
                 </div>`;
     },
     general_language: function(config, CT) {
+        return `<div class='babe-view babe-post-test-view'>
+                    <h1 class='babe-view-title'>${config.title}</h1>
+                    
+                    <section class="babe-text-container">
+                        <p class="babe-view-text">${config.text}</p>
+                    </section>
+                </div>`;
+    },
+    objective_language: function(config, CT) {
         return `<div class='babe-view babe-post-test-view'>
                     <h1 class='babe-view-title'>${config.title}</h1>
                     

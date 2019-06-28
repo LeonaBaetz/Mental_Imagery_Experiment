@@ -262,3 +262,45 @@ const general_language_ger = babeViews.view_generator('post_test',{
     handle_response_function: custom_handle_response_function.general_language
 }
 );
+
+const objective_language_eng = babeViews.view_generator('post_test',{
+    trials: 1,
+    name: 'objective_language_eng',
+    title: 'Your language knowledge',
+    text: 'Please answer the questions: ',
+    class1:"How often do you read in your foreign language?",
+    class2:"How often do you listen to or watch something in your foreign language?",
+    class3:"How often do you speak in your foreign language?",
+    class4:"For how many years do you learn/speak your choosen foreign language?",
+    option1:"0-4 hours/month",
+    option2:"1-2 hours/week",
+    option3:"3-5 hours/week",
+    option4:"6-10 hours/week",
+    option5:"more than 10 hours/week"
+},{
+    stimulus_container_generator: custom_stimulus_container_generators.objective_language,
+    answer_container_generator: custom_answer_container_generators.objective_language,
+    handle_response_function: custom_handle_response_function.objective_language
+}
+);
+
+const objective_language_ger = babeViews.view_generator('post_test',{
+    trials: 1,
+    name: 'objective_language_ger',
+    title: 'Deine Sprachkenntnisse',
+    text: 'Bitte beantworte folgende Fragen: ',
+    class1:"Wie häufig liest du in deiner Fremdsprache?",
+    class2:"Wie häufig hörst du etwas oder schaust etwas in deiner Fremdsprache?",
+    class3:"Wie häufig sprichst du in deiner Fremdsprache?",
+    class4:"Seit wie vielen Jahren lernst du/sprichst du deine eben gewählte Fremdsprache?",
+    option1:"0-4 Stunden/Monat",
+    option2:"1-2 Stunden/Woche",
+    option3:"3-5 Stunden/Woche",
+    option4:"6-10 Stunden/Woche",
+    option5:"mehr als 10 Stunden/Woche",
+},{
+    stimulus_container_generator: custom_stimulus_container_generators.objective_language,
+    answer_container_generator: custom_answer_container_generators.objective_language,
+    handle_response_function: custom_handle_response_function.objective_language
+}
+);
