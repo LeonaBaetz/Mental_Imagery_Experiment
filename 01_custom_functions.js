@@ -134,7 +134,7 @@ const generate_trial_views = function(){
                 language: language,
                 id: i,
                 type: sentences[i].type,
-                button_under: "I don't understand the question."
+                button_under: "I don't understand the Sentence."
             }
             object_list.push(object)
         }
@@ -149,7 +149,7 @@ const generate_trial_views = function(){
                 language: language,
                 id: i,
                 type: sentences[i].type,
-                button_under: "Ich verstehe die Frage nicht."
+                button_under: "Ich verstehe den Satz nicht nicht."
             }
             object_list.push(object)
         }
