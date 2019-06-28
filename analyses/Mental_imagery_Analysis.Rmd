@@ -28,7 +28,7 @@ set.seed(123)
 
 ```{r}
 # your code here
-(data <- read_csv("results.csv"))
+(data <- read_csv("C:/Users/leado/XP_Lab/Mental_Imagery_Experiment/data/results.csv"))
 data %>% glimpse()
 
 
@@ -40,6 +40,9 @@ data %>% glimpse()
 (s_data <- select(data, experiment_id, trial_name, id, type, response, language, languages, RT ))
 
 ```
+
+
+
 ```{r}
 #here we change the types of the 
 m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), language = factor(language), native_language = factor(languages), subject_id = as.numeric(experiment_id), response = as.numeric(response), experiment_id = NULL, languages = NULL)
@@ -67,7 +70,19 @@ m_data
 ```{r}
 #here we calculate the mean for the different types of the real task and group by language equality (set language == native_language?)
 (s_data3 <- group_by(m_data, type, language_equality) %>% filter(trial_name=="ratingScaleTask") %>% summarise(Mean=mean(response)))
+
+#s_data3 %>% mutate(mean_response = as.numeric(mean), mean = NULL)
 ```
 
 
+```{r}
+#brms model creation 
+
+fit_sc1 <- brm(
+formula = Mean ~ language_equality + type,
+data = s_data3,
+family = cumulative("logit")
+)
+
+```
 

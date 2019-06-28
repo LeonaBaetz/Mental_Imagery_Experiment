@@ -183,6 +183,7 @@ const generate_random_view_seq = function(){
             instructions_main_ger,
             ratingScaleTask,
             post_test_ger,
+            general_language_ger,
             subjective_language_ger,
             thanks_ger]
     }else{
@@ -192,6 +193,7 @@ const generate_random_view_seq = function(){
             instructions_main_eng,
             ratingScaleTask,
             post_test_eng,
+            general_language_eng,
             subjective_language_eng,
             thanks_eng]
     }
@@ -309,6 +311,41 @@ const custom_answer_container_generators = {
                     
                 </div>`;
     },
+    general_language: function(config, CT) {
+        return `<form>
+
+        <p class='babe-view-text'>
+            <label for="${config.class1}">${config.class1}:</label>
+            <select id="${config.class1}" name="${config.class1}">
+                <option></option>
+                <option value="German">${config.option1}</option>
+                <option value="English">${config.option2}</option>
+                <option value="Both">${config.option3}</option>
+                <option value="None">${config.option4}</option>
+                </select>
+        </p>
+        <p class='babe-view-text'>
+            <label for="${config.class2}">${config.class2}:</label>
+            <select id="${config.class2}" name="${config.class2}">
+                <option></option>
+                <option value="German">${config.option1}</option>
+                <option value="English">${config.option2}</option>
+                <option value="Both">${config.option3}</option>
+                <option value="None">${config.option4}</option>
+                </select>
+        </p>
+        <p class='babe-view-text'>
+            <label for="${config.class3}">${config.class3}:</label>
+            <select id="${config.class3}" name="${config.class3}">
+                <option></option>
+                <option value="yes">${config.option5}</option>
+                <option value="no">${config.option6}</option>
+                </select>
+        </p>
+        
+        <button id="next" class='babe-view-button'>${config.button}</button>
+        </form>`;
+    },
 }
 
 
@@ -361,10 +398,41 @@ const custom_handle_response_function = {
             babe.findNextView();
         });
     },
+    general_language: function(config, CT, babe, answer_container_generator, startingTime) {
+        $(".babe-view").append(answer_container_generator(config, CT));
 
+        $("#next").on("click", function(e) {
+            // prevents the form from submitting
+            e.preventDefault();
+
+            // records the post test info
+            
+            babe.global_data.native_language = $("#" + "config.class1").val();
+            babe.global_data.foreign_language = $("#"+"config.class2").val();
+            babe.global_data.foreign_dominance = $("#"+"config.class3").val();
+            
+            babe.global_data.endTime = Date.now();
+            babe.global_data.timeSpent =
+                (babe.global_data.endTime -
+                    babe.global_data.startTime) /
+                60000;
+
+            // moves to the next view
+            babe.findNextView();
+        });
+    },
 }
 const custom_stimulus_container_generators = {
     subjective_language: function(config, CT) {
+        return `<div class='babe-view babe-post-test-view'>
+                    <h1 class='babe-view-title'>${config.title}</h1>
+                    
+                    <section class="babe-text-container">
+                        <p class="babe-view-text">${config.text}</p>
+                    </section>
+                </div>`;
+    },
+    general_language: function(config, CT) {
         return `<div class='babe-view babe-post-test-view'>
                     <h1 class='babe-view-title'>${config.title}</h1>
                     

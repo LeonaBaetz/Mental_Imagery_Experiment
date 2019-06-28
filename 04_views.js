@@ -219,3 +219,46 @@ const subjective_language_ger = babeViews.view_generator('post_test',{
     handle_response_function: custom_handle_response_function.subjective_language
 }
 );
+const general_language_eng = babeViews.view_generator('post_test',{
+    trials: 1,
+    name: 'general_language_eng',
+    title: 'Your language knowledge',
+    text: 'Please answer the questions: ',
+    class1:"Is German or English your native language?",
+    class2:"Is German or English your foreign language?",
+    //class3:"For how many years do you speak your choosen foreign language?",
+    class3:"Do you speak this foreign language at home or more often than your native language?",
+    option1:"German",
+    option2:"English",
+    option3:"Both",
+    option4:"None of them",
+    option5:"yes",
+    option6:"no"
+},{
+    stimulus_container_generator: custom_stimulus_container_generators.general_language,
+    answer_container_generator: custom_answer_container_generators.general_language,
+    handle_response_function: custom_handle_response_function.general_language
+}
+);
+
+const general_language_ger = babeViews.view_generator('post_test',{
+    trials: 1,
+    name: 'general_language_ger',
+    title: 'Deine Sprachkenntnisse',
+    text: 'Bitte beantworte folgende Fragen: ',
+    class1:"Ist Deutsch oder Englisch deine Muttersprache?",
+    class2:"Ist Deutsch oder Englisch deine Fremdsprache?",
+    //class3:"Seit wie vielen Jahren sprichst du deine eben gewählte Fremdsprache?",
+    class3:"Sprichst du diese Fremdsprache zuhause oder häufiger als deine Muttersprache?",
+    option1:"Deutsch",
+    option2:"Englisch",
+    option3:"Beide",
+    option4:"Keine der genannten",
+    option5:"ja",
+    option6:"nein"
+},{
+    stimulus_container_generator: custom_stimulus_container_generators.general_language,
+    answer_container_generator: custom_answer_container_generators.general_language,
+    handle_response_function: custom_handle_response_function.general_language
+}
+);
