@@ -10,8 +10,7 @@ const coin = _.sample(["head", "tail"]); // You can flip a coin for your experim
 // determines (randomly) which language is used during the experiment
 var languages =["German","English"]
 const language = languages[Math.floor(Math.random() * languages.length)]
-
-
+const language_sec = language == "German" ? "English" : "German";
 /* Helper functions
 *
 *
@@ -182,6 +181,7 @@ const generate_random_view_seq = function(){
             instructions_main_ger,
             ratingScaleTask,
             post_test_ger,
+            subjective_language_eng,
             thanks_ger]
     }else{
         return [intro_eng,
@@ -190,7 +190,91 @@ const generate_random_view_seq = function(){
             instructions_main_eng,
             ratingScaleTask,
             post_test_eng,
+            subjective_language_eng,
             thanks_eng]
     }
     
+}
+
+const custom_answer_container_generators = {
+    subjective_language_native_eng: function(config, CT) {
+        return `<form>
+        <p class='babe-view-text'>${config.question}</p>
+        <p class='babe-view-text'>
+            <label for="${config.class1}">${config.class1}:</label>
+            <select id="${config.class1}" name="${config.class1}">
+                <option></option>
+                <option value="1">${config.option1}</option>
+                <option value="2">${config.option2}</option>
+                <option value="3">${config.option3}</option>
+                <option value="4">${config.option4}</option>
+                <option value="5">${config.option5}</option>
+                <option value="6">${config.option6}</option>
+                <option value="7">${config.option7}</option>
+                </select>
+        </p>
+        <p class='babe-view-text'>
+            <label for="${config.class2}">${config.class2}:</label>
+            <select id="${config.class2}" name="${config.class2}">
+                <option></option>
+                <option value="1">${config.option1}</option>
+                <option value="2">${config.option2}</option>
+                <option value="3">${config.option3}</option>
+                <option value="4">${config.option4}</option>
+                <option value="5">${config.option5}</option>
+                <option value="6">${config.option6}</option>
+                <option value="7">${config.option7}</option>
+                </select>
+        </p>
+        <p class='babe-view-text'>
+            <label for="${config.class3}">${config.class3}:</label>
+            <select id="${config.class3}" name="${config.class3}">
+                <option></option>
+                <option value="1">${config.option1}</option>
+                <option value="2">${config.option2}</option>
+                <option value="3">${config.option3}</option>
+                <option value="4">${config.option4}</option>
+                <option value="5">${config.option5}</option>
+                <option value="6">${config.option6}</option>
+                <option value="7">${config.option7}</option>
+                </select>
+        </p>
+        <button id="next" class='babe-view-button'>${config.button}</button>
+        </form>`;
+    }
+}
+const custom_stimulus_container_generators = {
+    subjective_language_native_eng: function(config, CT) {
+        return `<div class='babe-view babe-post-test-view'>
+                    <h1 class='babe-view-title'>${config.title}</h1>
+                    <section class="babe-text-container">
+                        <p class="babe-view-text">${config.text}</p>
+                    </section>
+                </div>`;
+    }
+}
+
+const custom_handle_response_function = {
+    subjective_language_native_eng: function(config, CT, babe, answer_container_generator, startingTime) {
+        $(".babe-view").append(answer_container_generator(config, CT));
+
+        $("#next").on("click", function(e) {
+            // prevents the form from submitting
+            e.preventDefault();
+
+            // records the post test info
+            
+            babe.global_data.speaking = $("#speaking").val();
+            babe.global_data.listening = $("#listening").val();
+            babe.global_data.writing = $("#writing").val();
+            babe.global_data.endTime = Date.now();
+            babe.global_data.timeSpent =
+                (babe.global_data.endTime -
+                    babe.global_data.startTime) /
+                60000;
+
+            // moves to the next view
+            babe.findNextView();
+        });
+    },
 }

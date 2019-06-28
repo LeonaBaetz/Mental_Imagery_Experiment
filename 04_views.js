@@ -212,29 +212,26 @@ const intro_choice = babeViews.view_generator("forced_choice",{
 );
 
 
-
-
-/** trial (babe's Trial Type Views) below
-
-* Obligatory properties
-
-    - trials: int - the number of trials this view will appear
-    - name: string - the name of the view type as it shall be known to _babe (e.g. for use with a progress bar)
-    - trial_type: string - the name of the trial type as you want it to appear in the submitted data
-    - data: array - an array of trial objects
-
-* Optional properties
-
-    - pause: number (in ms) - blank screen before the fixation point or stimulus show
-    - fix_duration: number (in ms) - blank screen with fixation point in the middle
-    - stim_duration: number (in ms) - for how long to have the stimulus on the screen
-        More about trial life cycle - https://github.com/babe-project/babe-project/blob/master/docs/views.md#trial-views-lifecycle
-
-    - hook: object - option to hook and add custom functions to the view
-        More about hooks - https://github.com/babe-project/babe-project/blob/master/docs/views.md#trial-views-hooks
-
-* All about the properties of trial - https://github.com/babe-project/babe-project/blob/master/docs/views.md#properties-of-trial
-*/
-
-// There are many more templates available:
-// forcedChoice, sliderRating, dropdownChoice, testboxInput, ratingScale, imageSelection, sentenceChoice, keyPress, selfPacedReading and selfPacedReading_ratingScale
+const subjective_language_eng = babeViews.view_generator('post_test',{
+    trials: 1,
+    name: 'subjective_language_eng',
+    title: 'Your language knowledge',
+    text: 'Please answer the questions:',
+    question: "how proficient would you describe your <b>native language</b> abilities for the following areas:",
+    class1:"speaking",
+    class2:"writing",
+    class3:"listening",
+    option1:"not at all proficient",
+    option2:"very little proficient",
+    option3:"little proficient",
+    option4:"average proficient",
+    option5:"good proficient",
+    option6:"very good proficient",
+    option7:"totally proficient",
+    
+},{
+    stimulus_container_generator: custom_stimulus_container_generators.subjective_language_native_eng,
+    answer_container_generator: custom_answer_container_generators.subjective_language_native_eng,
+    handle_response_function: custom_handle_response_function.subjective_language_native_eng
+}
+);

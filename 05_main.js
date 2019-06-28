@@ -17,17 +17,6 @@ $("document").ready(function() {
         
         views_seq: generate_random_view_seq(),
 
-        /*
-        views_seq: [
-            intro_choice,
-            instructions_practice,
-            ratingScaleTrial,
-            instructions_main,
-            ratingScaleTask,
-            post_test,
-            thanks,
-        ],*/
-
         // Here, you can specify all information for the deployment
         deploy: {
             experimentID: "INSERT_A_NUMBER",
