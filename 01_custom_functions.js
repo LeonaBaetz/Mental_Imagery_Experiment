@@ -189,8 +189,8 @@ const generate_random_view_seq = function(){
             ratingScaleTrial,
             instructions_main_eng,
             ratingScaleTask,
-            post_test_ger,
-            subjective_language_ger,
+            post_test_eng,
+            subjective_language_eng,
             thanks_eng]
     }
     

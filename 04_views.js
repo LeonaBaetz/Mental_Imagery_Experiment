@@ -230,9 +230,9 @@ const subjective_language_eng = babeViews.view_generator('post_test',{
     option6:"very good proficient",
     option7:"totally proficient",
 },{
-    stimulus_container_generator: custom_stimulus_container_generators.subjective_language_eng,
+    stimulus_container_generator: custom_stimulus_container_generators.subjective_language,
     answer_container_generator: custom_answer_container_generators.subjective_language,
-    handle_response_function: custom_handle_response_function.subjective_language_eng
+    handle_response_function: custom_handle_response_function.subjective_language
 }
 );
 const subjective_language_ger = babeViews.view_generator('post_test',{
