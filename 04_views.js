@@ -153,7 +153,11 @@ const ratingScaleTrial = babeViews.view_generator('rating_scale',{
     name: 'ratingScaleTrial',
     trial_type: 'ratingScaleTrial',
     data: trial_info.rating_scale_trial,
-});
+},{
+    answer_container_generator: custom_answer_container_generators.custom_rating_scale
+
+}
+);
 
 const ratingScaleTask = babeViews.view_generator('rating_scale',{
     // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
@@ -162,54 +166,11 @@ const ratingScaleTask = babeViews.view_generator('rating_scale',{
     name: 'ratingScaleTask',
     trial_type: 'ratingScaleTask',
     data: trial_info.rating_scale_task,
+},{
+    answer_container_generator: custom_answer_container_generators.custom_rating_scale
 });
 
-//This (customized) View is used to ask the User which language they speak
-const intro_choice = babeViews.view_generator("forced_choice",{
-    // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
-    trials: trial_info.intro_choice_info.length,
-    // name and trial_type should be identical to the variable name
-    name: 'intro_choice',
-    trial_type: 'intro_choice',
-    data: trial_info.intro_choice_info,
-},{
-    answer_container_generator: function (config, CT) {
-     return `<div class='babe-view-answer-container'>
-             <p class='babe-view-question'>${config.data[CT].question}</p>
-             <label for='o1' class='babe-response-buttons'>${config.data[CT].option1}</label>
-             <input type='radio' name='answer' id='o1' value=${config.data[CT].option1} />
-             <label for='o2' class='babe-response-buttons'>${config.data[CT].option2}</label>
-             <input type='radio' name='answer' id='o2' value=${config.data[CT].option2} />
-             <label for='o3' class='babe-response-buttons'>${config.data[CT].option3}</label>
-             <input type='radio' name='answer' id='o3' value=${config.data[CT].option3} />
-             <label for='o4' class='babe-response-buttons'>${config.data[CT].option4}</label>
-             <input type='radio' name='answer' id='o4' value=${config.data[CT].option4} />
-            
-             </div>`;
-}},{
-    handle_response_function: function(config, CT, babe, answer_container_generator, startingTime) {
 
-        // create the answer containe
-        $(".babe-view").append(answer_container_generator(config, CT));
-    
-        // attaches an event listener to the radio button input
-        // when an input is selected a response property with a value equal
-        // to the answer is added to the trial object
-        // as well as a readingTimes property with value
-        $("input[name=answer]").on("change", function() {
-        const RT = Date.now() - startingTime;
-        let trial_data = {
-            trial_name: config.name,
-            trial_number: CT + 1,
-            response: $("input[name=answer]:checked").val(),
-            RT: RT
-        };
-        trial_data = babeUtils.view.save_config_trial_data(config.data[CT], trial_data);
-        babe.trial_data.push(trial_data);
-        babe.findNextView();
-        });}   
-}
-);
 
 
 const subjective_language_eng = babeViews.view_generator('post_test',{

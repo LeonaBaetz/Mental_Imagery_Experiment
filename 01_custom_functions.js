@@ -134,6 +134,7 @@ const generate_trial_views = function(){
                 language: language,
                 id: i,
                 type: sentences[i].type,
+                button_under: "I don't understand the question."
             }
             object_list.push(object)
         }
@@ -148,6 +149,7 @@ const generate_trial_views = function(){
                 language: language,
                 id: i,
                 type: sentences[i].type,
+                button_under: "Ich verstehe die Frage nicht."
             }
             object_list.push(object)
         }
@@ -282,19 +284,33 @@ const custom_answer_container_generators = {
         
         <button id="next" class='babe-view-button'>${config.button}</button>
         </form>`;
-    }
-}
-const custom_stimulus_container_generators = {
-    subjective_language: function(config, CT) {
-        return `<div class='babe-view babe-post-test-view'>
-                    <h1 class='babe-view-title'>${config.title}</h1>
+    },
+    custom_rating_scale: function(config, CT) {
+        return `<p class='babe-view-question'>${config.data[CT].question}</p>
+                <div class='babe-view-answer-container'>
+                    <strong class='babe-response-rating-option babe-view-text'>${config.data[CT].optionLeft}</strong>
+                    <label for="1" class='babe-response-rating'>1</label>
+                    <input type="radio" name="answer" id="1" value="1" />
+                    <label for="2" class='babe-response-rating'>2</label>
+                    <input type="radio" name="answer" id="2" value="2" />
+                    <label for="3" class='babe-response-rating'>3</label>
+                    <input type="radio" name="answer" id="3" value="3" />
+                    <label for="4" class='babe-response-rating'>4</label>
+                    <input type="radio" name="answer" id="4" value="4" />
+                    <label for="5" class='babe-response-rating'>5</label>
+                    <input type="radio" name="answer" id="5" value="5" />
+                    <label for="6" class='babe-response-rating'>6</label>
+                    <input type="radio" name="answer" id="6" value="6" />
+                    <label for="7" class='babe-response-rating'>7</label>
+                    <input type="radio" name="answer" id="7" value="7" />
+                    <strong class='babe-response-rating-option babe-view-text'>${config.data[CT].optionRight}</strong>
+                    <label for="0" class='babe-view-button'>${config.data[CT].button_under}</label>
+                    <input type="radio" name="answer" id="0" value="0" />
                     
-                    <section class="babe-text-container">
-                        <p class="babe-view-text">${config.text}</p>
-                    </section>
                 </div>`;
-    }
+    },
 }
+
 
 const custom_handle_response_function = {
     subjective_language: function(config, CT, babe, answer_container_generator, startingTime) {
@@ -323,5 +339,38 @@ const custom_handle_response_function = {
             babe.findNextView();
         });
     },
+    custom_button_choice: function(config, CT, babe, answer_container_generator, startingTime) {
+        $(".babe-view").append(answer_container_generator(config, CT));
 
+        // attaches an event listener to the yes / no radio inputs
+        // when an input is selected a response property with a value equal
+        // to the answer is added to the trial object
+        // as well as a readingTimes property with value
+        $("input[name=answer]").on("change", function() {
+            const RT = Date.now() - startingTime;
+            let trial_data = {
+                trial_name: config.name,
+                trial_number: CT + 1,
+                response: $("input[name=answer]:checked").val(),
+                RT: RT
+            };
+
+            trial_data = babeUtils.view.save_config_trial_data(config.data[CT], trial_data);
+
+            babe.trial_data.push(trial_data);
+            babe.findNextView();
+        });
+    },
+
+}
+const custom_stimulus_container_generators = {
+    subjective_language: function(config, CT) {
+        return `<div class='babe-view babe-post-test-view'>
+                    <h1 class='babe-view-title'>${config.title}</h1>
+                    
+                    <section class="babe-text-container">
+                        <p class="babe-view-text">${config.text}</p>
+                    </section>
+                </div>`;
+    }
 }
