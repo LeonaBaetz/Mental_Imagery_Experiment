@@ -308,7 +308,8 @@ const custom_answer_container_generators = {
                     <label for="7" class='babe-response-rating'>7</label>
                     <input type="radio" name="answer" id="7" value="7" />
                     <strong class='babe-response-rating-option babe-view-text'>${config.data[CT].optionRight}</strong>
-                    <label for="0" class='babe-view-button'>${config.data[CT].button_under}</label>
+                    <p></p>
+                    <label for="0" class='babe-view-button-custom'>${config.data[CT].button_under}</label>
                     <input type="radio" name="answer" id="0" value="0" />
                     
                 </div>`;
@@ -593,5 +594,15 @@ const custom_stimulus_container_generators = {
                         <p class="babe-view-text">${config.text}</p>
                     </section>
                 </div>`;
-    }
+    },
+    rating_scale: function (config, CT) {
+        return `<div class='babe-view'>
+                    <h1 class='babe-view-title'>${config.title}</h1>
+                    <p class='babe-view-question babe-view-qud'>${config.data[CT].QUD}</p>
+                    <div class='babe-view-stimulus-container-small'>
+                        <div class='babe-view-stimulus babe-nodisplay'></div>
+                    </div>
+                </div>`;
+    },
+
 }

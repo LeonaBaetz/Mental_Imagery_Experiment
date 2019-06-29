@@ -164,8 +164,8 @@ const ratingScaleTrial = babeViews.view_generator('rating_scale',{
     trial_type: 'ratingScaleTrial',
     data: trial_info.rating_scale_trial,
 },{
-    answer_container_generator: custom_answer_container_generators.custom_rating_scale
-
+    answer_container_generator: custom_answer_container_generators.custom_rating_scale,
+    stimulus_container_generator: custom_stimulus_container_generators.rating_scale
 }
 );
 
@@ -177,7 +177,8 @@ const ratingScaleTask = babeViews.view_generator('rating_scale',{
     trial_type: 'ratingScaleTask',
     data: trial_info.rating_scale_task,
 },{
-    answer_container_generator: custom_answer_container_generators.custom_rating_scale
+    answer_container_generator: custom_answer_container_generators.custom_rating_scale,
+    stimulus_container_generator: custom_stimulus_container_generators.rating_scale
 });
 
 
