@@ -182,10 +182,10 @@ const generate_random_view_seq = function(){
             ratingScaleTrial,
             instructions_main_ger,
             ratingScaleTask,
-            post_test_ger,
             general_language_ger,
             subjective_language_ger,
             objective_language_ger,
+            additional_info_ger,
             thanks_ger]
     }else{
         return [intro_eng,
@@ -193,10 +193,10 @@ const generate_random_view_seq = function(){
             ratingScaleTrial,
             instructions_main_eng,
             ratingScaleTask,
-            post_test_eng,
             general_language_eng,
             subjective_language_eng,
             objective_language_eng,
+            additional_info_eng,
             thanks_eng]
     }
     
@@ -356,43 +356,82 @@ const custom_answer_container_generators = {
             <label for="${config.class1}">${config.class1}:</label>
             <select id="reading_time" name="${config.class1}">
                 <option></option>
-                <option value="German">${config.option1}</option>
-                <option value="English">${config.option2}</option>
-                <option value="Both">${config.option3}</option>
-                <option value="None">${config.option4}</option>
-                <option value="None">${config.option5}</option>
+                <option value="1">${config.option1}</option>
+                <option value="2">${config.option2}</option>
+                <option value="3">${config.option3}</option>
+                <option value="4">${config.option4}</option>
+                <option value="5">${config.option5}</option>
                 </select>
         </p>
         <p class='babe-view-text'>
             <label for="${config.class2}">${config.class2}:</label>
             <select id="listening_time" name="${config.class2}">
                 <option></option>
-                <option value="German">${config.option1}</option>
-                <option value="English">${config.option2}</option>
-                <option value="Both">${config.option3}</option>
-                <option value="None">${config.option4}</option>
-                <option value="None">${config.option5}</option>
+                <option value="1">${config.option1}</option>
+                <option value="2">${config.option2}</option>
+                <option value="3">${config.option3}</option>
+                <option value="4">${config.option4}</option>
+                <option value="5">${config.option5}</option>
                 </select>
         </p>
         <p class='babe-view-text'>
             <label for="${config.class3}">${config.class3}:</label>
             <select id="speaking_time" name="${config.class3}">
                 <option></option>
-                <option value="German">${config.option1}</option>
-                <option value="English">${config.option2}</option>
-                <option value="Both">${config.option3}</option>
-                <option value="None">${config.option4}</option>
-                <option value="None">${config.option5}</option>
+                <option value="1">${config.option1}</option>
+                <option value="2">${config.option2}</option>
+                <option value="3">${config.option3}</option>
+                <option value="4">${config.option4}</option>
+                <option value="5">${config.option5}</option>
                 </select>
         </p>
         <p class='babe-view-text'>
-        <label for="${config.class4}">${config.class4}:</label>
-
-        <input type="number" name="${config.class4}" min="0" max="110" id="learning_time"/>
+            <label for="${config.class4}">${config.class4}:</label>
+            <select id="learning_time" name="${config.class4}">
+                <option></option>
+                <option value="1">${config.option6}</option>
+                <option value="2">${config.option7}</option>
+                <option value="3">${config.option8}</option>
+                <option value="4">${config.option9}</option>
+                <option value="5">${config.option10}</option>
+                <option value="6">${config.option11}</option>
+                </select>
         </p>
-        
         <button id="next" class='babe-view-button'>${config.button}</button>
-        </form>`;
+        </form>`;   
+    },
+
+    additional_info: function(config, CT) {
+        const quest = babeUtils.view.fill_defaults_post_test(config);
+        return `<form>
+                    <p class='babe-view-text'>
+                        <label for="age">${quest.age.title}:</label>
+                        <input type="number" name="age" min="18" max="110" id="age" />
+                    </p>
+                    <p class='babe-view-text'>
+                        <label for="gender">${quest.gender.title}:</label>
+                        <select id="gender" name="gender">
+                            <option></option>
+                            <option value="${quest.gender.male}">${quest.gender.male}</option>
+                            <option value="${quest.gender.female}">${quest.gender.female}</option>
+                            <option value="${quest.gender.other}">${quest.gender.other}</option>
+                        </select>
+                    </p>
+                    <p class='babe-view-text'>
+                        <label for="education">${quest.edu.title}:</label>
+                        <select id="education" name="education">
+                            <option></option>
+                            <option value="${quest.edu.graduated_high_school}">${quest.edu.graduated_high_school}</option>
+                            <option value="${quest.edu.graduated_college}">${quest.edu.graduated_college}</option>
+                            <option value="${quest.edu.higher_degree}">${quest.edu.higher_degree}</option>
+                        </select>
+                    </p>
+                    <p class="babe-view-text">
+                        <label for="comments">${quest.comments.title}</label>
+                        <textarea name="comments" id="comments" rows="6" cols="40"></textarea>
+                    </p>
+                    <button id="next" class='babe-view-button'>${config.button}</button>
+            </form>`
     },
 }
 
@@ -493,6 +532,30 @@ const custom_handle_response_function = {
             babe.findNextView();
         });
     },
+    additional_info: function(config, CT, babe, answer_container_generator, startingTime) {
+        $(".babe-view").append(answer_container_generator(config, CT));
+
+        $("#next").on("click", function(e) {
+            // prevents the form from submitting
+            e.preventDefault();
+
+            // records the post test info
+            
+            babe.global_data.age = $("#age").val();
+            babe.global_data.gender = $("#gender").val();
+            babe.global_data.education = $("#education").val();
+            babe.global_data.comments = $("#comments").val();
+            
+            babe.global_data.endTime = Date.now();
+            babe.global_data.timeSpent =
+                (babe.global_data.endTime -
+                    babe.global_data.startTime) /
+                60000;
+
+            // moves to the next view
+            babe.findNextView();
+        });
+    },
 }
 const custom_stimulus_container_generators = {
     subjective_language: function(config, CT) {
@@ -514,6 +577,15 @@ const custom_stimulus_container_generators = {
                 </div>`;
     },
     objective_language: function(config, CT) {
+        return `<div class='babe-view babe-post-test-view'>
+                    <h1 class='babe-view-title'>${config.title}</h1>
+                    
+                    <section class="babe-text-container">
+                        <p class="babe-view-text">${config.text}</p>
+                    </section>
+                </div>`;
+    },
+    additional_info: function(config, CT) {
         return `<div class='babe-view babe-post-test-view'>
                     <h1 class='babe-view-title'>${config.title}</h1>
                     

@@ -100,35 +100,45 @@ const instructions_main_ger = babeViews.view_generator('instructions',{
 
 // In the post test questionnaire you can ask your participants addtional questions
 // english
-const post_test_eng = babeViews.view_generator('post_test',{
+const additional_info_eng = babeViews.view_generator('post_test',{
     trials: 1,
     name: 'post_test_eng',
     title: 'Additional information',
     text: 'Please answer the Questions '
-
-    // You can change much of what appears here, e.g., to present it in a different language, as follows:
-    // buttonText: 'Weiter',
-    // age_question: 'Alter',
-    // gender_question: 'Geschlecht',
-    // gender_male: 'männlich',
-    // gender_female: 'weiblich',
-    // gender_other: 'divers',
-    // edu_question: 'Höchster Bildungsabschluss',
-    // edu_graduated_high_school: 'Abitur',
-    // edu_graduated_college: 'Hochschulabschluss',
-    // edu_higher_degree: 'Universitärer Abschluss',
-    // languages_question: 'Muttersprache',
-    // languages_more: '(in der Regel die Sprache, die Sie als Kind zu Hause gesprochen haben)',
-    // comments_question: 'Weitere Kommentare'
-});
+},{
+    stimulus_container_generator: custom_stimulus_container_generators.additional_info,
+    answer_container_generator: custom_answer_container_generators.additional_info,
+    handle_response_function: custom_handle_response_function.additional_info
+}
+);
 
 //German
-const post_test_ger = babeViews.view_generator('post_test',{
+const additional_info_ger = babeViews.view_generator('post_test',{
     trials: 1,
     name: 'post_test_ger',
     title: 'Zusätzliche Informationen',
-    text: 'Abschließend benötigen wir noch einige Informationen über dich: '
-});
+    text: 'Abschließend benötigen wir noch einige Informationen über dich: ',
+
+    // You can change much of what appears here, e.g., to present it in a different language, as follows:
+    buttonText: 'Weiter',
+    age_question: 'Alter',
+    gender_question: 'Geschlecht',
+    gender_male: 'männlich',
+    gender_female: 'weiblich',
+    gender_other: 'divers',
+    edu_question: 'Höchster Bildungsabschluss',
+    edu_graduated_high_school: 'Abitur',
+    edu_graduated_college: 'Hochschulabschluss',
+    edu_higher_degree: 'Universitärer Abschluss',
+    // languages_question: 'Muttersprache',
+    // languages_more: '(in der Regel die Sprache, die Sie als Kind zu Hause gesprochen haben)',
+    comments_question: 'Weitere Kommentare'
+},{
+    stimulus_container_generator: custom_stimulus_container_generators.additional_info,
+    answer_container_generator: custom_answer_container_generators.additional_info,
+    handle_response_function: custom_handle_response_function.additional_info
+}
+);
 
 // The 'thanks' view is crucial; never delete it; it submits the results!
 // english
@@ -177,7 +187,7 @@ const subjective_language_eng = babeViews.view_generator('post_test',{
     trials: 1,
     name: 'subjective_language_eng',
     title: 'Your language knowledge',
-    text: 'Please answer the questions:',
+    text: 'Please answer the following questions:',
     question1: "How proficient would you describe your language abilities of your native language for the following areas:",
     question2:"How proficient would you describe your language abilities of your foreign language for the following areas:",
     class1:"speaking",
@@ -201,6 +211,7 @@ const subjective_language_ger = babeViews.view_generator('post_test',{
     name: 'subjective_language_ger',
     title: 'Deine Sprachkenntnisse',
     text: 'Bitte beantworte folgende Fragen: ',
+    buttonText: 'Weiter',
     question1: "Wie gut würdest du die Kompetenzen in deiner Muttersprache für folgende Bereiche einschätzen:",
     question2:"Wie gut würdest du die Kompetenzen in deiner Muttersprache für folgende Bereiche einschätzen:",
     class1:"Sprechen",
@@ -223,10 +234,9 @@ const general_language_eng = babeViews.view_generator('post_test',{
     trials: 1,
     name: 'general_language_eng',
     title: 'Your language knowledge',
-    text: 'Please answer the questions: ',
+    text: 'Please answer the following questions: ',
     class1:"Is German or English your native language?",
     class2:"Is German or English your foreign language?",
-    //class3:"For how many years do you speak your choosen foreign language?",
     class3:"Do you speak this foreign language at home or more often than your native language?",
     option1:"German",
     option2:"English",
@@ -246,9 +256,9 @@ const general_language_ger = babeViews.view_generator('post_test',{
     name: 'general_language_ger',
     title: 'Deine Sprachkenntnisse',
     text: 'Bitte beantworte folgende Fragen: ',
+    buttonText: 'Weiter',
     class1:"Ist Deutsch oder Englisch deine Muttersprache?",
     class2:"Ist Deutsch oder Englisch deine Fremdsprache?",
-    //class3:"Seit wie vielen Jahren sprichst du deine eben gewählte Fremdsprache?",
     class3:"Sprichst du diese Fremdsprache zuhause oder häufiger als deine Muttersprache?",
     option1:"Deutsch",
     option2:"Englisch",
@@ -267,7 +277,7 @@ const objective_language_eng = babeViews.view_generator('post_test',{
     trials: 1,
     name: 'objective_language_eng',
     title: 'Your language knowledge',
-    text: 'Please answer the questions: ',
+    text: 'Please answer the following questions: ',
     class1:"How often do you read in your foreign language?",
     class2:"How often do you listen to or watch something in your foreign language?",
     class3:"How often do you speak in your foreign language?",
@@ -276,7 +286,13 @@ const objective_language_eng = babeViews.view_generator('post_test',{
     option2:"1-2 hours/week",
     option3:"3-5 hours/week",
     option4:"6-10 hours/week",
-    option5:"more than 10 hours/week"
+    option5:"more than 10 hours/week",
+    option6:"0-2 years",
+    option7:"2-5 years",
+    option8:"5-7 years",
+    option9:"7-10 years",
+    option10:"10-15 years",
+    option11:"more than 15 years"
 },{
     stimulus_container_generator: custom_stimulus_container_generators.objective_language,
     answer_container_generator: custom_answer_container_generators.objective_language,
@@ -289,6 +305,7 @@ const objective_language_ger = babeViews.view_generator('post_test',{
     name: 'objective_language_ger',
     title: 'Deine Sprachkenntnisse',
     text: 'Bitte beantworte folgende Fragen: ',
+    buttonText: 'Weiter',
     class1:"Wie häufig liest du in deiner Fremdsprache?",
     class2:"Wie häufig hörst du etwas oder schaust etwas in deiner Fremdsprache?",
     class3:"Wie häufig sprichst du in deiner Fremdsprache?",
@@ -298,6 +315,12 @@ const objective_language_ger = babeViews.view_generator('post_test',{
     option3:"3-5 Stunden/Woche",
     option4:"6-10 Stunden/Woche",
     option5:"mehr als 10 Stunden/Woche",
+    option6:"0-2 Jahre",
+    option7:"2-5 Jahre",
+    option8:"5-7 Jahre",
+    option9:"7-10 Jahre",
+    option10:"10-15 Jahre",
+    option11:"länger als 15 Jahre"
 },{
     stimulus_container_generator: custom_stimulus_container_generators.objective_language,
     answer_container_generator: custom_answer_container_generators.objective_language,
