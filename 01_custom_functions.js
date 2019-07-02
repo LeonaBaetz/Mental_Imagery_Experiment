@@ -72,24 +72,24 @@ const check_response = function(data, next) {
 
 var sentences = [
     {
-        q_en: "Think of the following image carefully considering the visual image that comes to your imagination. Rate how vividly you can imagine this:",
+        q_en: "Think of the following image, carefully considering the visual image that comes to your imagination. Rate how vividly you can imagine this:",
         english: "A ball bouncing up and down",
         q_ge: "bla",
         german: "Ein Ball auf und ab hüpfend",
         type: "visual",
     },
     {
-        q_en: "Think of the following sound carefully considering the auditory image that comes to your imagination. Rate how vividly you can imagine this:",
+        q_en: "Think of the following sound, carefully considering the auditory image that comes to your imagination. Rate how vividly you can imagine this:",
         english: "Rain falling on the street",
         q_ge: "bla",
         german: "Auf die Straße fallender Regen",
         type: "auditory",
     },
     {
-        q_en: "Think of the following “feeling” or touching the following carefully considering the tactile image that comes to your imagination. Rate how vividly you can imagine this:",
+        q_en: "Think of the following “feeling” or touching the following, carefully considering the tactile image that comes to your imagination. Rate how vividly you can imagine this:",
         english: "A piece of paper",
         q_ge: "bla",
-        german: "Ein Stück papier",
+        german: "Ein Stück Papier",
         type: "tactile",
     },
     {
@@ -107,14 +107,14 @@ var sentences = [
         type: "gustatory",
     },
     {
-        q_en: "Think of smelling the following,  carefully considering the olfactory image that is produced. Rate how vividly you can imagine this:",
+        q_en: "Think of smelling the following, carefully considering the olfactory image that is produced. Rate how vividly you can imagine this:",
         english: "The smell of coffee",
         q_ge: "bla",
         german: "Den Geruch von Kaffee",
         type: "olfactory",
     },
     {
-        q_en: "Think of smelling the following,  carefully considering the olfactory image that is produced. Rate how vividly you can imagine this:Think of the following sensation, carefully considering the image that comes to your imagination. Rate how vividly you can imagine this",
+        q_en: "Think of smelling the following, carefully considering the olfactory image that is produced. Rate how vividly you can imagine this:Think of the following sensation, carefully considering the image that comes to your imagination. Rate how vividly you can imagine this",
         english: "Tiredness",
         q_ge: "bla",
         german: "Müdigkeit",
@@ -134,7 +134,7 @@ const generate_trial_views = function(){
                 language: language,
                 id: i,
                 type: sentences[i].type,
-                button_under: "I don't understand the Sentence."
+                button_under: "I don't understand the sentence."
             }
             object_list.push(object)
         }

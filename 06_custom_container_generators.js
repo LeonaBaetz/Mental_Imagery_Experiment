@@ -1,32 +1,5 @@
 const custom_stimulus_container_generators = {
-    subjective_language: function(config, CT) {
-        return `<div class='babe-view babe-post-test-view'>
-                    <h1 class='babe-view-title'>${config.title}</h1>
-                    
-                    <section class="babe-text-container">
-                        <p class="babe-view-text">${config.text}</p>
-                    </section>
-                </div>`;
-    },
-    general_language: function(config, CT) {
-        return `<div class='babe-view babe-post-test-view'>
-                    <h1 class='babe-view-title'>${config.title}</h1>
-                    
-                    <section class="babe-text-container">
-                        <p class="babe-view-text">${config.text}</p>
-                    </section>
-                </div>`;
-    },
-    objective_language: function(config, CT) {
-        return `<div class='babe-view babe-post-test-view'>
-                    <h1 class='babe-view-title'>${config.title}</h1>
-                    
-                    <section class="babe-text-container">
-                        <p class="babe-view-text">${config.text}</p>
-                    </section>
-                </div>`;
-    },
-    additional_info: function(config, CT) {
+    questionnaire: function(config, CT) {
         return `<div class='babe-view babe-post-test-view'>
                     <h1 class='babe-view-title'>${config.title}</h1>
                     
