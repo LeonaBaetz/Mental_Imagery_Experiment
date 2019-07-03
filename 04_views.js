@@ -201,9 +201,9 @@ const instructions_main_ger = babeViews.view_generator('instructions',{
 });
 // English
 // after practice instructions
-const instructions_main_en = babeViews.view_generator('instructions',{
+const instructions_main_eng = babeViews.view_generator('instructions',{
     trials: 1,
-    name: 'instructions_main_en',
+    name: 'instructions_main_eng',
     title: 'General Instructions',
     text:  `Well done, you successfully finished the practice session!
             <br />
@@ -299,6 +299,9 @@ const ratingScaleTrial = babeViews.view_generator('rating_scale',{
     name: 'ratingScaleTrial',
     trial_type: 'ratingScaleTrial',
     data: trial_info.rating_scale_trial,
+    hook: {
+        after_response_enabled: check_timing
+    }
 },{
     answer_container_generator: custom_answer_container_generators.custom_rating_scale,
     stimulus_container_generator: custom_stimulus_container_generators.rating_scale
@@ -339,8 +342,8 @@ const subjective_language_eng = babeViews.view_generator('post_test',{
     option7:"totally proficient",
 },{
     stimulus_container_generator: custom_stimulus_container_generators.questionnaire,
-    answer_container_generator: custom_answer_container_generators.questionnaire,
-    handle_response_function: custom_handle_response_function.questionnaire
+    answer_container_generator: custom_answer_container_generators.subjective_language,
+    handle_response_function: custom_handle_response_function.subjective_language
 }
 );
 const subjective_language_ger = babeViews.view_generator('post_test',{
@@ -363,8 +366,8 @@ const subjective_language_ger = babeViews.view_generator('post_test',{
     option7:"perfekt",
 },{
     stimulus_container_generator: custom_stimulus_container_generators.questionnaire,
-    answer_container_generator: custom_answer_container_generators.questionnaire,
-    handle_response_function: custom_handle_response_function.questionnaire
+    answer_container_generator: custom_answer_container_generators.subjective_language,
+    handle_response_function: custom_handle_response_function.subjective_language
 }
 );
 const general_language_eng = babeViews.view_generator('post_test',{
@@ -383,8 +386,8 @@ const general_language_eng = babeViews.view_generator('post_test',{
     option6:"no"
 },{
     stimulus_container_generator: custom_stimulus_container_generators.questionnaire,
-    answer_container_generator: custom_answer_container_generators.questionnaire,
-    handle_response_function: custom_handle_response_function.questionnaire
+    answer_container_generator: custom_answer_container_generators.general_language,
+    handle_response_function: custom_handle_response_function.general_language
 }
 );
 
@@ -405,8 +408,8 @@ const general_language_ger = babeViews.view_generator('post_test',{
     option6:"nein"
 },{
     stimulus_container_generator: custom_stimulus_container_generators.questionnaire,
-    answer_container_generator: custom_answer_container_generators.questionnaire,
-    handle_response_function: custom_handle_response_function.questionnaire
+    answer_container_generator: custom_answer_container_generators.general_language,
+    handle_response_function: custom_handle_response_function.general_language
 }
 );
 
@@ -432,8 +435,8 @@ const objective_language_eng = babeViews.view_generator('post_test',{
     option11:"more than 15 years"
 },{
     stimulus_container_generator: custom_stimulus_container_generators.questionnaire,
-    answer_container_generator: custom_answer_container_generators.questionnaire,
-    handle_response_function: custom_handle_response_function.questionnaire
+    answer_container_generator: custom_answer_container_generators.objective_language,
+    handle_response_function: custom_handle_response_function.objective_language
 }
 );
 
@@ -460,7 +463,7 @@ const objective_language_ger = babeViews.view_generator('post_test',{
     option11:"länger als 15 Jahre"
 },{
     stimulus_container_generator: custom_stimulus_container_generators.questionnaire,
-    answer_container_generator: custom_answer_container_generators.questionnaire,
-    handle_response_function: custom_handle_response_function.questionnaire
+    answer_container_generator: custom_answer_container_generators.objective_language,
+    handle_response_function: custom_handle_response_function.objective_language
 }
 );

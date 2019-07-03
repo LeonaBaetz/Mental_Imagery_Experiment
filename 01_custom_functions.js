@@ -70,6 +70,17 @@ const check_response = function(data, next) {
         }})
 }
 
+const check_timing = function(data, next) {
+    $("input[name=answer]").on("change", function(e) {
+        if (babe_monitor.trial_data[babe_monitor.trial_data.length-1].RT > 180000){
+            alert("Please don't take too much time and concentrate on the task.")
+        } if (babe_monitor.trial_data[babe_monitor.trial_data.length-1].RT < 1000){
+            alert('You have to really read the sentence carefully! Take your time.')
+        }
+        next()
+    })
+}
+
 var sentences = [
     {
         q_en: "Think of the following image, carefully considering the visual image that comes to your imagination. Rate how vividly you can imagine this:",
