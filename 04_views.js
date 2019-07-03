@@ -271,8 +271,8 @@ const additional_info_ger = babeViews.view_generator('post_test',{
     comments_question: 'Weitere Kommentare'
 },{
     stimulus_container_generator: custom_stimulus_container_generators.questionnaire,
-    answer_container_generator: custom_answer_container_generators.questionnaire,
-    handle_response_function: custom_handle_response_function.questionnaire
+    answer_container_generator: custom_answer_container_generators.additional_info,
+    handle_response_function: custom_handle_response_function.additional_info
 }
 );
 
