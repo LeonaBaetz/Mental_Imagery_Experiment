@@ -37,15 +37,15 @@ data %>% glimpse()
 
 ```{r}
 # + native_language = languages, + the language test results
-(s_data <- select(data, experiment_id, trial_name, id, type, response, language, languages, RT ))
+(s_data <- select(data, experiment_id, trial_name, id, type, response, RT, language, native_language, foreign_language, foreign_dominance, speaking_native, listening_native, writing_native, speaking_foreign, listening_foreign, writing_foreign, reading_time, listening_time, speaking_time, learning_time))
 
 ```
 
 
 
 ```{r}
-#here we change the types of the 
-m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), language = factor(language), native_language = factor(languages), subject_id = as.numeric(experiment_id), response = as.numeric(response), experiment_id = NULL, languages = NULL)
+#here we change the types of the variables
+m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), exp_language= factor(language), native_language = factor(native_language), foreign_language= factor(foreign_language), foreign_dominance = factor(foreign_dominance), subject_id = as.numeric(experiment_id), response = as.numeric(response), experiment_id = NULL)
 
 m_data
 ```
@@ -53,25 +53,29 @@ m_data
 
 ```{r}
 #here we calculate the mean response for trial and the real task (not important)
-(s_data <- group_by(m_data, trial_name) %>% filter(trial_name=="ratingScaleTask" | trial_name=="ratingScaleTrial") %>% mutate(response = as.numeric(response)) %>% summarise(mean(response)))
+(s_data <- group_by(m_data, trial_name) %>% summarise(overall_mean = mean(response)))
 ```
 
 ```{r}
 #here we calculate the mean for the different types of the real task
-(s_data2 <- group_by(m_data, type) %>% filter(trial_name=="ratingScaleTask") %>% mutate(response = as.numeric(response)) %>% summarise(Mean=mean(response)))
+(s_data2 <- group_by(m_data, type) %>% filter(trial_name=="ratingScaleTask") %>% summarise(type_mean=mean(response)))
 ```
 
 ```{r}
-m_data$language_equality <- identical(m_data[["language"]],m_data[["native_language"]])
+#check if the foreign or native language is used in this experiment and add the new column
+m_data$language_equality <- identical(m_data[["exp_language"]],m_data[["native_language"]])
+m_data
+
+#filter the data for our prerequisites
+m_data %>% filter(foreign_dominance == 'no', identical(m_data[["foreign_language"]],m_data[["native_language"]]) == FALSE, foreign_language == 'English'| foreign_language == 'German', native_language == 'English'| native_language == 'German')
 m_data
 ```
 
 
 ```{r}
-#here we calculate the mean for the different types of the real task and group by language equality (set language == native_language?)
-(s_data3 <- group_by(m_data, type, language_equality) %>% filter(trial_name=="ratingScaleTask") %>% summarise(Mean=mean(response)))
+#here we calculate the mean for the different types of the real task and group by language equality (set foreign_language == native_language)
+(s_data3 <- group_by(m_data, type, language_equality) %>% filter(trial_name=="ratingScaleTask") %>% summarise(type_lang_mean=mean(response)))
 
-#s_data3 %>% mutate(mean_response = as.numeric(mean), mean = NULL)
 ```
 
 
