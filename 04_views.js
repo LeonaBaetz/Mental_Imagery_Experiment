@@ -23,7 +23,7 @@ const intro_eng = babeViews.view_generator('intro',{
     trials: 1,
     name: 'intro_eng',
     // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside
-    text:   `The aim of this experiment is to determine the vividness of your imagery. 
+    text:   `AAAAAAThe aim of this experiment is to determine the vividness of your imagery. 
             <br />
             <br />
             The sentences that you will read on the following pages will bring certain images to your mind. Please read the given statements carefully.
