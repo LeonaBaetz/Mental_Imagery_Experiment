@@ -137,7 +137,7 @@ var sentences = [
         q_en: "Think of some relative or friend whom you frequently <b>see<b/>, carefully considering the <b>visual image<b/> that comes to your imagination. Rate how vividly you can imagine each of the following:",
         english: "Image of his/her: Exact contour of face, head, shoulders and body",
         q_ge: "Denk an eine*n Verwandte*n oder eine*n Freund*in, den/die du regelmäßig <b>siehst<b/>, und betrachte sorgfältig die entstehende <b>visuelle Vorstellung<b/>. Bewerte, wie lebhaft du dir das Folgende vorstellen kannst:",
-        german: "Aussehen von seiner/ihrer: genaue Kontur des Gesichts, Kopf, Schultern und Körper",
+        german: "Aussehen von seiner/ihrer: genauen Kontur des Gesichts, Kopf, Schultern und Körper",
         type: "visual",
     }
 ]
