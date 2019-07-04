@@ -73,9 +73,11 @@ const check_response = function(data, next) {
 const check_timing = function(data, next) {
     $("input[name=answer]").on("change", function(e) {
         if (babe_monitor.trial_data[babe_monitor.trial_data.length-1].RT > 180000){
-            alert("<<you should focus on the first image tht comes to your mind and don't take too much time.")
+            alert("You should focus on the first image that comes to your mind and don't take too much time.")
         } if (babe_monitor.trial_data[babe_monitor.trial_data.length-1].RT < 1000){
             alert("You should really read the sentence carefully, don't rush through it and take your time.")
+        } else {
+            alert("test")
         }
         next()
     })

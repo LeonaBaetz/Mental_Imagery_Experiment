@@ -365,6 +365,7 @@ const custom_answer_container_generators = {
                             <option value="${quest.edu.graduated_high_school}">${quest.edu.graduated_high_school}</option>
                             <option value="${quest.edu.graduated_college}">${quest.edu.graduated_college}</option>
                             <option value="${quest.edu.higher_degree}">${quest.edu.higher_degree}</option>
+                            <option value="other">${config.edu_other}</option>
                         </select>
                     </p>
                     <p class="babe-view-text">
