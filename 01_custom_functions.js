@@ -73,9 +73,9 @@ const check_response = function(data, next) {
 const check_timing = function(data, next) {
     $("input[name=answer]").on("change", function(e) {
         if (babe_monitor.trial_data[babe_monitor.trial_data.length-1].RT > 180000){
-            alert("Please don't take too much time and concentrate on the task.")
+            alert("<<you should focus on the first image tht comes to your mind and don't take too much time.")
         } if (babe_monitor.trial_data[babe_monitor.trial_data.length-1].RT < 1000){
-            alert('You have to really read the sentence carefully! Take your time.')
+            alert("You should really read the sentence carefully, don't rush through it and take your time.")
         }
         next()
     })
@@ -83,51 +83,51 @@ const check_timing = function(data, next) {
 
 var sentences = [
     {
-        q_en: "Think of the following image, carefully considering the visual image that comes to your imagination. Rate how vividly you can imagine this:",
+        q_en: "Think of the following <b>image</b>, carefully considering the <b>visual image</b> that comes to your imagination. Rate how vividly you can imagine this:",
         english: "A ball bouncing up and down",
-        q_ge: "bla",
-        german: "Ein Ball auf und ab hüpfend",
+        q_ge: "Stell dir das folgende <b>Bild</b> vor und betrachte sorgfältig die entstehende <b>visuelle Vorstellung</b>. Bewerte, wie lebhaft du dir das Folgende vorstellen kannst:",
+        german: "Ein Ball, der auf und ab hüpft",
         type: "visual",
     },
     {
-        q_en: "Think of the following sound, carefully considering the auditory image that comes to your imagination. Rate how vividly you can imagine this:",
+        q_en: "Think of the following <b>sound</b>, carefully considering the <b>auditory</b> image that comes to your imagination. Rate how vividly you can imagine this:",
         english: "Rain falling on the street",
-        q_ge: "bla",
+        q_ge: "Stell dir den <b>Ton</b> des Folgenden vor und betrachte sorgfältig die entstehende <b>auditive Vorstellung</b>. Bewerte, wie lebhaft du dir das Folgende vorstellen kannst:",
         german: "Auf die Straße fallender Regen",
         type: "auditory",
     },
     {
-        q_en: "Think of the following “feeling” or touching the following, carefully considering the tactile image that comes to your imagination. Rate how vividly you can imagine this:",
-        english: "A piece of paper",
-        q_ge: "bla",
-        german: "Ein Stück Papier",
+        q_en: "Think of the following <b>'feeling'</b> or touching the following, carefully considering the <b>tactile image</b> that comes to your imagination. Rate how vividly you can imagine this:",
+        english: "The tickle of a fly on your skin",
+        q_ge: "Stell dir das <b>Gefühl</b> des Folgenden auf der Haut vor und betrachte sorgfältig die entstehende <b>taktile (fühlbare) Vorstellung</b>. Bewerte, wie lebhaft du dir das Folgende vorstellen kannst:",
+        german: "Das Kitzeln einer Fliege auf der Haut",
         type: "tactile",
     },
     {
-        q_en: "Think of performing the following act, carefully considering the image that forms in your mind of your body part(s) moving. Rate how vividly you can imagine this:",
+        q_en: "Think of <b>performing the following act</b>, carefully considering the image that <b>forms in your mind of your body part(s) moving</b>. Rate how vividly you can imagine this:",
         english: "Sitting down on a chair",
-        q_ge: "bla",
+        q_ge: "Stell dir vor <b>das Folgende zu tun</b> und betrachte sorgfältig die entstehende Vorstellung, <b>wie sich deine Arme, Beine, Lippen etc bewegen und fühlen</b>. Bewerte, wie lebhaft du dir das Folgende vorstellen kannst:",
         german: "Auf einem Stuhl sitzen",
         type: "motor",
     },
     {
-        q_en: "Think of tasting the following, carefully considering the gustatory image that is produced. Rate how vividly you can imagine this:",
+        q_en: "Think of <b>tasting</b> the following, carefully considering the <b>gustatory image</b> that is produced. Rate how vividly you can imagine this:",
         english: "Strawberrys",
-        q_ge: "bla",
+        q_ge: "Stell dir den folgenden <b>Geschmack</b> vor und betrachte sorgfältig die entstehende <b>geschmackliche Vorstellung</b>. Bewerte wie lebhaft du dir das Folgende vorstellen kannst:",
         german: "Erdbeeren",
         type: "gustatory",
     },
     {
-        q_en: "Think of smelling the following, carefully considering the olfactory image that is produced. Rate how vividly you can imagine this:",
+        q_en: "Think of <b>smelling</b> the following, carefully considering the <b>olfactory</b> image that is produced. Rate how vividly you can imagine this:",
         english: "The smell of coffee",
-        q_ge: "bla",
+        q_ge: "Stellen Sie sich den folgenden <b>Geruch</b> vor und betrachten Sie sorgfältig die entstehende <b>geruchliche Vorstellung</b>. Bewerten Sie wie lebhaft Sie sich das Folgende vorstellen können:",
         german: "Den Geruch von Kaffee",
         type: "olfactory",
     },
     {
-        q_en: "Think of smelling the following, carefully considering the olfactory image that is produced. Rate how vividly you can imagine this:Think of the following sensation, carefully considering the image that comes to your imagination. Rate how vividly you can imagine this",
+        q_en: "Think of the following <b>sensation</b>, carefully considering the <b>image that comes to your imagination</b>. Rate how vividly you can imagine this:",
         english: "Tiredness",
-        q_ge: "bla",
+        q_ge: "Stellen Sie sich das folgende <b>Gefühl</b> vor und begutachten Sie genau die <b>Vorstellung welche in Ihre Gedanken dazu kommt</b>. Bewerten Sie, wie lebhaft Sie sich das Folgende vorstellen können:",
         german: "Müdigkeit",
         type: "organic",
     }
