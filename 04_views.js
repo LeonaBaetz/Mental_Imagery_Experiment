@@ -109,7 +109,7 @@ const instructions_practice_eng = babeViews.view_generator('instructions',{
     trials: 1,
     name: 'instructions_eng',
     title: 'General Instructions',
-    text:  `TESTTESTThis is the instruction page for the practice phase.
+    text:  `This is the instruction page for the practice phase.
             <br />
             <br />
             Here, you will get to know how the sentences will look like, your answers won't count.
