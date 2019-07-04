@@ -101,14 +101,14 @@ var sentences = [
     },
     {
         q_en: "Think of <b>tasting</b> the following, carefully considering the <b>gustatory image</b> that is produced. Rate how vividly you can imagine this:",
-        english: "<b>taste of</b>: Strawberrys",
+        english: "<b>Taste of</b>: Strawberrys",
         q_ge: "Stell dir den folgenden <b>Geschmack</b> vor und betrachte sorgfältig die entstehende <b>geschmackliche Vorstellung</b>. Bewerte wie lebhaft du dir das Folgende vorstellen kannst:",
-        german: "<b>Geschmack</b>von: Erdbeeren",
+        german: "<b>Geschmack</b> von: Erdbeeren",
         type: "gustatory",
     },
     {
         q_en: "Think of <b>smelling</b> the following, carefully considering the <b>olfactory image</b> that is produced. Rate how vividly you can imagine this:",
-        english: "<b>smell</b>of: coffee",
+        english: "<b>smell</b> of: coffee",
         q_ge: "Stellen Sie sich den folgenden <b>Geruch</b> vor und betrachten Sie sorgfältig die entstehende <b>Geruchsvorstellung</b>. Bewerten Sie wie lebhaft Sie sich das Folgende vorstellen können:",
         german: "<b>Geruch<b/> von: Kaffee",
         type: "olfactory",
@@ -119,6 +119,13 @@ var sentences = [
         q_ge: "Stellen Sie sich das folgende <b>Gefühl</b> vor und begutachten Sie genau die <b>Vorstellung welche in Ihre Gedanken dazu kommt</b>. Bewerten Sie, wie lebhaft Sie sich das Folgende vorstellen können:",
         german: "Gefühl von: Müdigkeit",
         type: "organic",
+    },
+    {
+        q_en: "Think of some relative or friend whom you frequently <b>see<b/>, carefully considering the <b>visual image<b/> that comes to your imagination. Rate how vividly you can imagine each of the following:",
+        english: "Image of his/her: Exact contour of face, head, shoulders and body",
+        q_ge: "Denk an eine*n Verwandte*n oder eine*n Freund*in, den/die du regelmäßig <b>siehst<b/>, und betrachte sorgfältig die entstehende <b>visuelle Vorstellung<b/>. Bewerte, wie lebhaft du dir das Folgende vorstellen kannst:",
+        german: "Aussehen von seiner/ihrer: genauen Kontur des Gesichts, Kopf, Schultern und Körper",
+        type: "visual",
     }
 ]
 
