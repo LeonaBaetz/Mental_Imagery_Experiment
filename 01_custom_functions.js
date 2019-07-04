@@ -70,19 +70,6 @@ const check_response = function(data, next) {
         }})
 }
 
-const check_timing = function(data, next) {
-    $("input[name=answer]").on("change", function(e) {
-        if (babe_monitor.trial_data[babe_monitor.trial_data.length-1].RT > 180000){
-            alert("You should focus on the first image that comes to your mind and don't take too much time.")
-        } if (babe_monitor.trial_data[babe_monitor.trial_data.length-1].RT < 1000){
-            alert("You should really read the sentence carefully, don't rush through it and take your time.")
-        } else {
-            alert("test")
-        }
-        next()
-    })
-}
-
 var sentences = [
     {
         q_en: "Think of the following <b>image</b>, carefully considering the <b>visual image</b> that comes to your imagination. Rate how vividly you can imagine this:",
@@ -162,7 +149,7 @@ const generate_trial_views = function(){
                 language: language,
                 id: i,
                 type: sentences[i].type,
-                button_under: "Ich verstehe den Satz nicht nicht."
+                button_under: "Ich verstehe den Satz nicht nicht.",
             }
             object_list.push(object)
         }

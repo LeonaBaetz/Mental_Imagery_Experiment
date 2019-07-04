@@ -294,6 +294,22 @@ const thanks_ger = babeViews.view_generator('thanks',{
     prolificConfirmText: 'Ergebnisse Übermitteln'
 });
 
+const check_timing = function(data, next) {
+    $("input[name=answer]").on("change", function(e) {
+        //if (babe.trial_data[babe.trial_data.length-1].RT > 180000){
+        //    alert("You should focus on the first image that comes to your mind and don't take too much time.")
+        //} if (babe.trial_data[babe.trial_data.length-1].RT < 1000){
+        //    alert("You should really read the sentence carefully, don't rush through it and take your time.")
+        //} else {
+        //    alert("test")
+        //}
+        //alert("test")
+        if(e>1){
+            alert("test")
+        }
+        next()
+    })
+}
 const ratingScaleTrial = babeViews.view_generator('rating_scale',{
     // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
     trials: trial_info.rating_scale_trial.length,
