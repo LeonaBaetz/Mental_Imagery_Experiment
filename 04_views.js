@@ -194,7 +194,7 @@ const instructions_main_ger = babeViews.view_generator('instructions',{
             7 ≙ “perfekt deutlich”
             <br />
             <br />
-            Bitte gehe sicher, dass du dich fpr die nächsten ∼20 Minuten konzentrieren und fokussieren kannst.
+            Bitte gehe sicher, dass du dich f�r die nächsten ∼20 Minuten konzentrieren und fokussieren kannst.
             <br />
             Wenn du dich bereit fühlst, klicke auf den Los Knopf!`,
     buttonText: 'Los'
