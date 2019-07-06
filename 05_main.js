@@ -32,7 +32,8 @@ $("document").ready(function() {
         progress_bar: {
             in: [
                 // list the view-names of the views for which you want a progress bar
-                ratingScaleTrial.name,
+                ratingScaleTrial_eng.name,
+                ratingScaleTrial_ger.name,
             ],
              // Possible styles are "default", "separate" and "chunks"
             style: "separate",

@@ -63,6 +63,7 @@ const intro_eng = babeViews.view_generator('intro',{
 //German Intro
 const intro_ger = babeViews.view_generator('intro',{
     trials: 1,
+    title: "Willkommen!",
     name: 'intro_ger',
     // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside
     text:   `Das Ziel dieses Experiments ist es, die Lebendigkeit deines Vorstellungsvermögens zu testen. 
@@ -194,7 +195,7 @@ const instructions_main_ger = babeViews.view_generator('instructions',{
             7 ≙ “perfekt deutlich”
             <br />
             <br />
-            Bitte gehe sicher, dass du dich f�r die nächsten ∼20 Minuten konzentrieren und fokussieren kannst.
+            Bitte gehe sicher, dass du dich f�r die nächsten ∼20 Minuten konzentrieren und fokussieren kannst.
             <br />
             Wenn du dich bereit fühlst, klicke auf den Los Knopf!`,
     buttonText: 'Los'
@@ -294,42 +295,39 @@ const thanks_ger = babeViews.view_generator('thanks',{
     prolificConfirmText: 'Ergebnisse Übermitteln'
 });
 
-/*
-const check_timing = function(data, next) {
-    $("input[name=answer]").on("change", function(e) {
-        //if (babe.trial_data[babe.trial_data.length-1].RT > 180000){
-        //    alert("You should focus on the first image that comes to your mind and don't take too much time.")
-        //} if (babe.trial_data[babe.trial_data.length-1].RT < 1000){
-        //    alert("You should really read the sentence carefully, don't rush through it and take your time.")
-        //} else {
-        //    alert("test")
-        //}
-        //alert("test")
-        if(e>1){
-            alert("test")
-        }
-        next()
-    })
-}
-*/
 
-
-const ratingScaleTrial = babeViews.view_generator('rating_scale',{
+const ratingScaleTrial_eng = babeViews.view_generator('rating_scale',{
     // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
     trials: trial_info.rating_scale_trial.length,
     // name and trial_type should be identical to the variable name
-    name: 'ratingScaleTrial',
-    trial_type: 'ratingScaleTrial',
+    name: 'ratingScaleTrial_eng',
+    trial_type: 'ratingScaleTrial_eng',
     data: trial_info.rating_scale_trial,
     hook: {
-        after_stim_hidden: save_time,
-        after_response_enabled: check_timing
+        after_response_enabled: check_timing_eng
     }
 },{
     answer_container_generator: custom_answer_container_generators.custom_rating_scale,
     stimulus_container_generator: custom_stimulus_container_generators.rating_scale
 }
 );
+
+const ratingScaleTrial_ger = babeViews.view_generator('rating_scale',{
+    // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
+    trials: trial_info.rating_scale_trial.length,
+    // name and trial_type should be identical to the variable name
+    name: 'ratingScaleTrial_ger',
+    trial_type: 'ratingScaleTrial_ger',
+    data: trial_info.rating_scale_trial,
+    hook: {
+        after_response_enabled: check_timing_ger
+    }
+},{
+    answer_container_generator: custom_answer_container_generators.custom_rating_scale,
+    stimulus_container_generator: custom_stimulus_container_generators.rating_scale
+}
+);
+
 
 const ratingScaleTask = babeViews.view_generator('rating_scale',{
     // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
