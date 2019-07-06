@@ -70,12 +70,14 @@ const check_response = function(data, next) {
         }})
 }
 
+//practice sentences1-7
+
 var sentences = [
     {
         q_en: "Think of the following <b>image</b>, carefully considering the <b>visual image</b> that comes to your imagination. Rate how vividly you can imagine this:",
         english: "<b>image</b> of: A ball bouncing up and down",
         q_ge: "Stell dir das folgende <b>Bild</b> vor und betrachte sorgfältig die entstehende <b>visuelle Vorstellung</b>. Bewerte, wie lebhaft du dir das Folgende vorstellen kannst:",
-        german: "Das <b>Bild</b> eines Balls, der auf und ab hüpft",
+        german: "Das <b>Bild</b>: Eines Balls, der auf und ab hüpft",
         type: "visual",
     },
     {
@@ -108,7 +110,7 @@ var sentences = [
     },
     {
         q_en: "Think of <b>smelling</b> the following, carefully considering the <b>olfactory image</b> that is produced. Rate how vividly you can imagine this:",
-        english: "<b>smell</b> of: coffee",
+        english: "<b>smell</b> of: Coffee",
         q_ge: "Stellen Sie sich den folgenden <b>Geruch</b> vor und betrachten Sie sorgfältig die entstehende <b>Geruchsvorstellung</b>. Bewerten Sie wie lebhaft Sie sich das Folgende vorstellen können:",
         german: "<b>Geruch</b> von: Kaffee",
         type: "olfactory",
@@ -120,11 +122,13 @@ var sentences = [
         german: "<b>Gefühl</b> von: Müdigkeit",
         type: "organic",
     },
+    
+//main trials8-42
     {
         q_en: "Think of some relative or friend whom you frequently <b>see<b/>, carefully considering the <b>visual image<b/> that comes to your imagination. Rate how vividly you can imagine each of the following:",
         english: "<b>Image</b> of his/her: Exact contour of face, head, shoulders and body",
         q_ge: "Denk an eine*n Verwandte*n oder eine*n Freund*in, den/die du regelmäßig <b>siehst</b>, und betrachte sorgfältig die entstehende <b>visuelle Vorstellung</b>. Bewerte, wie lebhaft du dir das Folgende vorstellen kannst:",
-        german: "<b>Aussehen</b> von seiner/ihrer: genauen Kontur des Gesichts, Kopf, Schultern und Körper",
+        german: "<b>Aussehen</b> von seiner/ihrer: Genauen Kontur des Gesichtes, Kopf, Schultern und Körper",
         type: "visual",
     },
     {
@@ -138,14 +142,14 @@ var sentences = [
         q_en: "Think of some relative or friend whom you frequently <b>see</b>, carefully considering the <b>visual image</b> that comes to your imagination. Rate how vividly you can imagine each of the following:",
         english: "<b>Image</b>of his/her: The precise gait, length of step, etc.in walking",
         q_ge: "Denk an eine*n Verwandte*n oder eine*n Freund*in, den/die du regelmäßig <b>siehst</b>, und betrachte sorgfältig die entstehende <b>visuelle Vorstellung</b>. Bewerte, wie lebhaft du dir das Folgende vorstellen kannst:",
-        german: "<b>Bild</b> von: seinem/ihrem Gang, wie er/sie läuft, wie lang seine/ihre Schritte sind etc",
+        german: "<b>Bild</b> von: Seinem/Ihrem Gang, wie er/sie läuft, wie lang seine/ihre Schritte sind etc.",
         type: "visual",
     },
     {
         q_en: "Think of some relative or friend whom you frequently <b>see</b>, carefully considering the <b>visual image</b> that comes to your imagination. Rate how vividly you can imagine each of the following:",
         english: "<b>Image</b> of: The different colors worn in their usual clothes",
         q_ge: "Denk an eine*n Verwandte*n oder eine*n Freund*in, den/die du regelmäßig <b>siehst</b>, und betrachte sorgfältig die entstehende <b>visuelle Vorstellung</b>. Bewerte, wie lebhaft du dir das Folgende vorstellen kannst:",
-        german: "<b>Bild</b> von: den verschiedenen Farben, mit denen sich die Person häufig kleidet",
+        german: "<b>Bild</b> von: Den verschiedenen Farben, mit denen sich die Person häufig kleidet",
         type: "visual",
     },
     {
@@ -159,35 +163,35 @@ var sentences = [
         q_en: "Think of each of the following <b>sounds</b>, carefully considering the <b>auditory image</b>, that comes to your imagination. Rate how vividly you can imagine each of the following:",
         english: "<b>Sound</b> of: The whistle of a locomotiv",
         q_ge: "Stell dir die folgenden <b>Klänge / Töne</b> vor und betrachte sorgfältig die entstehende <b>auditive Impression</b>. Bewerte, wie lebhaft du dir die Folgenden vorstellen kannst",
-        german: "<b>Klang/Ton</b>: Das Pfeifen einer Lokomotive",
+        german: "<b>Klang</b>: Des Pfeifens einer Lokomotive",
         type: "auditory",
     },
     {
         q_en: "Think of each of the following <b>sounds</b>, carefully considering the <b>auditory image</b>, that comes to your imagination. Rate how vividly you can imagine each of the following:",
         english: "<b>Sound</b> of: The horn of an automobile",
         q_ge: "Stell dir die folgenden <b>Klänge / Töne</b> vor und betrachte sorgfältig die entstehende <b>auditive Impression</b>. Bewerte, wie lebhaft du dir die Folgenden vorstellen kannst",
-        german: "<b>Klang/Ton</b>: Des Hupens eines Autos",
+        german: "<b>Klang</b>: Eines hupenden Autos",
         type: "auditory",
     },
     {
         q_en: "Think of each of the following <b>sounds</b>, carefully considering the <b>auditory image</b>, that comes to your imagination. Rate how vividly you can imagine each of the following:",
         english: "<b>Sound</b> of: The meowing of a cat",
         q_ge: "Stell dir die folgenden <b>Klänge / Töne</b> vor und betrachte sorgfältig die entstehende <b>auditive Impression</b>. Bewerte, wie lebhaft du dir die Folgenden vorstellen kannst",
-        german: "<b>Klang/Ton</b>: Von dem Miauen einer Katze",
+        german: "<b>Klang</b>: Des Miauens einer Katze",
         type: "auditory",
     },
     {
         q_en: "Think of each of the following <b>sounds</b>, carefully considering the <b>auditory image</b>, that comes to your imagination. Rate how vividly you can imagine each of the following:",
-        english: "<b>Sound</b> of: escaping steam",
+        english: "<b>Sound</b> of: Escaping steam",
         q_ge: "Stell dir die folgenden <b>Klänge / Töne</b> vor und betrachte sorgfältig die entstehende <b>auditive Impression</b>. Bewerte, wie lebhaft du dir die Folgenden vorstellen kannst",
-        german: "<b>Klang/Ton</b> von: entweichendem Dampf",
+        german: "<b>Klang</b> von: Entweichendem Dampf",
         type: "auditory",
     },
     {
         q_en: "Think of each of the following <b>sounds</b>, carefully considering the <b>auditory image</b>, that comes to your imagination. Rate how vividly you can imagine each of the following:",
-        english: "<b>Sound</b> of:  The clapping of hands in applause ",
+        english: "<b>Sound</b> of: The clapping of hands in applause",
         q_ge: "Stell dir die folgenden <b>Klänge / Töne</b> vor und betrachte sorgfältig die entstehende <b>auditive Impression</b>. Bewerte, wie lebhaft du dir die Folgenden vorstellen kannst",
-        german: "<b>Klang/Ton</b> von: Dem Klatschen von Händen beim Applaudieren",
+        german: "<b>Klang</b> von: Dem Klatschen von Händen beim Applaudieren",
         type: "auditory",
     },
     {
@@ -215,21 +219,21 @@ var sentences = [
         q_en: "Think of the <b>'feeling' or touching</b> each of the following, carefully considering the <b>tactile image</b> that comes into your mind. Rate how vividly you can imagine the following:",
         english: "<b>Feeling</b> of: The prick of a pin",
         q_ge: "Stell dir das <b>Gefühl</b> einer der Folgenden <b>auf der Haut</b> vor und betrachte sorgfältig die entstehende <b>taktile (fühlbare) Vorstellung</b>. Bewerte, wie lebhaft du dir das Folgende vorstellen kannst:",
-        german: "<b>Gefühl</b> vom Piksen einer Stecknadel",
+        german: "<b>Gefühl</b> vom: Piksen einer Stecknadel",
         type: "tactile",
     },
     {
         q_en: "Think of the <b>'feeling' or touching</b> each of the following, carefully considering the <b>tactile image</b> that comes into your mind. Rate how vividly you can imagine the following:",
         english: "<b>Feeling</b> of: The warmth of a tepid bath",
         q_ge: "Stell dir das <b>Gefühl</b> einer der Folgenden <b>auf der Haut</b> vor und betrachte sorgfältig die entstehende <b>taktile (fühlbare) Vorstellung</b>. Bewerte, wie lebhaft du dir das Folgende vorstellen kannst:",
-        german: "<b>Gefühl</b> von: Der Wärme eines lauwarmen Bads",
+        german: "<b>Gefühl</b> von: Der Wärme eines lauwarmen Bades",
         type: "tactile",
     },
     {
         q_en: "Think of <b>performing</b> each of the following <b>acts</b>, carefully considering the image that forms in your mind of your <b>arms, legs, lips, etc.</b> performing this act. Rate how vividly you can imagine the following:",
         english: "<b>Movement</b> of: Running upstairs",
         q_ge: "Stell dir vor die folgenden <b>Dinge zu tun</b> und betrachte sorgfältig die entstehende Vorstellung, wie sich <b>deine Arme, Beine, Lippen etc. bewegen und fühlen</b>. Bewerte, wie lebhaft du dir die Folgenden vorstellen kannst:",
-        german: "<b>Bewegung</b> von: Eine Treppe hoch rennen",
+        german: "<b>Bewegung</b>: Eine Treppe hoch rennen",
         type: "motor",
     },
     {
@@ -243,7 +247,7 @@ var sentences = [
         q_en: "Think of <b>performing</b> each of the following <b>acts</b>, carefully considering the image that forms in your mind of your <b>arms, legs, lips, etc.</b> performing this act. Rate how vividly you can imagine the following:",
         english: "<b>Movement</b> of: Drawing a circle on paper",
         q_ge: "Stell dir vor die folgenden <b>Dinge zu tun</b> und betrachte sorgfältig die entstehende Vorstellung, wie sich <b>deine Arme, Beine, Lippen etc. bewegen und fühlen</b>. Bewerte, wie lebhaft du dir die Folgenden vorstellen kannst:",
-        german: "<b>Bewegung</b> von: Einen Kreis auf ein Blatt Papier malen",
+        german: "<b>Bewegung</b>: Einen Kreis auf ein Blatt Papier malen",
         type: "motor",
     },
     {
@@ -365,7 +369,7 @@ var sentences = [
         german: "<b>Gefühl</b> von: Das Unwohlsein nachdem man zu viel gegessen hat.",
         type: "organic",
     }
-]
+];
 
 const generate_trial_views = function(){
     if (language =="English"){
