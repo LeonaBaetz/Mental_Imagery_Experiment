@@ -49,7 +49,29 @@ const time_limit = function(data, next) {
     }, 5000));
     next();
 };
+
 // Declare your hooks here
+
+let start_time;
+const save_time = function(data, next) {
+    start_time = Date.now();
+    next();
+};
+
+const check_timing = function(data, next) {
+    const start_time = Date.now();
+    $("input[name=answer]").on("change", function(e) {
+        if (Date.now-start_time > 3000){ // time in ms  
+            alert("You should focus on the first image that comes to your mind and don't take too much time.");
+        }   // else {
+           // alert("test");
+        //}
+        if (Date.now-start_time < 1000){
+            alert(Date.now-start_time)
+        }
+        next();
+    });
+};
 
 const check_response = function(data, next) {
     data.response_checked = false;

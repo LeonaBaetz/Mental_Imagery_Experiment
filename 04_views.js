@@ -171,7 +171,7 @@ const instructions_practice_ger = babeViews.view_generator('instructions',{
 const instructions_main_ger = babeViews.view_generator('instructions',{
     trials: 1,
     name: 'instructions_main_ger',
-    title: 'General Instructions',
+    title: 'Einweisung',
     text:  `Super, du hast die Übungsphase abgeschlossen!
             <br />
             Lass uns jetzt mit dem richtigen Experiment anfangen. Es ist genauso aufgebaut wie die Übung.
@@ -294,6 +294,7 @@ const thanks_ger = babeViews.view_generator('thanks',{
     prolificConfirmText: 'Ergebnisse Übermitteln'
 });
 
+/*
 const check_timing = function(data, next) {
     $("input[name=answer]").on("change", function(e) {
         //if (babe.trial_data[babe.trial_data.length-1].RT > 180000){
@@ -310,6 +311,9 @@ const check_timing = function(data, next) {
         next()
     })
 }
+*/
+
+
 const ratingScaleTrial = babeViews.view_generator('rating_scale',{
     // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
     trials: trial_info.rating_scale_trial.length,
@@ -318,6 +322,7 @@ const ratingScaleTrial = babeViews.view_generator('rating_scale',{
     trial_type: 'ratingScaleTrial',
     data: trial_info.rating_scale_trial,
     hook: {
+        after_stim_hidden: save_time,
         after_response_enabled: check_timing
     }
 },{
