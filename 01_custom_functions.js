@@ -110,16 +110,16 @@ var sentences = [
     },
     {
         q_en: "Think of <b>smelling</b> the following, carefully considering the <b>olfactory image</b> that is produced. Rate how vividly you can imagine this:",
-        english: "<b>smell</b> of: Coffee",
+        english: "<b>smell</b> of: fresh brewed coffee",
         q_ge: "Stellen Sie sich den folgenden <b>Geruch</b> vor und betrachten Sie sorgfältig die entstehende <b>Geruchsvorstellung</b>. Bewerten Sie wie lebhaft Sie sich das Folgende vorstellen können:",
-        german: "<b>Geruch</b> von: Kaffee",
+        german: "<b>Geruch</b> von: frisch gebrühtem Kaffee",
         type: "olfactory",
     },
     {
         q_en: "Think of the following <b>sensation</b>, carefully considering the <b>image that comes to your imagination</b>. Rate how vividly you can imagine this:",
-        english: "<b>Sensation of</b>: Tiredness",
+        english: "<b>Sensation of</b>: The feeling you had when hearing the school bell ringing",
         q_ge: "Stellen Sie sich das folgende <b>Gefühl</b> vor und begutachten Sie genau die <b>Vorstellung welche in Ihre Gedanken dazu kommt</b>. Bewerten Sie, wie lebhaft Sie sich das Folgende vorstellen können:",
-        german: "<b>Gefühl</b> von: Müdigkeit",
+        german: "<b>Gefühl</b> dass Du hattest, wenn die Schulklingel läutete",
         type: "organic",
     },
     
