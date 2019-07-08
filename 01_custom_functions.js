@@ -110,8 +110,8 @@ var sentences = [
     {
         q_en: "Think of the following <b>sound</b>, carefully considering the <b>auditory</b> image that comes to your imagination.<br />Rate how vividly you can imagine this:",
         english: "<b>sound</b> of: Rain falling on the street",
-        q_ge: "Stellen Sie sich den folgenden <b>Ton</b> bzw. das folgende <b>Geräusch</b> vor und betrachten Sie sorgfältig die entstehende <b>auditive Vorstellung</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
-        german: "<b>Ton / Geräusch</b> von: Auf die Straße fallender Regen",
+        q_ge: "Stellen Sie sich den folgenden <b>Klang</b> bzw. das folgende <b>Geräusch</b> vor und betrachten Sie sorgfältig die entstehende <b>auditive Vorstellung</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
+        german: "<b>Klang / Geräusch</b> von: Auf die Straße fallender Regen",
         type: "auditory",
     },
     {
