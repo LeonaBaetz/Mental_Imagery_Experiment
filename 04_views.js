@@ -189,7 +189,7 @@ const instructions_practice_ger = babeViews.view_generator('instructions',{
             7 ≙ “perfekt deutlich”
             <br />
             <br />
-            Wenn Du auf den folgenden Knopf drückst, werden dir ein paar Beispielsätze gezeigt.`,
+            Wenn Sie auf den folgenden Knopf drücken, werden Ihnen einige Beispielsätze präsentiert.`,
     buttonText: 'Mit der Übung beginnen'
 });
 
