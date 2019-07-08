@@ -26,9 +26,9 @@ const intro_eng = babeViews.view_generator('intro',{
     text:   `The aim of this experiment is to determine the vividness of your imagery.
             <br />
             <br />
-            The sentences used of this experiment will bring certain images to your mind.
+            The sentences used in this experiment will bring certain images to your mind.
             <br />
-            Please use the following scale to rate how vivid each image is: Choose the appropriate scale that matches the image that came to your mind when reading the sentence the first time.
+            Please use the following scale to rate how vivid each image is:
             <br />
             <br />
             1 ≙ “no image”
@@ -47,12 +47,16 @@ const intro_eng = babeViews.view_generator('intro',{
             <br />
             Additionally, there is the option to respond with “I don’t understand the sentence” if you really cannot understand the sentence (semantically).
             <br />
+            Choose the appropriate scale that matches the image that came to your mind when reading the sentence the first time.
+            <br />
             <br />
             We kindly ask you to read each of the given statements carefully and concentrate throughout the whole experiment.
             <br />
-            Make sure that you are in an environment that is as little distracting as possible, i.e., turn off your phone/tv/..., close doors, do not have contact to other people while performing the experiment, etc.
+            Make sure that you are in an environment that is as little distracting as possible, i.e., turn off your phone / TV /..., close doors, do not have contact to other people while performing the experiment, etc.
             <br />
-            Please, do not rush through the exercise and at the same time, don't take too much time to think about the mental image that comes to your mind.
+            <br />
+            Please, do not rush through the exercise and at the same time, do not take too much time to think about the mental image that comes to your mind.
+            <br />
             <br />
             Thank you a lot for your cooperation and participantion!
             <br />
@@ -60,6 +64,7 @@ const intro_eng = babeViews.view_generator('intro',{
             The experiment is devided into two parts:
             First,  a short practice phase where you can familiarise yourself with the format of the experiment.
             Second, the main phase which is the actual experiment.
+            <br />
             <br />
             With pressing button, you will start the practice phase:`,
    buttonText: 'Klick here to start the experiment'
@@ -75,7 +80,7 @@ const intro_ger = babeViews.view_generator('intro',{
             <br />
             Die Sätze, die Du auf den nächsten Seiten lesen wirst, werden gewisse Vorstellungen in deinem Kopf hervorrufen.
             <br />
-            Nutze bitte die folgende Skala, um zu bewerten, wie lebendig jede der hervorgerufenen Vorstellungen ist: Wähle den passenden Ausdruck der Skala der zu Deiner Vorstellung passt, die hervorgerufen wurde, als Du den Satz das erste Mal gelesen hast.
+            Nutze bitte die folgende Skala, um zu bewerten, wie lebendig jede der hervorgerufenen Vorstellungen ist:
             <br />
             <br />
             1 ≙ “keine Vorstellung”
@@ -94,9 +99,13 @@ const intro_ger = babeViews.view_generator('intro',{
             <br />
             Zusätzlich gibt es die Option mit "Ich verstehe den Satz nicht" zu antworten, wenn du den Satz nicht verstehst.
             <br />
+            Wähle den passenden Ausdruck von der Skala welcher zu Deiner hervorgerufenen Vorstellung am besten passt, als Du den Satz das erste Mal gelesen hast.
+            <br />
             <br />
             Wir bitten Dich jeden der Sätze genau zu lesen und Dich während des gesamten Experiments (bestmöglich) zu konzentrieren. 
-            Gehe sicher, dass Du in einer (so gut wie möglich ungestörten) Umgebung bist, schalte Dein Handy/TV/... aus, schließe die Tür und habe keinen Kontakt zu anderen Personen während Du das Experiment durchführst, etc.
+            <br />
+            Gehe sicher, dass Du in einer (so gut wie möglich ungestörten) Umgebung bist, schalte Dein Handy / TV /... aus, schließe die Tür und habe keinen Kontakt zu anderen Personen während Du das Experiment durchführst, etc.
+            <br />
             <br />
             Vielen Dank für deine Kooperation und Teilnahme!
             <br />
@@ -104,6 +113,7 @@ const intro_ger = babeViews.view_generator('intro',{
             Das Experiment ist in zwei Blöche unterteilt:
             Zu Erst gibt es eine kurze Übungsphase, in welcher Du das Format des Experiments kennenlernst und Dich mit diesem vertraut machen kannst.
             Danach folgt die Hauptphase, welches dann das richtige Experiment ist.
+            <br />
             <br />
             Mit dem folgenden Knopf startest Du die Übungsphase.`,
    buttonText: 'Drücke hier um das Experiment zu starten'
