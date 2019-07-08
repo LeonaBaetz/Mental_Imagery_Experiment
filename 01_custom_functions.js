@@ -140,7 +140,7 @@ var sentences = [
     },
     {
         q_en: "Think of some relative or friend whom you frequently <b>see</b>, carefully considering the <b>visual image</b> that comes to your imagination. Rate how vividly you can imagine each of the following:",
-        english: "<b>Image</b>of his/her: The precise gait, length of step, etc.in walking",
+        english: "<b>Image</b> of his/her: The precise gait, length of step, etc.in walking",
         q_ge: "Denk an eine*n Verwandte*n oder eine*n Freund*in, den/die du regelmäßig <b>siehst</b>, und betrachte sorgfältig die entstehende <b>visuelle Vorstellung</b>. Bewerte, wie lebhaft du dir das Folgende vorstellen kannst:",
         german: "<b>Bild</b> von: Seinem/Ihrem Gang, wie er/sie läuft, wie lang seine/ihre Schritte sind etc.",
         type: "visual",
