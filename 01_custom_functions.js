@@ -49,7 +49,34 @@ const time_limit = function(data, next) {
     }, 5000));
     next();
 };
+
 // Declare your hooks here
+
+const check_timing_eng = function(data, next) {
+    const start_time = Date.now();
+    $("input[name=answer]").on("change", function(e) {
+        if (Date.now()-start_time > 180000){ // time in ms  
+            alert("You should focus on the first image that comes to your mind and don't take too much time.");
+        }   
+        if (Date.now()-start_time < 1000){
+            alert("You should really read the sentence carefully, don't rush through it and take your time.")
+        }
+        next();
+    });
+};
+
+const check_timing_ger = function(data, next) {
+    const start_time = Date.now();
+    $("input[name=answer]").on("change", function(e) {
+        if (Date.now()-start_time > 180000){ // time in ms  
+            alert("Du solltest dich auf das erste konzentrieren, das du dir vorstellst, nehme dir nicht zu viel Zeit.");
+        }   
+        if (Date.now()-start_time < 1000){
+            alert("Du solltest den Satz sorgfältig lesen, eile nicht zu sehr und lasse dir ein wenig Zeit.")
+        }
+        next();
+    });
+};
 
 const check_response = function(data, next) {
     data.response_checked = false;
@@ -428,7 +455,7 @@ const generate_random_view_seq = function(){
     if (language == "German"){
         return [intro_ger,
             instructions_practice_ger,
-            ratingScaleTrial,
+            ratingScaleTrial_ger,
             instructions_main_ger,
             ratingScaleTask,
             general_language_ger,
@@ -439,7 +466,7 @@ const generate_random_view_seq = function(){
     }else{
         return [intro_eng,
             instructions_practice_eng,
-            ratingScaleTrial,
+            ratingScaleTrial_eng,
             instructions_main_eng,
             ratingScaleTask,
             general_language_eng,
