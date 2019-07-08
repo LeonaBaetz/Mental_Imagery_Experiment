@@ -108,12 +108,12 @@ const intro_ger = babeViews.view_generator('intro',{
             <br />
             Wir bitten Dich jeden der Sätze genau zu lesen und Dich während des gesamten Experiments (bestmöglich) zu konzentrieren. 
             <br />
-            Gehe sicher, dass Du in einer (so gut wie möglich ungestörten) Umgebung bist, schalte Dein Handy / TV /... aus, schließe die Tür und habe keinen Kontakt zu anderen Personen während Du das Experiment durchführst, etc.
+            Gehe sicher, dass Du in einer (so gut wie möglich ungestörten) Umgebung bist, schalte Dein Handy / TV /... aus, schließe die Tür und habe keinen Kontakt zu anderen Personen, während Du das Experiment durchführst, etc.
             <br />
             <br />
-            Das Experiment ist in zwei Blöche unterteilt:
+            Das Experiment ist in zwei Blöcke unterteilt:
             <br />
-            Zu Erst gibt es eine kurze Übungsphase, in welcher Du das Format des Experiments kennenlernst und Dich mit diesem vertraut machen kannst.
+            Zuerst gibt es eine kurze Übungsphase, in welcher Du das Format des Experiments kennenlernst und Dich mit diesem vertraut machen kannst.
             <br />
             Danach folgt die Hauptphase, welches dann das richtige Experiment ist.
             <br />
@@ -165,10 +165,10 @@ const instructions_practice_ger = babeViews.view_generator('instructions',{
     trials: 1,
     name: 'instructions_ger',
     title: 'Erklärungen für die Übungsphase',
-    text:  `Hier ein paar Hinnweise zu der Übungsphase.
+    text:  `Hier ein paar Hinweise zu der Übungsphase.
             <br />
             <br />
-            Das Ziel der Übungsphase ist es Dich mit dem Experiment vertraut zu machen und dir zu zeigen wie Die Sätze aussehen werden, die gewisse mentale Vorstellungen bei Dir hervorrufen werden. Du sollst für jeden dieser Sätze bereits den Grad der Lebendigkeit angeben, deine Antworten zählen allerdings in dieser Phase noch nicht.
+            Das Ziel der Übungsphase ist es Dich mit dem Experiment vertraut zu machen und dir zu zeigen wie die Sätze aussehen werden, die gewisse mentale Vorstellungen bei Dir hervorrufen werden. Du sollst für jeden dieser Sätze bereits den Grad der Lebendigkeit angeben, deine Antworten zählen allerdings in dieser Phase noch nicht.
             <br />
             <br />
             Als Erinnerung, hier noch einmal die Skala, die Du benutzen sollst um die Lebendigkeit deiner Vorstellungen zu bewerten:
@@ -189,7 +189,7 @@ const instructions_practice_ger = babeViews.view_generator('instructions',{
             7 ≙ “perfekt deutlich”
             <br />
             <br />
-            Wenn du auf den folgenden Knopf drückst, werden dir die ein paar Beispielsätze gezeigt.`,
+            Wenn Du auf den folgenden Knopf drückst, werden dir die ein paar Beispielsätze gezeigt.`,
     buttonText: 'Mit der Übung beginnen'
 });
 
@@ -238,7 +238,7 @@ const instructions_main_eng = babeViews.view_generator('instructions',{
     title: 'The experiment',
     text:  `Well done, you successfully finished the practice session!
             <br />
-            We hope you were able to familiarize yourself with the experiment and feel prepared fot the experiment.
+            We hope you were able to familiarize yourself with the experiment and feel prepared for the experiment.
             <br />
             <br />
             Let us start the actual experiment now. It looks exactly like the practice:
