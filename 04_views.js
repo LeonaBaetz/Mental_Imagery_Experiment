@@ -78,12 +78,12 @@ const intro_ger = babeViews.view_generator('intro',{
     title: "Willkommen!",
     name: 'intro_ger',
     // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside
-    text:   `Das Ziel dieses Experiments ist es, die Lebendigkeit deines Vorstellungsvermögens zu testen. 
+    text:   `Das Ziel dieses Experiments ist es, die Lebendigkeit Ihres Vorstellungsvermögens zu testen. 
             <br />
             <br />
-            Die Sätze, die Du auf den nächsten Seiten lesen wirst, werden gewisse Vorstellungen in deinem Kopf hervorrufen.
+            Die Sätze, die Sie auf den nächsten Seiten lesen werden, werden gewisse Vorstellungen in Ihrem Kopf hervorrufen.
             <br />
-            Nutze bitte die folgende Skala, um zu bewerten, wie lebendig jede der hervorgerufenen Vorstellungen ist:
+            Nutzen Sie bitte die folgende Skala, um zu bewerten, wie lebendig jede der hervorgerufenen Vorstellungen ist:
             <br />
             <br />
             1 ≙ “keine Vorstellung”
@@ -100,29 +100,29 @@ const intro_ger = babeViews.view_generator('intro',{
             <br />
             7 ≙ “perfekt deutlich”
             <br />
-            Zusätzlich gibt es die Option mit "Ich verstehe den Satz nicht" zu antworten, wenn du den Satz nicht verstehst.
+            Zusätzlich gibt es die Option mit "Ich verstehe den Satz nicht" zu antworten, falls Sie den Satz nicht verstehen.
             <br />
             <br />
-            Wähle den passenden Ausdruck von der Skala welcher zu Deiner hervorgerufenen Vorstellung am besten passt, als Du den Satz das erste Mal gelesen hast.
+            Wählen Sie den passenden Ausdruck von der Skala welcher zu Ihrer hervorgerufenen Vorstellung am besten passt, als Sie den Satz das erste Mal gelesen haben.
             <br />
             <br />
-            Wir bitten Dich jeden der Sätze genau zu lesen und Dich während des gesamten Experiments (bestmöglich) zu konzentrieren. 
+            Wir bitten Sie jeden der Sätze genau zu lesen und sich während des gesamten Experiments (bestmöglich) zu konzentrieren. 
             <br />
-            Gehe sicher, dass Du in einer (so gut wie möglich ungestörten) Umgebung bist, schalte Dein Handy / TV /... aus, schließe die Tür und habe keinen Kontakt zu anderen Personen, während Du das Experiment durchführst, etc.
+            Gehen Sie sicher, dass Sie in einer (so gut wie möglich ungestörten) Umgebung sind, schalten Sie ihr Handy / TV /... aus, schließen Sie die Tür und haben Sie keinen Kontakt zu anderen Personen, während Sie das Experiment durchführen, etc.
             <br />
             <br />
             Das Experiment ist in zwei Blöcke unterteilt:
             <br />
-            Zuerst gibt es eine kurze Übungsphase, in welcher Du das Format des Experiments kennenlernst und Dich mit diesem vertraut machen kannst.
+            Zuerst gibt es eine kurze Übungsphase, in welcher Sie das Format des Experiments kennenlernen und sich mit diesem vertraut machen können.
             <br />
             Danach folgt die Hauptphase, welches dann das richtige Experiment ist.
             <br />
             <br />
-            Vielen Dank für deine Kooperation und Teilnahme!
+            Vielen Dank für Ihre Kooperation und Teilnahme!
             <br />
             <br />
-            Mit dem folgenden Knopf startest Du die Übungsphase.`,
-   buttonText: 'Drücke hier um das Experiment zu starten'
+            Mit dem folgenden Knopf starten Sie die Übungsphase.`,
+   buttonText: 'Drücken Sie hier um das Experiment zu starten'
 });
 
 // For most tasks, you need instructions views
@@ -168,10 +168,10 @@ const instructions_practice_ger = babeViews.view_generator('instructions',{
     text:  `Hier ein paar Hinweise zu der Übungsphase.
             <br />
             <br />
-            Das Ziel der Übungsphase ist es Dich mit dem Experiment vertraut zu machen und dir zu zeigen wie die Sätze aussehen werden, die gewisse mentale Vorstellungen bei Dir hervorrufen werden. Du sollst für jeden dieser Sätze bereits den Grad der Lebendigkeit angeben, deine Antworten zählen allerdings in dieser Phase noch nicht.
+            Das Ziel der Übungsphase ist es Sie mit dem Experiment vertraut zu machen und Ihnen zu zeigen wie die Sätze aussehen werden, die gewisse mentale Vorstellungen bei Ihnen hervorrufen werden. Sie sollen für jeden dieser Sätze den Grad der Lebendigkeit angeben, Ihre Antworten zählen allerdings in dieser Phase noch nicht.
             <br />
             <br />
-            Als Erinnerung, hier noch einmal die Skala, die Du benutzen sollst um die Lebendigkeit deiner Vorstellungen zu bewerten:
+            Als Erinnerung, hier noch einmal die Skala, die Sie benutzen sollen um die Lebendigkeit Ihrer Vorstellungen zu bewerten:
             <br />
             <br />
             1 ≙ “keine Vorstellung”
@@ -189,7 +189,7 @@ const instructions_practice_ger = babeViews.view_generator('instructions',{
             7 ≙ “perfekt deutlich”
             <br />
             <br />
-            Wenn Du auf den folgenden Knopf drückst, werden dir die ein paar Beispielsätze gezeigt.`,
+            Wenn Du auf den folgenden Knopf drückst, werden dir ein paar Beispielsätze gezeigt.`,
     buttonText: 'Mit der Übung beginnen'
 });
 
@@ -199,15 +199,15 @@ const instructions_main_ger = babeViews.view_generator('instructions',{
     trials: 1,
     name: 'instructions_main_ger',
     title: 'Das Experiment',
-    text:  `Super, du hast die Übungsphase erfolgreich abgeschlossen!
+    text:  `Super, Sie haben die Übungsphase erfolgreich abgeschlossen!
             <br />
-            Wir hoffe Du konntest Dich mit dem Format des Experiments vertraut machen.
+            Wir hoffen Sie konnten Sich mit dem Format des Experiments vertraut machen.
             <br />
             <br />
             Lass uns also jetzt mit dem richtigen Experiment anfangen. Es ist genauso aufgebaut wie die Übung.
             <br />
             <br />
-            Die Sätze werden gewisse Vorstellungen in deinem Kopf hervorrufen und du wirst gebeten anhand der folgenden Skala zu bewerten, wie lebendig deine Vorstellung für jeden Satz ist:
+            Die Sätze werden gewisse Vorstellungen in Ihrem Kopf hervorrufen und Sie werden gebeten anhand der folgenden Skala zu bewerten, wie lebendig Ihre Vorstellung für jeden Satz ist:
             <br />
             1 ≙ “keine Vorstellung”
             <br />
@@ -224,10 +224,10 @@ const instructions_main_ger = babeViews.view_generator('instructions',{
             7 ≙ “perfekt deutlich”
             <br />
             <br />
-            Bitte gehe sicher, dass du dich für die nächsten ∼20 Minuten konzentrieren und fokussieren kannst.
+            Bitte gehe sicher, dass Sie sich für die nächsten ∼20 Minuten konzentrieren und fokussieren können.
             <br />
             <br />
-            Wenn du dich bereit fühlst, klicke auf den Los-Knopf um das Experiment zu beginnen`,
+            Wenn Sie sich bereit fühlen, klicken Sie auf den Los-Knopf um das Experiment zu beginnen`,
     buttonText: 'Los'
 });
 // English
@@ -326,7 +326,7 @@ const thanks_eng = babeViews.view_generator('thanks',{
 const thanks_ger = babeViews.view_generator('thanks',{
     trials: 1,
     name: 'thanks_ger',
-    title: 'Danke für deine Teilnahme!',
+    title: 'Danke für Ihre Teilnahme!',
     prolificConfirmText: 'Ergebnisse Übermitteln'
 });
 
@@ -406,11 +406,11 @@ const subjective_language_eng = babeViews.view_generator('post_test',{
 const subjective_language_ger = babeViews.view_generator('post_test',{
     trials: 1,
     name: 'subjective_language_ger',
-    title: 'Deine Sprachkenntnisse',
-    text: 'Bitte beantworte folgende Fragen: ',
+    title: 'Ihre Sprachkenntnisse',
+    text: 'Bitte beantworten Sie folgende Fragen: ',
     buttonText: 'Weiter',
-    question1: "Wie gut würdest du die Kompetenzen in deiner Muttersprache für folgende Bereiche einschätzen:",
-    question2:"Wie gut würdest du die Kompetenzen in deiner Muttersprache für folgende Bereiche einschätzen:",
+    question1: "Wie gut würden Sie die Kompetenzen in Ihrer Muttersprache für folgende Bereiche einschätzen:",
+    question2:"Wie gut würden Sie die Kompetenzen in Ihrer Muttersprache für folgende Bereiche einschätzen:",
     class1:"Sprechen",
     class2:"Schreiben",
     class3:"Hörverstehen",
@@ -452,12 +452,12 @@ const general_language_eng = babeViews.view_generator('post_test',{
 const general_language_ger = babeViews.view_generator('post_test',{
     trials: 1,
     name: 'general_language_ger',
-    title: 'Deine Sprachkenntnisse',
-    text: 'Bitte beantworte folgende Fragen: ',
+    title: 'Ihre Sprachkenntnisse',
+    text: 'Bitte beantworten Sie folgende Fragen: ',
     buttonText: 'Weiter',
-    class1:"Ist Deutsch oder Englisch deine Muttersprache?",
-    class2:"Ist Deutsch oder Englisch eine Fremdsprache für dich?",
-    class3:"Sprichst du diese Fremdsprache zuhause oder häufiger als deine Muttersprache?",
+    class1:"Ist Deutsch oder Englisch Ihre Muttersprache?",
+    class2:"Ist Deutsch oder Englisch eine Fremdsprache für Sie?",
+    class3:"Sprechen Sie diese Fremdsprache zuhause oder häufiger als Ihre Muttersprache?",
     option1:"Deutsch",
     option2:"Englisch",
     option3:"Beide",
@@ -501,13 +501,13 @@ const objective_language_eng = babeViews.view_generator('post_test',{
 const objective_language_ger = babeViews.view_generator('post_test',{
     trials: 1,
     name: 'objective_language_ger',
-    title: 'Deine Sprachkenntnisse',
-    text: 'Bitte beantworte folgende Fragen: ',
+    title: 'Ihre Sprachkenntnisse',
+    text: 'Bitte beantworten Sie folgende Fragen: ',
     buttonText: 'Weiter',
-    class1:"Wie häufig liest du in deiner Fremdsprache?",
-    class2:"Wie häufig hörst du etwas oder schaust etwas in deiner Fremdsprache?",
-    class3:"Wie häufig sprichst du in deiner Fremdsprache?",
-    class4:"Seit wie vielen Jahren lernst du/sprichst du deine eben gewählte Fremdsprache?",
+    class1:"Wie häufig lesen Sie in Ihrer Fremdsprache?",
+    class2:"Wie häufig hören Sie etwas oder schauen etwas in Ihrer Fremdsprache?",
+    class3:"Wie häufig sprechen Sie in Ihrer Fremdsprache?",
+    class4:"Seit wie vielen Jahren lernen Sie/sprechen Sie Ihre eben gewählte Fremdsprache?",
     option1:"0-4 Stunden/Monat",
     option2:"1-2 Stunden/Woche",
     option3:"3-5 Stunden/Woche",
