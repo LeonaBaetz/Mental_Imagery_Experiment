@@ -52,21 +52,24 @@ const intro_eng = babeViews.view_generator('intro',{
             <br />
             We kindly ask you to read each of the given statements carefully and concentrate throughout the whole experiment.
             <br />
+            <br />
             Make sure that you are in an environment that is as little distracting as possible, i.e., turn off your phone / TV /..., close doors, do not have contact to other people while performing the experiment, etc.
             <br />
             <br />
             Please, do not rush through the exercise and at the same time, do not take too much time to think about the mental image that comes to your mind.
             <br />
             <br />
-            Thank you a lot for your cooperation and participantion!
-            <br />
-            <br />
             The experiment is devided into two parts:
+            <br />
             First,  a short practice phase where you can familiarise yourself with the format of the experiment.
+            <br />
             Second, the main phase which is the actual experiment.
             <br />
             <br />
-            With pressing button, you will start the practice phase:`,
+            Thank you a lot for your cooperation and participantion!
+            <br />
+            <br />
+            With pressing the following button, you will start the practice phase:`,
    buttonText: 'Klick here to start the experiment'
 });
 //German Intro
@@ -99,6 +102,7 @@ const intro_ger = babeViews.view_generator('intro',{
             <br />
             Zusätzlich gibt es die Option mit "Ich verstehe den Satz nicht" zu antworten, wenn du den Satz nicht verstehst.
             <br />
+            <br />
             Wähle den passenden Ausdruck von der Skala welcher zu Deiner hervorgerufenen Vorstellung am besten passt, als Du den Satz das erste Mal gelesen hast.
             <br />
             <br />
@@ -107,12 +111,14 @@ const intro_ger = babeViews.view_generator('intro',{
             Gehe sicher, dass Du in einer (so gut wie möglich ungestörten) Umgebung bist, schalte Dein Handy / TV /... aus, schließe die Tür und habe keinen Kontakt zu anderen Personen während Du das Experiment durchführst, etc.
             <br />
             <br />
-            Vielen Dank für deine Kooperation und Teilnahme!
-            <br />
-            <br />
             Das Experiment ist in zwei Blöche unterteilt:
+            <br />
             Zu Erst gibt es eine kurze Übungsphase, in welcher Du das Format des Experiments kennenlernst und Dich mit diesem vertraut machen kannst.
+            <br />
             Danach folgt die Hauptphase, welches dann das richtige Experiment ist.
+            <br />
+            <br />
+            Vielen Dank für deine Kooperation und Teilnahme!
             <br />
             <br />
             Mit dem folgenden Knopf startest Du die Übungsphase.`,
@@ -133,6 +139,7 @@ const instructions_practice_eng = babeViews.view_generator('instructions',{
             <br />
             <br />
             As a reminder, this is the scale you can use to rate the vividness of your mental image or simulation:
+            <br />
             <br />
             1 ≙ “no image”
             <br />
@@ -163,7 +170,9 @@ const instructions_practice_ger = babeViews.view_generator('instructions',{
             <br />
             Das Ziel der Übungsphase ist es Dich mit dem Experiment vertraut zu machen und dir zu zeigen wie Die Sätze aussehen werden, die gewisse mentale Vorstellungen bei Dir hervorrufen werden. Du sollst für jeden dieser Sätze bereits den Grad der Lebendigkeit angeben, deine Antworten zählen allerdings in dieser Phase noch nicht.
             <br />
+            <br />
             Als Erinnerung, hier noch einmal die Skala, die Du benutzen sollst um die Lebendigkeit deiner Vorstellungen zu bewerten:
+            <br />
             <br />
             1 ≙ “keine Vorstellung”
             <br />
@@ -195,7 +204,8 @@ const instructions_main_ger = babeViews.view_generator('instructions',{
             Wir hoffe Du konntest Dich mit dem Format des Experiments vertraut machen.
             <br />
             <br />
-            Lass uns jetzt mit dem richtigen Experiment anfangen. Es ist genauso aufgebaut wie die Übung.
+            Lass uns also jetzt mit dem richtigen Experiment anfangen. Es ist genauso aufgebaut wie die Übung.
+            <br />
             <br />
             Die Sätze werden gewisse Vorstellungen in deinem Kopf hervorrufen und du wirst gebeten anhand der folgenden Skala zu bewerten, wie lebendig deine Vorstellung für jeden Satz ist:
             <br />
@@ -216,6 +226,7 @@ const instructions_main_ger = babeViews.view_generator('instructions',{
             <br />
             Bitte gehe sicher, dass du dich für die nächsten ∼20 Minuten konzentrieren und fokussieren kannst.
             <br />
+            <br />
             Wenn du dich bereit fühlst, klicke auf den Los-Knopf um das Experiment zu beginnen`,
     buttonText: 'Los'
 });
@@ -231,6 +242,7 @@ const instructions_main_eng = babeViews.view_generator('instructions',{
             <br />
             <br />
             Let us start the actual experiment now. It looks exactly like the practice:
+            <br />
             <br />
             The sentences of the experiment will bring certain images to your mind and you are asked to use the following scale to rate how vivid each image or simualtion is:
             <br />
@@ -250,6 +262,7 @@ const instructions_main_eng = babeViews.view_generator('instructions',{
             <br />
             <br />
             Please make sure that you can perform the experiment concentrated and focussed for the next ∼20 minutes.
+            <br />
             <br />
             If you feel ready, press the Go-button to start the experiment`,
     buttonText: 'Go'
