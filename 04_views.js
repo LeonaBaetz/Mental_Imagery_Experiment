@@ -290,7 +290,7 @@ const additional_info_ger = babeViews.view_generator('post_test',{
     trials: 1,
     name: 'post_test_ger',
     title: 'Zusätzliche Informationen',
-    text: 'Abschließend benötigen wir noch einige Informationen über dich: ',
+    text: 'Abschließend benötigen wir noch einige Informationen über Sie: ',
 
     // You can change much of what appears here, e.g., to present it in a different language, as follows:
     buttonText: 'Weiter',
@@ -326,7 +326,7 @@ const thanks_eng = babeViews.view_generator('thanks',{
 const thanks_ger = babeViews.view_generator('thanks',{
     trials: 1,
     name: 'thanks_ger',
-    title: 'Danke für deine Teilnahme!',
+    title: 'Danke für Ihre Teilnahme!',
     prolificConfirmText: 'Ergebnisse Übermitteln'
 });
 
