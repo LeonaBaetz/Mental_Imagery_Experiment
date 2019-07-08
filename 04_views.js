@@ -70,7 +70,7 @@ const intro_eng = babeViews.view_generator('intro',{
             <br />
             <br />
             With pressing the following button, you will start the practice phase:`,
-   buttonText: 'Klick here to start the experiment'
+   buttonText: 'Click here to start the experiment'
 });
 //German Intro
 const intro_ger = babeViews.view_generator('intro',{
