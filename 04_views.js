@@ -179,13 +179,8 @@ const instructions_practice_ger = babeViews.view_generator('instructions',{
 const instructions_main_ger = babeViews.view_generator('instructions',{
     trials: 1,
     name: 'instructions_main_ger',
-<<<<<<< HEAD
     title: 'Das Experiment',
     text:  `Super, du hast die Übungsphase erfolgreich abgeschlossen!
-=======
-    title: 'Einweisung',
-    text:  `Super, du hast die Übungsphase abgeschlossen!
->>>>>>> 3610ca1a0f4cd672eb39cf178ae0e445b1ea6467
             <br />
             Wir hoffe Du konntest Dich mit dem Format des Experiments vertraut machen.
             <br />
@@ -209,11 +204,7 @@ const instructions_main_ger = babeViews.view_generator('instructions',{
             7 ≙ “perfekt deutlich”
             <br />
             <br />
-<<<<<<< HEAD
             Bitte gehe sicher, dass du dich für die nächsten ∼20 Minuten konzentrieren und fokussieren kannst.
-=======
-            Bitte gehe sicher, dass du dich f�r die nächsten ∼20 Minuten konzentrieren und fokussieren kannst.
->>>>>>> 3610ca1a0f4cd672eb39cf178ae0e445b1ea6467
             <br />
             Wenn du dich bereit fühlst, klicke auf den Los-Knopf um das Experiment zu beginnen`,
     buttonText: 'Los'
