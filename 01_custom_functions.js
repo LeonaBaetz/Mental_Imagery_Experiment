@@ -69,10 +69,10 @@ const check_timing_ger = function(data, next) {
     const start_time = Date.now();
     $("input[name=answer]").on("change", function(e) {
         if (Date.now()-start_time > 180000){ // time in ms  
-            alert("Du solltest dich auf das erste konzentrieren, das du dir vorstellst, nehme dir nicht zu viel Zeit.");
+            alert("Sie sollten sich auf die erste Vorstellung konzentrieren die Ihnen in den Kopf kommt, bitte nehmen Sie sich nicht zu viel Zeit.");
         }   
         if (Date.now()-start_time < 1000){
-            alert("Du solltest den Satz sorgfältig lesen, eile nicht zu sehr und lasse dir ein wenig Zeit.")
+            alert("Sie sollten den Satz sorgfältig lesen, eilen Sie nicht zu sehr und lassen Sie sich ein wenig Zeit.")
         }
         next();
     });
