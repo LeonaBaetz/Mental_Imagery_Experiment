@@ -23,17 +23,13 @@ const intro_eng = babeViews.view_generator('intro',{
     trials: 1,
     name: 'intro_eng',
     // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside
-    text:   `The aim of this experiment is to determine the vividness of your imagery. 
+    text:   `The aim of this experiment is to determine the vividness of your imagery.
             <br />
             <br />
-            The sentences that you will read on the following pages will bring certain images to your mind. Please read the given statements carefully.
+            The sentences used in this experiment will bring certain images to your mind.
             <br />
-            Do not rush through the exercise and at the same time, don't take too much time to think about the mental image that comes to your mind.
+            Please use the following scale to rate how vivid each image is:
             <br />
-            Please use a scale to rate how vivid each image is and choose the appropriate scale that matches the image that came to your mind when reading the sentence the first time.
-            <br />
-            <br />
-            You can report the degree of vividness on a scale from 1 to 7:
             <br />
             1 ≙ “no image”
             <br />
@@ -49,16 +45,29 @@ const intro_eng = babeViews.view_generator('intro',{
             <br />
             7 ≙ “perfectly clear”
             <br />
-            Additionally, there is the option to respond with “I don’t understand the sentence” if you really cannot understand the sentence.
+            Additionally, there is the option to respond with “I don’t understand the sentence” if you really cannot understand the sentence (semantically).
+            <br />
+            Choose the appropriate scale that matches the image that came to your mind when reading the sentence the first time.
             <br />
             <br />
-            Please concentrate and make sure that you are in an environment that is as less distracting as possible (turn off phone/tv, close doors, no contact to other people while performing the experiment, etc.).
+            We kindly ask you to read each of the given statements carefully and concentrate throughout the whole experiment.
             <br />
-            Thank you for your cooperation!
+            Make sure that you are in an environment that is as little distracting as possible, i.e., turn off your phone / TV /..., close doors, do not have contact to other people while performing the experiment, etc.
             <br />
             <br />
-            The experiment is devided into a short practice phase and a main phase. With the button, you will start the practice phase:`,
-   buttonText: 'klick here to test the experiment'
+            Please, do not rush through the exercise and at the same time, do not take too much time to think about the mental image that comes to your mind.
+            <br />
+            <br />
+            Thank you a lot for your cooperation and participantion!
+            <br />
+            <br />
+            The experiment is devided into two parts:
+            First,  a short practice phase where you can familiarise yourself with the format of the experiment.
+            Second, the main phase which is the actual experiment.
+            <br />
+            <br />
+            With pressing button, you will start the practice phase:`,
+   buttonText: 'Klick here to start the experiment'
 });
 //German Intro
 const intro_ger = babeViews.view_generator('intro',{
@@ -69,14 +78,10 @@ const intro_ger = babeViews.view_generator('intro',{
     text:   `Das Ziel dieses Experiments ist es, die Lebendigkeit deines Vorstellungsvermögens zu testen. 
             <br />
             <br />
-            Die Sätze, die du auf den nächsten Seiten lesen wirst, werden gewisse Vorstellungen in deinem Kopf hervorrufen. Bitte lese die gezeigten Sätze sorgfältig.
+            Die Sätze, die Du auf den nächsten Seiten lesen wirst, werden gewisse Vorstellungen in deinem Kopf hervorrufen.
             <br />
-            Hetze nicht durch die Aufgaben und lasse dir auch nicht zu viel Zeit, um über deine mentalen Vorstellungen nachzudenken.
+            Nutze bitte die folgende Skala, um zu bewerten, wie lebendig jede der hervorgerufenen Vorstellungen ist:
             <br />
-            Bitte nutze eine Skala, um zu bewerten, wie lebendig die Vorstellung für jeden Satz ist und wähle den passenden Ausdruck der Skala der zu der Vorstellung passt, die du hattest, als du den Satz das erste Mal gelesen hast.
-            <br />
-            <br />
-            Du kannst dich für einen "Grad der Lebendigkeit" auf einer Skala von 1 bis 7 entscheiden:
             <br />
             1 ≙ “keine Vorstellung”
             <br />
@@ -92,16 +97,26 @@ const intro_ger = babeViews.view_generator('intro',{
             <br />
             7 ≙ “perfekt deutlich”
             <br />
-            Zusätzlich gibt es die Option mit "Ich verstehe den Satz nicht" zu antworten, wenn du ihn wirklich nicht verstehst.
+            Zusätzlich gibt es die Option mit "Ich verstehe den Satz nicht" zu antworten, wenn du den Satz nicht verstehst.
+            <br />
+            Wähle den passenden Ausdruck von der Skala welcher zu Deiner hervorgerufenen Vorstellung am besten passt, als Du den Satz das erste Mal gelesen hast.
             <br />
             <br />
-            Bitte konzentriere dich und gehe sicher, dass du in einer so gut wie möglich ungestörten Umgebung bist (schalte Handy/TV aus, schließe die Tür, keinen Kontakt zu anderen Personen während des Experiments, etc.).
+            Wir bitten Dich jeden der Sätze genau zu lesen und Dich während des gesamten Experiments (bestmöglich) zu konzentrieren. 
             <br />
-            Danke für deine Kooperation!
+            Gehe sicher, dass Du in einer (so gut wie möglich ungestörten) Umgebung bist, schalte Dein Handy / TV /... aus, schließe die Tür und habe keinen Kontakt zu anderen Personen während Du das Experiment durchführst, etc.
             <br />
             <br />
-            Das Experiment ist in eine kurze Übungs- und eine Hauptphase eingeteilt. Mit diesem Knopf startest du die Übungsphase.`,
-   buttonText: 'Experiment Starten'
+            Vielen Dank für deine Kooperation und Teilnahme!
+            <br />
+            <br />
+            Das Experiment ist in zwei Blöche unterteilt:
+            Zu Erst gibt es eine kurze Übungsphase, in welcher Du das Format des Experiments kennenlernst und Dich mit diesem vertraut machen kannst.
+            Danach folgt die Hauptphase, welches dann das richtige Experiment ist.
+            <br />
+            <br />
+            Mit dem folgenden Knopf startest Du die Übungsphase.`,
+   buttonText: 'Drücke hier um das Experiment zu starten'
 });
 
 // For most tasks, you need instructions views
@@ -109,13 +124,15 @@ const intro_ger = babeViews.view_generator('intro',{
 const instructions_practice_eng = babeViews.view_generator('instructions',{
     trials: 1,
     name: 'instructions_eng',
-    title: 'General Instructions',
-    text:  `This is the instruction page for the practice phase.
+    title: 'Instructions for the practice phase',
+    text:  `These are the instructions for the practice phase. 
+            <br />
+            The aim of the practise phase is to show you how the experiment is going to look like, so that you can familiarize yourself with it.
+            <br />
+            Therefore, your answers won't count.
             <br />
             <br />
-            Here, you will get to know how the sentences will look like, your answers won't count.
-            <br />
-            As a reminder, here is the scale again:
+            As a reminder, this is the scale you can use to rate the vividness of your mental image or simulation:
             <br />
             1 ≙ “no image”
             <br />
@@ -132,21 +149,21 @@ const instructions_practice_eng = babeViews.view_generator('instructions',{
             7 ≙ “perfectly clear”
             <br />
             <br />
-            When you click on the following button, you will go through some example sentences.`,
-    buttonText: 'go to practice statements'
+            With pressing the following button, you will go through some example sentences.`,
+    buttonText: 'Start practice phase'
 });
 
 //German Instructions
 const instructions_practice_ger = babeViews.view_generator('instructions',{
     trials: 1,
     name: 'instructions_ger',
-    title: 'Einweisung',
-    text:  `Das hier ist die Einleitung für die Übungsphase.
+    title: 'Erklärungen für die Übungsphase',
+    text:  `Hier ein paar Hinnweise zu der Übungsphase.
             <br />
             <br />
-            Hier wirst du sehen wie die Sätze aussehen werden, deine Antworten zählen aber nicht.
+            Das Ziel der Übungsphase ist es Dich mit dem Experiment vertraut zu machen und dir zu zeigen wie Die Sätze aussehen werden, die gewisse mentale Vorstellungen bei Dir hervorrufen werden. Du sollst für jeden dieser Sätze bereits den Grad der Lebendigkeit angeben, deine Antworten zählen allerdings in dieser Phase noch nicht.
             <br />
-            Als Erinnerung ist hier noch einmal die Skala:
+            Als Erinnerung, hier noch einmal die Skala, die Du benutzen sollst um die Lebendigkeit deiner Vorstellungen zu bewerten:
             <br />
             1 ≙ “keine Vorstellung”
             <br />
@@ -163,7 +180,7 @@ const instructions_practice_ger = babeViews.view_generator('instructions',{
             7 ≙ “perfekt deutlich”
             <br />
             <br />
-            Wenn du auf diesen Knopf drückst, gehst du durch ein paar Beispielsätze.`,
+            Wenn du auf den folgenden Knopf drückst, werden dir die ein paar Beispielsätze gezeigt.`,
     buttonText: 'Mit der Übung beginnen'
 });
 
@@ -172,13 +189,15 @@ const instructions_practice_ger = babeViews.view_generator('instructions',{
 const instructions_main_ger = babeViews.view_generator('instructions',{
     trials: 1,
     name: 'instructions_main_ger',
-    title: 'Einweisung',
-    text:  `Super, du hast die Übungsphase abgeschlossen!
+    title: 'Das Experiment',
+    text:  `Super, du hast die Übungsphase erfolgreich abgeschlossen!
+            <br />
+            Wir hoffe Du konntest Dich mit dem Format des Experiments vertraut machen.
+            <br />
             <br />
             Lass uns jetzt mit dem richtigen Experiment anfangen. Es ist genauso aufgebaut wie die Übung.
             <br />
-            Die Sätze werden gewisse Vorstellungen in deinem Kopf hervorrufen und du wirst gebeten anhand der folgenden Skala zu bewerten, wie lebendig deine Vorstellung für jeden Satz ist.
-            <br />
+            Die Sätze werden gewisse Vorstellungen in deinem Kopf hervorrufen und du wirst gebeten anhand der folgenden Skala zu bewerten, wie lebendig deine Vorstellung für jeden Satz ist:
             <br />
             1 ≙ “keine Vorstellung”
             <br />
@@ -195,9 +214,9 @@ const instructions_main_ger = babeViews.view_generator('instructions',{
             7 ≙ “perfekt deutlich”
             <br />
             <br />
-            Bitte gehe sicher, dass du dich f�r die nächsten ∼20 Minuten konzentrieren und fokussieren kannst.
+            Bitte gehe sicher, dass du dich für die nächsten ∼20 Minuten konzentrieren und fokussieren kannst.
             <br />
-            Wenn du dich bereit fühlst, klicke auf den Los Knopf!`,
+            Wenn du dich bereit fühlst, klicke auf den Los-Knopf um das Experiment zu beginnen`,
     buttonText: 'Los'
 });
 // English
@@ -205,13 +224,15 @@ const instructions_main_ger = babeViews.view_generator('instructions',{
 const instructions_main_eng = babeViews.view_generator('instructions',{
     trials: 1,
     name: 'instructions_main_eng',
-    title: 'General Instructions',
+    title: 'The experiment',
     text:  `Well done, you successfully finished the practice session!
             <br />
-            Let us start the real experiment now. It looks exactly like the practice.
+            We hope you were able to familiarize yourself with the experiment and feel prepared fot the experiment.
             <br />
-            The items of the test will bring certain images to your mind and you are asked to use the following scale to rate how vivid each image is.
             <br />
+            Let us start the actual experiment now. It looks exactly like the practice:
+            <br />
+            The sentences of the experiment will bring certain images to your mind and you are asked to use the following scale to rate how vivid each image or simualtion is:
             <br />
             1 ≙ “no image”
             <br />
@@ -228,9 +249,9 @@ const instructions_main_eng = babeViews.view_generator('instructions',{
             7 ≙ “perfectly clear”
             <br />
             <br />
-            Please make sure to be able to concentrate and focus for the next ∼20 minutes.
+            Please make sure that you can perform the experiment concentrated and focussed for the next ∼20 minutes.
             <br />
-            If you feel ready, hit the go button!`,
+            If you feel ready, press the Go-button to start the experiment`,
     buttonText: 'Go'
 });
 
@@ -242,7 +263,8 @@ const additional_info_eng = babeViews.view_generator('post_test',{
     name: 'post_test_eng',
     title: 'Additional information',
     text: 'Please answer the some more questions: ',
-    edu_other: 'other'
+    edu_other: 'other',
+    edu_graduated_high_school: "Graduated High School (Abitur)"
 },{
     stimulus_container_generator: custom_stimulus_container_generators.questionnaire,
     answer_container_generator: custom_answer_container_generators.additional_info,
@@ -266,8 +288,8 @@ const additional_info_ger = babeViews.view_generator('post_test',{
     gender_other: 'divers',
     edu_question: 'Höchster Bildungsabschluss',
     edu_graduated_high_school: 'Abitur',
-    edu_graduated_college: 'Hochschulabschluss',
-    edu_higher_degree: 'Universitärer Abschluss',
+    edu_graduated_college: 'Hochschulabschluss (Bachelor/Master)',
+    edu_higher_degree: 'höherer Universitätsabschluss (Doktor)',
     edu_other: 'anderes',
     // languages_question: 'Muttersprache',
     // languages_more: '(in der Regel die Sprache, die Sie als Kind zu Hause gesprochen haben)',
@@ -354,6 +376,7 @@ const subjective_language_eng = babeViews.view_generator('post_test',{
     class1:"speaking",
     class2:"writing",
     class3:"listening",
+    class4:"reading",
     option1:"not at all proficient",
     option2:"very little proficient",
     option3:"little proficient",
@@ -378,6 +401,7 @@ const subjective_language_ger = babeViews.view_generator('post_test',{
     class1:"Sprechen",
     class2:"Schreiben",
     class3:"Hörverstehen",
+    class4:"Leseverstehen",
     option1:"Überhaupt nicht gut",
     option2:"sehr gering",
     option3:"nicht sehr gut",
