@@ -103,21 +103,21 @@ var sentences = [
     {
         q_en: "Think of the following <b>image</b>, carefully considering the <b>visual image</b> that comes to your imagination.<br />Rate how vividly you can imagine this:",
         english: "<b>image</b> of: A ball bouncing up and down",
-        q_ge: "Stellen Sie sich das folgende <b>Bild</b> vor und betrachte sorgfältig die entstehende <b>visuelle Vorstellung</b>.<br />Bewerten Sie, wie lebhaft Sie sich das Folgendes vorstellen können:",
+        q_ge: "Stellen Sie sich das folgende <b>Bild</b> vor und betrachte sorgfältig die entstehende <b>visuelle Vorstellung</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
         german: "<b>Bild</b>: Eines Balls, der auf und ab hüpft",
         type: "visual",
     },
     {
         q_en: "Think of the following <b>sound</b>, carefully considering the <b>auditory</b> image that comes to your imagination.<br />Rate how vividly you can imagine this:",
         english: "<b>sound</b> of: Rain falling on the street",
-        q_ge: "Stellen Sie sich den folgenden <b>Ton</b> bzw. das folgende <b>Geräusch</b> vor und betrachten Sie sorgfältig die entstehende <b>auditive Vorstellung</b>.<br />Bewerten Sie, wie lebhaft Sie sich das Folgendes vorstellen können:",
+        q_ge: "Stellen Sie sich den folgenden <b>Ton</b> bzw. das folgende <b>Geräusch</b> vor und betrachten Sie sorgfältig die entstehende <b>auditive Vorstellung</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
         german: "<b>Ton / Geräusch</b> von: Auf die Straße fallender Regen",
         type: "auditory",
     },
     {
         q_en: "Think of the following <b>'feeling'</b> or <b>touching the following</b>, carefully considering the <b>tactile image</b> that comes to your imagination.<br />Rate how vividly you can imagine this:",
         english: "<b>'feeling'</b> of: The The tickle of a fly on your skin",
-        q_ge: "Stellen Sie sich das <b>Gefühl</b> oder die <b>Berührung</b> des Folgenden vor und betrachten Sie sorgfältig die entstehende <b>taktile (fühlbare) Vorstellung</b>.<br />Bewerten Sie, wie lebhaft Sie sich das Folgendes vorstellen können:",
+        q_ge: "Stellen Sie sich das <b>Gefühl</b> oder die <b>Berührung</b> des Folgenden vor und betrachten Sie sorgfältig die entstehende <b>taktile (fühlbare) Vorstellung</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
         german: "<b>Gefühl</b>: Das Kitzeln einer Fliege auf der Haut",
         type: "tactile",
     },
@@ -131,7 +131,7 @@ var sentences = [
     {
         q_en: "Think of <b>tasting</b> the following, carefully considering the <b>gustatory image</b> that is produced.<br />Rate how vividly you can imagine this:",
         english: "<b>Taste of</b>: Strawberrys",
-        q_ge: "Stellen Sie sich den folgenden <b>Geschmack</b> vor und betrachten Sie sorgfältig die entstehende <b>geschmackliche Vorstellung</b>.<br />Bewerten Sie, wie lebhaft Sie sich das Folgendes vorstellen können:",
+        q_ge: "Stellen Sie sich den folgenden <b>Geschmack</b> vor und betrachten Sie sorgfältig die entstehende <b>geschmackliche Vorstellung</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
         german: "<b>Geschmack</b> von: Erdbeeren",
         type: "gustatory",
     },
