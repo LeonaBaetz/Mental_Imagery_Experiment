@@ -253,7 +253,8 @@ const additional_info_eng = babeViews.view_generator('post_test',{
     name: 'post_test_eng',
     title: 'Additional information',
     text: 'Please answer the some more questions: ',
-    edu_other: 'other'
+    edu_other: 'other',
+    edu_graduated_high_school: "Graduated High School (Abitur)"
 },{
     stimulus_container_generator: custom_stimulus_container_generators.questionnaire,
     answer_container_generator: custom_answer_container_generators.additional_info,
@@ -277,8 +278,8 @@ const additional_info_ger = babeViews.view_generator('post_test',{
     gender_other: 'divers',
     edu_question: 'Höchster Bildungsabschluss',
     edu_graduated_high_school: 'Abitur',
-    edu_graduated_college: 'Hochschulabschluss',
-    edu_higher_degree: 'Universitärer Abschluss',
+    edu_graduated_college: 'Hochschulabschluss (Bachelor/Master)',
+    edu_higher_degree: 'höherer Universitätsabschluss (Doktor)',
     edu_other: 'anderes',
     // languages_question: 'Muttersprache',
     // languages_more: '(in der Regel die Sprache, die Sie als Kind zu Hause gesprochen haben)',
