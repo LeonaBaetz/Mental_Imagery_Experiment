@@ -33,9 +33,11 @@ const custom_handle_response_function = {
             babe.global_data.speaking_native = $("#"+ config.class1 +"_native").val();
             babe.global_data.listening_native = $("#"+config.class2+"_native").val();
             babe.global_data.writing_native = $("#"+ config.class3 +"_native").val();
+            babe.global_data.reading_native = $("#"+ config.class4 +"_native").val();
             babe.global_data.speaking_foreign = $("#"+ config.class1 +"_foreign").val();
             babe.global_data.listening_foreign = $("#"+ config.class2 +"_foreign").val();
             babe.global_data.writing_foreign = $("#"+ config.class3 +"_foreign").val();
+            babe.global_data.reading_foreign = $("#"+ config.class4 +"_foreign").val();
             
             babe.global_data.endTime = Date.now();
             babe.global_data.timeSpent =
@@ -185,6 +187,19 @@ const custom_answer_container_generators = {
                 <option value="7">${config.option7}</option>
                 </select>
         </p>
+        <p class='babe-view-text'>
+            <label for="${config.class4}_native">${config.class4}:</label>
+            <select id="${config.class4}_native" name="${config.class4}_native">
+                <option></option>
+                <option value="1">${config.option1}</option>
+                <option value="2">${config.option2}</option>
+                <option value="3">${config.option3}</option>
+                <option value="4">${config.option4}</option>
+                <option value="5">${config.option5}</option>
+                <option value="6">${config.option6}</option>
+                <option value="7">${config.option7}</option>
+                </select>
+        </p>
         <p class='babe-view-text'>${config.question2}</p>
         <p class='babe-view-text'>
             <label for="${config.class1}_foreign">${config.class1}:</label>
@@ -225,6 +240,18 @@ const custom_answer_container_generators = {
                 <option value="7">${config.option7}</option>
                 </select>
         </p>
+        <p class='babe-view-text'>
+            <label for="${config.class4}_foreign">${config.class4}:</label>
+            <select id="${config.class4}_foreign" name="${config.class4}_foreign">
+                <option></option>
+                <option value="1">${config.option1}</option>
+                <option value="2">${config.option2}</option>
+                <option value="3">${config.option3}</option>
+                <option value="4">${config.option4}</option>
+                <option value="5">${config.option5}</option>
+                <option value="6">${config.option6}</option>
+                <option value="7">${config.option7}</option>
+                </select>
         
         <button id="next" class='babe-view-button'>${config.button}</button>
         </form>`;
