@@ -78,7 +78,7 @@ const intro_ger = babeViews.view_generator('intro',{
     title: "Willkommen!",
     name: 'intro_ger',
     // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside
-    text:   `Das Ziel dieses Experiments ist es, die Lebendigkeit Ihres Vorstellungsvermögens zu testen. 
+    text:   `Das Ziel dieses Experimentes ist es, die Lebendigkeit Ihres Vorstellungsvermögens zu testen. 
             <br />
             <br />
             Die Sätze, die Sie auf den nächsten Seiten lesen werden, werden gewisse Vorstellungen in Ihrem Kopf hervorrufen.
@@ -103,7 +103,7 @@ const intro_ger = babeViews.view_generator('intro',{
             Zusätzlich gibt es die Option mit "Ich verstehe den Satz nicht" zu antworten, falls Sie den Satz nicht verstehen.
             <br />
             <br />
-            Wählen Sie den passenden Ausdruck von der Skala welcher zu Ihrer hervorgerufenen Vorstellung am besten passt, als Sie den Satz das erste Mal gelesen haben.
+            Wählen Sie den passenden Ausdruck von der Skala, welcher zu Ihrer hervorgerufenen Vorstellung am besten passt, als Sie den Satz das erste Mal gelesen haben.
             <br />
             <br />
             Wir bitten Sie jeden der Sätze genau zu lesen und sich während des gesamten Experiments (bestmöglich) zu konzentrieren. 
@@ -113,7 +113,7 @@ const intro_ger = babeViews.view_generator('intro',{
             <br />
             Das Experiment ist in zwei Blöcke unterteilt:
             <br />
-            Zuerst gibt es eine kurze Übungsphase, in welcher Sie das Format des Experiments kennenlernen und sich mit diesem vertraut machen können.
+            Zuerst gibt es eine kurze Übungsphase, in welcher Sie das Format des Experimentes kennenlernen und sich mit diesem vertraut machen können.
             <br />
             Danach folgt die Hauptphase, welches dann das richtige Experiment ist.
             <br />
@@ -168,7 +168,7 @@ const instructions_practice_ger = babeViews.view_generator('instructions',{
     text:  `Hier ein paar Hinweise zu der Übungsphase.
             <br />
             <br />
-            Das Ziel der Übungsphase ist es Sie mit dem Experiment vertraut zu machen und Ihnen zu zeigen wie die Sätze aussehen werden, die gewisse mentale Vorstellungen bei Ihnen hervorrufen werden. Sie sollen für jeden dieser Sätze den Grad der Lebendigkeit angeben, Ihre Antworten zählen allerdings in dieser Phase noch nicht.
+            Das Ziel der Übungsphase ist es Sie mit dem Experiment vertraut zu machen und Ihnen zu zeigen wie die Sätze aussehen werden, die gewisse mentale Vorstellungen bei Ihnen hervorrufen werden. Sie sollen für jeden dieser Sätze den Grad der Lebendigkeit angeben. Ihre Antworten zählen allerdings in dieser Phase noch nicht.
             <br />
             <br />
             Als Erinnerung, hier noch einmal die Skala, die Sie benutzen sollen um die Lebendigkeit Ihrer Vorstellungen zu bewerten:
