@@ -103,7 +103,7 @@ var sentences = [
     {
         q_en: "Think of the following <b>image</b>, carefully considering the <b>visual image</b> that comes to your imagination.<br />Rate how vividly you can imagine this:",
         english: "<b>image</b> of: A ball bouncing up and down",
-        q_ge: "Stellen Sie sich das folgende <b>Bild</b> vor und betrachte sorgfältig die entstehende <b>visuelle Vorstellung</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
+        q_ge: "Stellen Sie sich das folgende <b>Bild</b> vor und betrachten Sie sorgfältig die entstehende <b>visuelle Vorstellung</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
         german: "<b>Bild</b>: Eines Balls, der auf und ab hüpft",
         type: "visual",
     },
@@ -124,7 +124,7 @@ var sentences = [
     {
         q_en: "Think of <b>performing the following act</b>, carefully considering the image that <b>forms in your mind of your body part(s) moving</b>.<br />Rate how vividly you can imagine this:",
         english: "<b>Movement</b>: Sitting down on a chair",
-        q_ge: "Stellen Sie sich vor das Folgende <b>zu tun</b> und betrachten Sie sorgfältig die entstehende Vorstellung, wie sich Ihre <b>Körperteile bewegen und fühlen</b> um das Beschriebene <b>auszuführen</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
+        q_ge: "Stellen Sie sich vor, das Folgende <b>zu tun</b> und betrachten Sie sorgfältig die entstehende Vorstellung, wie sich Ihre <b>Körperteile bewegen und anfühlen</b>, um das Beschriebene <b>auszuführen</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
         german: "<b>Bewegung</b>: Das Hinsetzen auf einen Stuhl",
         type: "motor",
     },
@@ -145,7 +145,7 @@ var sentences = [
     {
         q_en: "Think of the following <b>sensation</b>, carefully considering the <b>image that comes to your imagination</b>.<br />Rate how vividly you can imagine this:",
         english: "<b>Sensation of</b>: The feeling you had when hearing the school bell ringing",
-        q_ge: "Stellen Sie sich das folgende <b>Gefühl</b> vor und begutachten Sie genau die <b>Vorstellung welche in Ihre Gedanken dazu entsteht</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
+        q_ge: "Stellen Sie sich das folgende <b>Gefühl</b> vor und begutachten Sie genau die <b>Vorstellung, welche in Ihre Gedanken dazu entsteht</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
         german: "<b>Gefühl</b>: das Sie hatten, wenn die Schulklingel läutete",
         type: "organic",
     },
@@ -260,35 +260,35 @@ var sentences = [
     {
         q_en: "Think of <b>performing</b> the following <b>act</b>, carefully considering the image that forms in your mind of your <b>arms, legs, lips, etc.</b> performing this act.<br />Rate how vividly you can imagine the following:",
         english: "<b>Movement</b> of: Running upstairs",
-        q_ge: "Stellen Sie sich vor das Folgende <b>zu tun</b> und betrachten Sie sorgfältig die entstehende Vorstellung, wie sich Ihre <b>Körperteile bewegen und fühlen</b> um das Beschriebene <b>auszuführen</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
+        q_ge: "Stellen Sie sich vor, das Folgende <b>zu tun</b> und betrachten Sie sorgfältig die entstehende Vorstellung, wie sich Ihre <b>Körperteile bewegen und anfühlen</b>, um das Beschriebene <b>auszuführen</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
         german: "<b>Bewegung</b>: Eine Treppe hoch rennen",
         type: "motor",
     },
     {
         q_en: "Think of <b>performing</b> the following <b>act</b>, carefully considering the image that forms in your mind of your <b>arms, legs, lips, etc.</b> performing this act.<br />Rate how vividly you can imagine the following:",
         english: "<b>Movement</b> of: Jumping across a stream",
-        q_ge: "Stellen Sie sich vor das Folgende <b>zu tun</b> und betrachten Sie sorgfältig die entstehende Vorstellung, wie sich <b>Ihre Körperteile bewegen und fühlen</b> um das Beschriebene <b>auszuführen</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
+        q_ge: "Stellen Sie sich, vor das Folgende <b>zu tun</b> und betrachten Sie sorgfältig die entstehende Vorstellung, wie sich <b>Ihre Körperteile bewegen und anfühlen</b>, um das Beschriebene <b>auszuführen</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
         german: "<b>Bewegung</b>: Über einen (kleinen) Bach springen",
         type: "motor",
     },
     {
         q_en: "Think of <b>performing</b> the following <b>act</b>, carefully considering the image that forms in your mind of your <b>arms, legs, lips, etc.</b> performing this act.<br />Rate how vividly you can imagine the following:",
         english: "<b>Movement</b> of: Drawing a circle on paper",
-        q_ge: "Stellen Sie sich vor das Folgende <b>zu tun</b> und betrachten Sie sorgfältig die entstehende Vorstellung, wie sich Ihre <b>Körperteile bewegen und fühlen</b> um das Beschriebene <b>auszuführen</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
+        q_ge: "Stellen Sie sich vor, das Folgende <b>zu tun</b> und betrachten Sie sorgfältig die entstehende Vorstellung, wie sich Ihre <b>Körperteile bewegen und anfühlen</b>, um das Beschriebene <b>auszuführen</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
         german: "<b>Bewegung</b>: Einen Kreis auf ein Blatt Papier malen",
         type: "motor",
     },
     {
         q_en: "Think of <b>performing</b> the following <b>act</b>, carefully considering the image that forms in your mind of your <b>arms, legs, lips, etc.</b> performing this act.<br />Rate how vividly you can imagine the following:",
         english: "<b>Movement</b> of: Reaching up to a high shelf",
-        q_ge: "Stellen Sie sich vor das Folgende <b>zu tun</b> und betrachten Sie sorgfältig die entstehende Vorstellung, wie sich Ihre <b>Körperteile bewegen und fühlen</b> um das Beschriebene <b>auszuführen</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
+        q_ge: "Stellen Sie sich vor, das Folgende <b>zu tun</b> und betrachten Sie sorgfältig die entstehende Vorstellung, wie sich Ihre <b>Körperteile bewegen und anfühlen</b>, um das Beschriebene <b>auszuführen</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
         german: "<b>Bewegung</b>: Zu einem hohen Regal hoch greifen",
         type: "motor",
     },
     {
         q_en: "Think of <b>performing</b> the following <b>act</b>, carefully considering the image that forms in your mind of your <b>arms, legs, lips, etc.</b> performing this act.<br />Rate how vividly you can imagine the following:",
         english: "<b>Movement</b> of: Kicking something out of your way",
-        q_ge: "Stellen Sie sich vor das Folgende <b>zu tun</b> und betrachten Sie sorgfältig die entstehende Vorstellung, wie sich Ihre <b>Körperteile bewegen und fühlen</b> um das Beschriebene <b>auszuführen</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
+        q_ge: "Stellen Sie sich vor, das Folgende <b>zu tun</b> und betrachten Sie sorgfältig die entstehende Vorstellung, wie sich Ihre <b>Körperteile bewegen und anfühlen</b>, um das Beschriebene <b>auszuführen</b>.<br />Bewerten Sie, wie lebhaft Sie sich Folgendes vorstellen können:",
         german: "<b>Bewegung</b>: Ein Objekt aus dem Weg treten",
         type: "motor",
     },
@@ -394,7 +394,7 @@ var sentences = [
         q_en: "Think of each of the following <b>sensations</b>, carefully considering the image that comes to your mind.<br />Rate how vividly you can imagine each of the following: ",
         english: "<b>Feeling</b> of: Feeling sick after eating a lot",
         q_ge: "Stellen Sie sich das folgende <b>Gefühl</b> vor und begutachten Sie die genaue <b>Impression dieses Gefühles</b>, welches in Ihre Gedanken dazu kommt.<br />Bewerten Sie, wie lebhaft Sie sich das Folgende vorstellen können:",
-        german: "<b>Gefühl</b> von: Das Unwohlsein nachdem man zu viel gegessen hat.",
+        german: "<b>Gefühl</b> von: Das Unwohlsein, nachdem man zu viel gegessen hat.",
         type: "organic",
     }
 ];
