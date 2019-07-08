@@ -201,13 +201,13 @@ const instructions_main_ger = babeViews.view_generator('instructions',{
     title: 'Das Experiment',
     text:  `Super, Sie haben die Übungsphase erfolgreich abgeschlossen!
             <br />
-            Wir hoffen Sie konnten Sich mit dem Format des Experiments vertraut machen.
+            Wir hoffen, Sie konnten sich mit dem Format des Experimentes vertraut machen.
             <br />
             <br />
-            Lass uns also jetzt mit dem richtigen Experiment anfangen. Es ist genauso aufgebaut wie die Übung.
+            Lassen Sie uns also jetzt mit dem richtigen Experiment beginnen. Es ist genauso aufgebaut wie die Übung.
             <br />
             <br />
-            Die Sätze werden gewisse Vorstellungen in Ihrem Kopf hervorrufen und Sie werden gebeten anhand der folgenden Skala zu bewerten, wie lebendig Ihre Vorstellung für jeden Satz ist:
+            Die Sätze werden gewisse Vorstellungen in Ihrem Kopf hervorrufen und Sie werden gebeten, anhand der folgenden Skala zu bewerten, wie lebendig Ihre Vorstellung für jeden Satz ist:
             <br />
             1 ≙ “keine Vorstellung”
             <br />
@@ -224,10 +224,10 @@ const instructions_main_ger = babeViews.view_generator('instructions',{
             7 ≙ “perfekt deutlich”
             <br />
             <br />
-            Bitte gehe sicher, dass Sie sich für die nächsten ∼20 Minuten konzentrieren und fokussieren können.
+            Bitte gehen Sie sicher, dass Sie sich für die nächsten ∼20 Minuten konzentrieren und fokussieren können.
             <br />
             <br />
-            Wenn Sie sich bereit fühlen, klicken Sie auf den Los-Knopf um das Experiment zu beginnen`,
+            Wenn Sie sich bereit fühlen, klicken Sie auf den Los-Knopf um das Experiment zu beginnen.`,
     buttonText: 'Los'
 });
 // English
@@ -410,7 +410,7 @@ const subjective_language_ger = babeViews.view_generator('post_test',{
     text: 'Bitte beantworten Sie folgende Fragen: ',
     buttonText: 'Weiter',
     question1: "Wie gut würden Sie die Kompetenzen in Ihrer Muttersprache für folgende Bereiche einschätzen:",
-    question2:"Wie gut würden Sie die Kompetenzen in Ihrer Muttersprache für folgende Bereiche einschätzen:",
+    question2:"Wie gut würden Sie die Kompetenzen in Ihrer Fremdsprache für folgende Bereiche einschätzen:",
     class1:"Sprechen",
     class2:"Schreiben",
     class3:"Hörverstehen",
