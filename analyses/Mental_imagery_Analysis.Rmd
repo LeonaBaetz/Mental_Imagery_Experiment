@@ -28,7 +28,7 @@ set.seed(123)
 
 ```{r}
 # your code here
-(data <- read_csv("C:/Users/leado/XP_Lab/Mental_Imagery_Experiment/data/results.csv"))
+(data <- read_csv("C:/Users/leado/XP_Lab/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz (1).csv"))
 data %>% glimpse()
 
 
@@ -45,7 +45,7 @@ data %>% glimpse()
 
 ```{r}
 #here we change the types of the variables
-m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), exp_language= factor(language), native_language = factor(native_language), foreign_language= factor(foreign_language), foreign_dominance = factor(foreign_dominance), subject_id = as.numeric(experiment_id), response = as.numeric(response), experiment_id = NULL)
+m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), exp_language= factor(language), native_language = factor(native_language), foreign_language= factor(foreign_language), foreign_dominance = factor(foreign_dominance), subject_id = as.numeric(experiment_id), response = as.numeric(response), experiment_id = NULL, language = NULL)
 
 m_data
 ```
@@ -54,6 +54,7 @@ m_data
 ```{r}
 #here we calculate the mean response for trial and the real task (not important)
 (s_data <- group_by(m_data, trial_name) %>% summarise(overall_mean = mean(response)))
+#+language means!
 ```
 
 ```{r}
@@ -63,11 +64,12 @@ m_data
 
 ```{r}
 #check if the foreign or native language is used in this experiment and add the new column
-m_data$language_equality <- identical(m_data[["exp_language"]],m_data[["native_language"]])
-m_data
+m_data$language_equality <- identical(m_data[["exp_language"]],m_data[["native_language"]]) 
+m_data <- mutate(m_data, language_equality= factor(language_equality))
 
 #filter the data for our prerequisites
-m_data %>% filter(foreign_dominance == 'no', identical(m_data[["foreign_language"]],m_data[["native_language"]]) == FALSE, foreign_language == 'English'| foreign_language == 'German', native_language == 'English'| native_language == 'German')
+#write down precise exclusion criteria here
+m_data %>% filter(foreign_dominance == 'no', identical(m_data[["foreign_language"]],m_data[["native_language"]]) == FALSE, foreign_language == 'English'| foreign_language == 'German', native_language == 'English'| native_language == 'German') 
 m_data
 ```
 
@@ -83,8 +85,8 @@ m_data
 #brms model creation 
 
 fit_sc1 <- brm(
-formula = Mean ~ language_equality + type,
-data = s_data3,
+formula = response ~ language_equality + type,
+data = m_data,
 family = cumulative("logit")
 )
 
