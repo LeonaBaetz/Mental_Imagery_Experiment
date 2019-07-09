@@ -61,12 +61,12 @@ const intro_eng = babeViews.view_generator('intro',{
             <br />
             The experiment is devided into two parts:
             <br />
-            First,  a short practice phase where you can familiarise yourself with the format of the experiment.
+            First, a short practice phase where you can familiarise yourself with the format of the experiment.
             <br />
             Second, the main phase which is the actual experiment.
             <br />
             <br />
-            Thank you a lot for your cooperation and participantion!
+            Thank you a lot for your cooperation and participation!
             <br />
             <br />
             With pressing the following button, you will start the practice phase:`,
@@ -275,7 +275,7 @@ const additional_info_eng = babeViews.view_generator('post_test',{
     trials: 1,
     name: 'post_test_eng',
     title: 'Additional information',
-    text: 'Please answer the some more questions: ',
+    text: 'Please answer some more questions: ',
     edu_other: 'other',
     edu_graduated_high_school: "Graduated High School (Abitur)"
 },{
@@ -384,7 +384,7 @@ const subjective_language_eng = babeViews.view_generator('post_test',{
     name: 'subjective_language_eng',
     title: 'Your language knowledge',
     text: 'Please answer the following questions:',
-    question1: "How proficient would you describe your language abilities of your native language for the following areas:",
+    question1:"How proficient would you describe your language abilities of your native language for the following areas:",
     question2:"How proficient would you describe your language abilities of your foreign language for the following areas:",
     class1:"speaking",
     class2:"writing",
@@ -409,7 +409,7 @@ const subjective_language_ger = babeViews.view_generator('post_test',{
     title: 'Ihre Sprachkenntnisse',
     text: 'Bitte beantworten Sie folgende Fragen: ',
     buttonText: 'Weiter',
-    question1: "Wie gut würden Sie die Kompetenzen in Ihrer Muttersprache für folgende Bereiche einschätzen:",
+    question1:"Wie gut würden Sie die Kompetenzen in Ihrer Muttersprache für folgende Bereiche einschätzen:",
     question2:"Wie gut würden Sie die Kompetenzen in Ihrer Fremdsprache für folgende Bereiche einschätzen:",
     class1:"Sprechen",
     class2:"Schreiben",
