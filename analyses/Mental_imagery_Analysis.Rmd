@@ -15,8 +15,8 @@ rstan_options(auto_write = TRUE)
 library(brms)
 
 # install faintr with 
-install.packages("HDInterval")
-devtools::install_github('michael-franke/bayes_mixed_regression_tutorial/faintr', build_vignettes = TRUE)
+#install.packages("HDInterval")
+#devtools::install_github('michael-franke/bayes_mixed_regression_tutorial/faintr', build_vignettes = TRUE)
 library(faintr)
 
 
@@ -37,7 +37,7 @@ data %>% glimpse()
 
 ```{r}
 # + native_language = languages, + the language test results
-(s_data <- select(data, experiment_id, trial_name, id, type, response, RT, language, native_language, foreign_language, foreign_dominance, speaking_native, listening_native, writing_native, speaking_foreign, listening_foreign, writing_foreign, reading_time, listening_time, speaking_time, learning_time))
+(s_data <- select(data, submission_id, trial_name, id, type, response, RT, language, native_language, foreign_language, foreign_dominance, speaking_native, listening_native, writing_native, speaking_foreign, listening_foreign, writing_foreign, reading_time, listening_time, speaking_time, learning_time))
 
 ```
 
@@ -45,38 +45,43 @@ data %>% glimpse()
 
 ```{r}
 #here we change the types of the variables
-m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), exp_language= factor(language), native_language = factor(native_language), foreign_language= factor(foreign_language), foreign_dominance = factor(foreign_dominance), subject_id = as.numeric(experiment_id), response = as.numeric(response), experiment_id = NULL, language = NULL)
+m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), exp_language= language, foreign_dominance = factor(foreign_dominance), subject_id = as.numeric(submission_id), response = factor(response, ordered=TRUE), experiment_id = NULL, language = NULL, submission_id = NULL)
 
 m_data
 ```
 
-
-```{r}
-#here we calculate the mean response for trial and the real task (not important)
-(s_data <- group_by(m_data, trial_name) %>% summarise(overall_mean = mean(response)))
-#+language means!
-```
 
 ```{r}
 #here we calculate the mean for the different types of the real task
-(s_data2 <- group_by(m_data, type) %>% filter(trial_name=="ratingScaleTask") %>% summarise(type_mean=mean(response)))
+#(s_data2 <- group_by(m_data, type) %>% filter(trial_name=="ratingScaleTask") %>% summarise(type_mean=mean(response)))
+```
+```{r}
+#check if the foreign or native language is used in this experiment and add the new column
+m_data <- m_data %>% 
+  mutate(language_eq = (exp_language == native_language))
 ```
 
 ```{r}
-#check if the foreign or native language is used in this experiment and add the new column
-m_data$language_equality <- identical(m_data[["exp_language"]],m_data[["native_language"]]) 
-m_data <- mutate(m_data, language_equality= factor(language_equality))
+#add exclusion criteria
+e_data <- group_by(m_data, subject_id) %>% filter(trial_name == "ratingScaleTask")
+e_data <- subset(e_data,select = c( response, subject_id))
+a <- table(e_data)
+e_data
 
+```
+
+```{r}
 #filter the data for our prerequisites
 #write down precise exclusion criteria here
-m_data %>% filter(foreign_dominance == 'no', identical(m_data[["foreign_language"]],m_data[["native_language"]]) == FALSE, foreign_language == 'English'| foreign_language == 'German', native_language == 'English'| native_language == 'German') 
+m_data <- filter(m_data, foreign_dominance == 'no', foreign_language == 'English'| foreign_language == 'German', native_language == 'English'| native_language == 'German') %>% subset(response !=0, foreign_language!=native_language)
 m_data
 ```
+
 
 
 ```{r}
 #here we calculate the mean for the different types of the real task and group by language equality (set foreign_language == native_language)
-(s_data3 <- group_by(m_data, type, language_equality) %>% filter(trial_name=="ratingScaleTask") %>% summarise(type_lang_mean=mean(response)))
+#(s_data3 <- group_by(m_data, type, language_eq) %>% filter(trial_name=="ratingScaleTask") %>% summarise(type_lang_mean=mean(response)))
 
 ```
 
@@ -85,10 +90,30 @@ m_data
 #brms model creation 
 
 fit_sc1 <- brm(
-formula = response ~ language_equality + type,
+formula = response ~ language_eq + type,
 data = m_data,
 family = cumulative("logit")
 )
 
+```
+```{r}
+fit_sc1
+```
+```{r}
+fit_sc2 <- brm(
+formula = response ~ language_eq + type + (1|subject_id),
+data = m_data,
+family = cumulative("logit")
+)
+```
+
+
+```{r}
+(loo(fit_sc1,fit_sc2))
+```
+
+```{r}
+post_samples <- posterior_samples(fit_sc1) %>% 
+  as_tibble()
 ```
 
