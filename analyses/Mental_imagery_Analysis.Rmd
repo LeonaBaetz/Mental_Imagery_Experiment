@@ -64,11 +64,28 @@ m_data <- m_data %>%
 ```{r}
 #add exclusion criteria
 e_data <- group_by(m_data, subject_id) %>% filter(trial_name == "ratingScaleTask")
-e_data <- subset(e_data,select = c( response, subject_id))
-a <- table(e_data)
-e_data
+e_data <- subset(e_data,select = c(response, subject_id))
 
+#CHECK 95% the same answer
+# get matrix that shows how often a subject clicked each level of vividness
+a <- table(e_data) %>% as.data.frame.matrix(a)
+
+# check if one level was chosen more than 95% (>= 33) and safe index
+b <- which(a >= 32, arr.ind=T)
+# save name of columns that have to be deleted
+col_names <-colnames(a[unique(b[,"col"])])
+
+new_data <- m_data[!(m_data$subject_id %in% col_names),]
+
+# CHECK IF 5 or more time "i dont know the answer was choosen
+row <-3
+c <- which(a[row,] >= 5, arr.ind=T)
+#print(a[3,])
+c
 ```
+
+
+
 
 ```{r}
 #filter the data for our prerequisites
@@ -113,7 +130,13 @@ family = cumulative("logit")
 ```
 
 ```{r}
-post_samples <- posterior_samples(fit_sc1) %>% 
+post_samples <- posterior_samples(fit_sc2) %>% 
   as_tibble()
+```
+
+```{r}
+effects <- marginal_effects(fit_sc2)
+effects$language_eq
+effects$type
 ```
 
