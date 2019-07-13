@@ -68,7 +68,8 @@ e_data <- subset(e_data,select = c(response, subject_id))
 
 #CHECK 95% the same answer
 # get matrix that shows how often a subject clicked each level of vividness
-a <- table(e_data) %>% as.data.frame.matrix(a)
+a <- table(e_data)
+a <- as.data.frame.matrix(a)
 
 # check if one level was chosen more than 95% (>= 33) and safe index
 b <- which(a >= 32, arr.ind=T)
@@ -77,11 +78,20 @@ col_names <-colnames(a[unique(b[,"col"])])
 
 new_data <- m_data[!(m_data$subject_id %in% col_names),]
 
-# CHECK IF 5 or more time "i dont know the answer was choosen
+# CHECK IF 5 or more times "i dont know the answer" was chosen
 row <-3
 c <- which(a[row,] >= 5, arr.ind=T)
 #print(a[3,])
-c
+
+e_data2 <- subset(new_data,select = c(response, subject_id))
+t2 <- table(e_data2)
+t2 <- as.data.frame.matrix(t2)
+#print(c[,"col"])
+#print(t2[20])
+col_names2 <- colnames(t2[unique(c[,"col"])])
+new_data2 <- new_data[!(new_data$subject_id %in% col_names2),]
+new_data2
+
 ```
 
 
