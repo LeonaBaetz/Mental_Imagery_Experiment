@@ -32,7 +32,7 @@ set.seed(123)
 data <- read_csv("C:/Users/Groen/Documents/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz (1).csv")
 data %>% glimpse()
 
-
+data
 ```
 
 
@@ -48,7 +48,6 @@ data %>% glimpse()
 #here we change the types of the variables
 m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), exp_language= language, foreign_dominance = factor(foreign_dominance), subject_id = as.numeric(submission_id), response = factor(response, ordered=TRUE), experiment_id = NULL, language = NULL, submission_id = NULL)
 
-m_data
 ```
 
 
@@ -62,14 +61,87 @@ m_data
 #check if the foreign or native language is used in this experiment and add the new column
 m_data <- m_data %>% 
   mutate(language_eq = (exp_language == native_language))
+
+#filter out the trial tasks as they are irrelevant for us
+m_data <- m_data %>% filter(trial_name == "ratingScaleTask")
+
 ```
 
 #Exclusion Criteria:
 ```{r}
 #Counting number of overall excluded participants
 start_participants = nrow(unique(m_data[,"subject_id"]))
+start_num_sentences = nrow(m_data)
 
 ```
+## a. Excluding Criteria regarding the participants:
+
+### Criteria i:
+Participants having neither English nor German as native language are going to be excluded from the analysis
+```{r}
+a = nrow(unique(m_data[,"subject_id"]))
+print(paste("Number of Participants before exclusion i: ",nrow(unique(m_data[,"subject_id"]))))
+
+#Exclude
+new_data <- m_data %>% filter(native_language == "German" | native_language == "English")
+
+
+print(paste("Number of Participants after exclusion i: ", nrow(unique(new_data[,"subject_id"]))))
+b= nrow(unique(new_data[,"subject_id"]))
+print(paste("Excluded: ", a-b))
+
+```
+
+### Criteria ii:
+Participants having neither English nor German as a foreign language are going to be excluded from the analysis
+```{r}
+a = nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants before exclusion ii: ",nrow(unique(new_data[,"subject_id"]))))
+
+
+#Exclude
+new_data <- new_data %>% filter(foreign_language == "German" | foreign_language == "English")
+
+
+print(paste("Number of Participants after exclusion i: ", nrow(unique(new_data[,"subject_id"]))))
+b= nrow(unique(new_data[,"subject_id"]))
+print(paste("Excluded: ", a-b))
+
+```
+
+
+### Criteria iii:
+Participants where their foreign language is their dominant language are going to be excluded: Participants that have spoken their foreign language in their homes and/or if they are speaking in their foreign language more often (in their daily life) than their actual native language are going to be excluded from the analysis
+```{r}
+a = nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants before exclusion iii: ",nrow(unique(new_data[,"subject_id"]))))
+
+
+#Exclude
+new_data <- new_data %>% filter(foreign_dominance == 'no')
+
+print(paste("Number of Participants after exclusion iii: ", nrow(unique(new_data[,"subject_id"]))))
+b= nrow(unique(new_data[,"subject_id"]))
+print(paste("Excluded: ", a-b))
+```
+
+### Criteria iv:
+Exclude any participant which native language is equal to their foreign language
+```{r}
+a = nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants before exclusion iV: ",nrow(unique(new_data[,"subject_id"]))))
+m_data
+
+
+#Exclude
+new_data <- new_data %>% filter(native_language != foreign_language)
+
+print(paste("Number of Participants after exclusion iV: ", nrow(unique(new_data[,"subject_id"]))))
+b= nrow(unique(new_data[,"subject_id"]))
+print(paste("Excluded: ", a-b))
+```
+
+
 
 ## Specific Criteria:
 
@@ -77,11 +149,12 @@ start_participants = nrow(unique(m_data[,"subject_id"]))
 If a participant has chosen the exact same rating in 95% or more of the 35 stimuli (≥ 95% of the same rate), then this participant is going to be excluded from the analysis
 
 ```{r}
-print(paste("Number of Participants before exclusion i: ",nrow(unique(m_data[,"subject_id"]))))
+a = nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants before exclusion i: ",nrow(unique(new_data[,"subject_id"]))))
 
 # CHECK 95% the same answer
 # only check main trials and look at subject id
-e_data <- group_by(m_data, subject_id) %>% filter(trial_name == "ratingScaleTask")
+e_data <- group_by(m_data, subject_id)
 e_data <- subset(e_data,select = c(response, subject_id))
 
 # get matrix that shows how often a subject clicked each level of vividness
@@ -97,7 +170,9 @@ col_names <-colnames(t1[unique(b[,"col"])])
 
 new_data <- m_data[!(m_data$subject_id %in% col_names),]
 
-print(paste("Number of Participants before exclusion i: ", nrow(unique(new_data[,"subject_id"]))))
+print(paste("Number of Participants after exclusion i: ", nrow(unique(new_data[,"subject_id"]))))
+b= nrow(unique(new_data[,"subject_id"]))
+print(paste("Excluded: ", a-b))
 
 
 ```
@@ -107,7 +182,10 @@ If a participant has chosen the option “I don’t understand the sentence” 5
 
 
 ```{r}
+a = nrow(unique(new_data[,"subject_id"]))
 print(paste("Number of Participants before exclusion ii: ",nrow(unique(new_data[,"subject_id"]))))
+
+
 # CHECK IF 5 or more times "i dont know the answer" was chosen
 t2 <- table(e_data2) 
 t2 <- as.data.frame.matrix(t2)
@@ -119,8 +197,10 @@ c <- which(t2[row,] >= 5, arr.ind=T)
 
 col_names2 <- colnames(t2[unique(c[,"col"])])
 new_data <- new_data[!(new_data$subject_id %in% col_names2),]
-print(paste("Number of Participants before exclusion ii: ", nrow(unique(new_data[,"subject_id"]))))
 
+print(paste("Number of Participants after exclusion ii: ", nrow(unique(new_data[,"subject_id"]))))
+b= nrow(unique(new_data[,"subject_id"]))
+print(paste("Excluded: ", a-b))
 
 ```
 
@@ -128,39 +208,46 @@ print(paste("Number of Participants before exclusion ii: ", nrow(unique(new_data
 We are going to look at the overall distribution of data and exclude every trial of a participant that deviates three standard deviations above and below the mean with respect to the participants' reaction time. If for one participant there are five trials or more where the reaction time deviates three standard deviations above and below the mean reaction time, the whole participant is going to be excluded from the analysis. We will also check how the analysis differs with and without these participants.
 
 ```{r}
+a = nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants before exclusion iii: ",nrow(unique(new_data[,"subject_id"]))))
+
+#get sd and mean
 std<-apply(new_data[5], 2, sd)
 mean <- apply(new_data[5], 2, mean)
 lower_bound = mean-3*std
 upper_bound = mean+3*std
 
-std_excl <- new_data %>% mutate(RT_exc_critieria =RT <= lower_bound || RT >= upper_bound)%>% group_by(subject_id) %>% filter(trial_name == "ratingScaleTask") %>% subset(select = c(RT_exc_critieria, subject_id))
+std_excl <- new_data %>% mutate(RT_exc_critieria =RT <= lower_bound || RT >= upper_bound)%>% group_by(subject_id) %>% subset(select = c(RT_exc_critieria, subject_id))
 
 
-###################PROBLEM##########
-#hier fehlt uns im daten eine stelle wo das "TRUE" sein müsste...daher hat die table nur eine spalte 
-#daher füg ich ein "Fake" TRUE hinzu um unten zu testen
-#test
-std_excl[nrow(std_excl) + 1,]= list(TRUE,999)
-##
-
-t3[2,] #funktioniert
-t3[TRUE,] #funktioniert nicht (WARUM?!?)
+t3 <- table(std_excl) %>% as.data.frame.matrix()
 
 # only continue if there are at least one exclusions at all (else the table does not have the TRUE row)
-if(nrow(t3 != 2)){
-  d <- which(t3[,TRUE] >= 5, arr.ind=T)
+if(nrow(t3 == 2)){
+  d <- which(t3["TRUE",] >= 5, arr.ind=T)
+  # save name of columns that have to be deleted
   col_names3 <- colnames(t3[unique(d[,"col"])])
   #exclude
-  print(col_names3)
-  #new_data <- new_data[!(new_data$subject_id %in% col_names3),]
+  new_data <- new_data[!(new_data$subject_id %in% col_names3),]
 }
 
-
-
-
-
+print(paste("Number of Participants after exclusion iii: ", nrow(unique(new_data[,"subject_id"]))))
+b= nrow(unique(new_data[,"subject_id"]))
+print(paste("Excluded: ", a-b))
 ```
 
+
+### criteria iv:
+Any sentence that received the response “I don’t understand the sentence” is useless for our purpose of analysis, thus for each participant that was not excluded via ii. but made use of this choice, the respective sentence(s) are excluded from the participants analysis, however the remaining ones are used.
+
+```{r}
+a = nrow(new_data)
+new_data <- new_data %>% filter(response != 0)
+b = a - nrow(new_data)
+
+print(paste("number of excluded sentences: ", b))
+
+```
 
 
 ## Results of Exclusion
@@ -171,6 +258,10 @@ num_excluded = nrow(unique(m_data[,"subject_id"]))-nrow(unique(new_data[,"subjec
 print(paste("Started with ", start_participants, " participants"))
 print(paste("Overall Number of excluded participants: ", num_excluded))
 print(paste("Remaining number of Participants: ", start_participants - num_excluded))
+exc_sentences = start_num_sentences - nrow(new_data)
+print(paste("Started with ", start_num_sentences, " sentences"))
+print(paste("Overall number of removed sentences", exc_sentences))
+print(paste("Remaining number of sentences", nrow(new_data)))
 
 ```
 
@@ -178,8 +269,8 @@ print(paste("Remaining number of Participants: ", start_participants - num_exclu
 ```{r}
 #filter the data for our prerequisites
 #write down precise exclusion criteria here
-m_data <- filter(m_data, foreign_dominance == 'no', foreign_language == 'English'| foreign_language == 'German', native_language == 'English'| native_language == 'German') %>% subset(response !=0, foreign_language!=native_language)
-m_data
+#m_data <- filter(m_data, foreign_dominance == 'no', foreign_language == 'English'| foreign_language == 'German', native_language == 'English'| native_language == 'German') %>% subset(response !=0, foreign_language!=native_language)
+#m_data
 ```
 
 
@@ -201,6 +292,8 @@ family = cumulative("logit")
 )
 
 ```
+
+
 ```{r}
 fit_sc1
 ```
