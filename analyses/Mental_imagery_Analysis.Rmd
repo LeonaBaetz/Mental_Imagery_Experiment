@@ -4,6 +4,7 @@ output: html_document
 ---
 
 ```{r}
+#setwd("~/Mental_Imagery_Experiment")
 library(tidyverse)
 
 library(rstan)
@@ -28,7 +29,7 @@ set.seed(123)
 
 ```{r}
 # your code here
-(data <- read_csv("C:/Users/leado/XP_Lab/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz (1).csv"))
+data <- read_csv("C:/Users/Groen/Documents/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz (1).csv")
 data %>% glimpse()
 
 
@@ -55,46 +56,123 @@ m_data
 #here we calculate the mean for the different types of the real task
 #(s_data2 <- group_by(m_data, type) %>% filter(trial_name=="ratingScaleTask") %>% summarise(type_mean=mean(response)))
 ```
+
+
 ```{r}
 #check if the foreign or native language is used in this experiment and add the new column
 m_data <- m_data %>% 
   mutate(language_eq = (exp_language == native_language))
 ```
 
+#Exclusion Criteria:
 ```{r}
-#add exclusion criteria
+#Counting number of overall excluded participants
+start_participants = nrow(unique(m_data[,"subject_id"]))
+
+```
+
+## Specific Criteria:
+
+### Criteria i:
+If a participant has chosen the exact same rating in 95% or more of the 35 stimuli (≥ 95% of the same rate), then this participant is going to be excluded from the analysis
+
+```{r}
+print(paste("Number of Participants before exclusion i: ",nrow(unique(m_data[,"subject_id"]))))
+
+# CHECK 95% the same answer
+# only check main trials and look at subject id
 e_data <- group_by(m_data, subject_id) %>% filter(trial_name == "ratingScaleTask")
 e_data <- subset(e_data,select = c(response, subject_id))
 
-#CHECK 95% the same answer
 # get matrix that shows how often a subject clicked each level of vividness
-a <- table(e_data)
-a <- as.data.frame.matrix(a)
+t1 <- table(e_data)
+t1 <- as.data.frame.matrix(t1)
+
+
 
 # check if one level was chosen more than 95% (>= 33) and safe index
-b <- which(a >= 32, arr.ind=T)
+b <- which(t1 >= 32, arr.ind=T)
 # save name of columns that have to be deleted
-col_names <-colnames(a[unique(b[,"col"])])
+col_names <-colnames(t1[unique(b[,"col"])])
 
 new_data <- m_data[!(m_data$subject_id %in% col_names),]
 
-# CHECK IF 5 or more times "i dont know the answer" was chosen
-row <-3
-c <- which(a[row,] >= 5, arr.ind=T)
-#print(a[3,])
+print(paste("Number of Participants before exclusion i: ", nrow(unique(new_data[,"subject_id"]))))
 
-e_data2 <- subset(new_data,select = c(response, subject_id))
-t2 <- table(e_data2)
+
+```
+
+### Criteria ii:
+If a participant has chosen the option “I don’t understand the sentence” 5 times or more (≥ 5x “I don’t understand”), then this participant is going to be excluded from the analysis
+
+
+```{r}
+print(paste("Number of Participants before exclusion ii: ",nrow(unique(new_data[,"subject_id"]))))
+# CHECK IF 5 or more times "i dont know the answer" was chosen
+t2 <- table(e_data2) 
 t2 <- as.data.frame.matrix(t2)
-#print(c[,"col"])
-#print(t2[20])
+
+# check given row was chosen more 5 times and safe index
+row <- 1
+c <- which(t2[row,] >= 5, arr.ind=T)
+# save name of columns that have to be deleted
+
 col_names2 <- colnames(t2[unique(c[,"col"])])
-new_data2 <- new_data[!(new_data$subject_id %in% col_names2),]
-new_data2
+new_data <- new_data[!(new_data$subject_id %in% col_names2),]
+print(paste("Number of Participants before exclusion ii: ", nrow(unique(new_data[,"subject_id"]))))
+
+
+```
+
+### criteria iii:
+We are going to look at the overall distribution of data and exclude every trial of a participant that deviates three standard deviations above and below the mean with respect to the participants' reaction time. If for one participant there are five trials or more where the reaction time deviates three standard deviations above and below the mean reaction time, the whole participant is going to be excluded from the analysis. We will also check how the analysis differs with and without these participants.
+
+```{r}
+std<-apply(new_data[5], 2, sd)
+mean <- apply(new_data[5], 2, mean)
+lower_bound = mean-3*std
+upper_bound = mean+3*std
+
+std_excl <- new_data %>% mutate(RT_exc_critieria =RT <= lower_bound || RT >= upper_bound)%>% group_by(subject_id) %>% filter(trial_name == "ratingScaleTask") %>% subset(select = c(RT_exc_critieria, subject_id))
+
+
+###################PROBLEM##########
+#hier fehlt uns im daten eine stelle wo das "TRUE" sein müsste...daher hat die table nur eine spalte 
+#daher füg ich ein "Fake" TRUE hinzu um unten zu testen
+#test
+std_excl[nrow(std_excl) + 1,]= list(TRUE,999)
+##
+
+t3[2,] #funktioniert
+t3[TRUE,] #funktioniert nicht (WARUM?!?)
+
+# only continue if there are at least one exclusions at all (else the table does not have the TRUE row)
+if(nrow(t3 != 2)){
+  d <- which(t3[,TRUE] >= 5, arr.ind=T)
+  col_names3 <- colnames(t3[unique(d[,"col"])])
+  #exclude
+  print(col_names3)
+  #new_data <- new_data[!(new_data$subject_id %in% col_names3),]
+}
+
+
+
+
 
 ```
 
 
+
+## Results of Exclusion
+
+```{r}
+# Count how many participants have been excluded:
+num_excluded = nrow(unique(m_data[,"subject_id"]))-nrow(unique(new_data[,"subject_id"]))
+print(paste("Started with ", start_participants, " participants"))
+print(paste("Overall Number of excluded participants: ", num_excluded))
+print(paste("Remaining number of Participants: ", start_participants - num_excluded))
+
+```
 
 
 ```{r}
