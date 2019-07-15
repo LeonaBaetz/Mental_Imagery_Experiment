@@ -29,7 +29,7 @@ set.seed(123)
 
 ```{r}
 # your code here
-data <- read_csv("C:/Users/Groen/Documents/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz (1).csv")
+data <- read_csv("C:/Users/Groen/Documents/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
 data %>% glimpse()
 
 data
@@ -130,7 +130,7 @@ Exclude any participant which native language is equal to their foreign language
 ```{r}
 a = nrow(unique(new_data[,"subject_id"]))
 print(paste("Number of Participants before exclusion iV: ",nrow(unique(new_data[,"subject_id"]))))
-m_data
+
 
 
 #Exclude
@@ -154,7 +154,7 @@ print(paste("Number of Participants before exclusion i: ",nrow(unique(new_data[,
 
 # CHECK 95% the same answer
 # only check main trials and look at subject id
-e_data <- group_by(m_data, subject_id)
+e_data <- group_by(new_data, subject_id)
 e_data <- subset(e_data,select = c(response, subject_id))
 
 # get matrix that shows how often a subject clicked each level of vividness
@@ -168,7 +168,7 @@ b <- which(t1 >= 32, arr.ind=T)
 # save name of columns that have to be deleted
 col_names <-colnames(t1[unique(b[,"col"])])
 
-new_data <- m_data[!(m_data$subject_id %in% col_names),]
+new_data <- new_data[!(new_data$subject_id %in% col_names),]
 
 print(paste("Number of Participants after exclusion i: ", nrow(unique(new_data[,"subject_id"]))))
 b= nrow(unique(new_data[,"subject_id"]))
