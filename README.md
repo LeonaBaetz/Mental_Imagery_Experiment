@@ -16,4 +16,6 @@ Let's meet Thursdays during the regular timeslot of PsyLab :) and of course any 
 
 ### First Draft Design Plan
 Google Docs Link for editing
-https://docs.google.com/document/d/17NYOGDbZc-3gmFd_WZF2R30e93_hZ07W4ra9DWyn7tY/edit?usp=sharing
+https://docs.google.com/document/d/17NYOGDbZc-3gmFd_WZF2R30e93_hZ07W4ra9DWyn7tY/edit?usp=sharing.
+
+
