@@ -194,6 +194,9 @@ If a participant has chosen the option “I don’t understand the sentence” 5
 a = nrow(unique(new_data[,"subject_id"]))
 print(paste("Number of Participants before exclusion ii: ", a))
 
+# only check main trials and look at subject id
+e_data2 <- group_by(new_data, subject_id)
+e_data2 <- subset(e_data2,select = c(response, subject_id))
 
 # CHECK IF 5 or more times "i dont know the answer" was chosen
 t2 <- table(e_data2) 
