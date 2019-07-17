@@ -2,6 +2,9 @@
 title: "Mental_Imagery_analysis"
 output: html_document
 ---
+#Analysis
+##Preparing the Data
+###Librarys used
 
 ```{r}
 #setwd("~/Mental_Imagery_Experiment")
@@ -25,43 +28,27 @@ set.seed(123)
 
 ```
 
-
+###Reading data
 
 ```{r}
 # your code here
 
-data <- read_csv("C:/Users/leado/XP_Lab/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
-data %>% glimpse()
+#data <- read_csv("C:/Users/leado/XP_Lab/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
+#data %>% glimpse()
 
-
-# data <- read_csv("C:/Users/Groen/Documents/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
+#Sven PC1
+#data <- read_csv("C:/Users/Groen/Documents/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
 # data %>% glimpse()
 
-data
+#Sven PC2
+data <- read_csv("C:/Users/SvenG/OneDrive/Sommersemester 2019/Experimental Psychology/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
+
+data %>% glimpse()
 
 ```
+###Selecting only relevant columns and changing their data type
 
-
-```{r}
-# + native_language = languages, + the language test results
-(s_data <- select(data, submission_id, trial_name, id, type, response, RT, language, native_language, foreign_language, foreign_dominance, speaking_native, listening_native, writing_native, speaking_foreign, listening_foreign, writing_foreign, reading_time, listening_time, speaking_time, learning_time))
-
-```
-
-
-
-```{r}
-#here we change the types of the variables
-m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), exp_language= language, foreign_dominance = factor(foreign_dominance), subject_id = as.numeric(submission_id), response = factor(response, ordered=TRUE), experiment_id = NULL, language = NULL, submission_id = NULL)
-
-```
-
-
-```{r}
-#here we calculate the mean for the different types of the real task
-#(s_data2 <- group_by(m_data, type) %>% filter(trial_name=="ratingScaleTask") %>% summarise(type_mean=mean(response)))
-```
-
+####Preparing for Analysis
 
 ```{r}
 #check if the foreign or native language is used in this experiment and add the new column
@@ -71,6 +58,68 @@ m_data <- m_data %>%
 #filter out the trial tasks as they are irrelevant for us
 m_data <- m_data %>% filter(trial_name == "ratingScaleTask")
 
+
+#selecting relevant columns
+s_data <- select(data, submission_id, trial_name, id, type, response, RT, language, native_language, foreign_language, foreign_dominance, speaking_native, listening_native, writing_native, speaking_foreign, listening_foreign, writing_foreign, reading_time, listening_time, speaking_time, learning_time,age,education, gender,timeSpent) %>% filter(trial_name == "ratingScaleTask")
+
+#here we change the types of the variables
+m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), exp_language= language, foreign_dominance = factor(foreign_dominance), subject_id = as.numeric(submission_id), response = factor(response, ordered=TRUE), experiment_id = NULL, language = NULL, submission_id = NULL, id = factor(id),native_language = factor(native_language), foreign_language=factor(foreign_language) , education = factor(education), gender = factor(gender))
+m_data
+
+```
+###Explanation and keys of the selected Variables
+
+
+###General Overview of the dataset
+```{r}
+d_individual_summary <- m_data  %>% group_by(subject_id) %>%  summarize(mean_RT = mean(RT), timeSpent=mean(timeSpent), writing_foreign = mean(writing_foreign), speaking_foreign= mean(speaking_foreign), listening_foreign = mean(listening_foreign), writing_native = mean(writing_native), speaking_native = mean(speaking_native),listening_native = mean(listening_native),reading_time = mean(reading_time), listening_time= mean(listening_time), speaking_time = mean(speaking_time), learning_time=mean(learning_time), age = mean(age), education = unique(education),gender = unique(gender), exp_language = unique(exp_language), native_language = unique(native_language), foreign_language= unique(foreign_language))
+
+#gender was presented in German and English
+#this translates the german version into english
+d_individual_summary$gender <- ifelse(d_individual_summary$gender == "männlich" & d_individual_summary$gender != "male" & d_individual_summary$gender != "female", "male","female")
+
+#same with education:
+#TODO
+
+```
+
+####Age Distribution
+
+```{r}
+#Barplot
+ggplot(m_data, aes(x=age)) + theme_bw() + geom_bar() 
+
+age_mean <-(colMeans( m_data[ , c("age")],na.rm = TRUE))
+print(paste("The average age of our participants is: ", 
+(colMeans( m_data[ , c("age")],na.rm = TRUE)), "years"))
+
+```
+
+####Language Levels
+```{r}
+m_data
+ggplot(m_data, aes(x=native_language)) + theme_bw() + geom_bar()
+ggplot(m_data, aes(x=foreign_language)) + theme_bw() + geom_bar()
+```
+The majority of our participants are German native speaker with English as their foreign language
+
+
+
+```{r}
+#MAKE CODE MORE EASY
+language_summary <- (colMeans( m_data[ , c("writing_foreign", "speaking_foreign", "listening_foreign", "writing_native", "listening_native","speaking_native")],na.rm = TRUE)) %>% as.matrix()
+colnames(language_summary) <- c("rating")
+
+library(reshape2)
+tmp<- melt(language_summary)
+names(tmp) = c("language_skill", "", "value")
+
+
+ggplot(a, aes(x=language_skill,y=value)) +
+    geom_bar(stat="identity", position="dodge", colour="black") 
+
+print("The subjective anguage Ratings: ")
+print(language_summary)
 ```
 
 #Exclusion Criteria:
