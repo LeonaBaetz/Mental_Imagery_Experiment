@@ -1,10 +1,13 @@
 ---
 title: "Mental_Imagery_analysis"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
 ---
-#Analysis
-##Preparing the Data
-###Librarys used
+# Analysis
+## Preparing the Data
+### Librarys used
 
 ```{r}
 #setwd("~/Mental_Imagery_Experiment")
@@ -22,13 +25,14 @@ library(brms)
 #install.packages("HDInterval")
 #devtools::install_github('michael-franke/bayes_mixed_regression_tutorial/faintr', build_vignettes = TRUE)
 library(faintr)
+library(reshape2)
 
 
 set.seed(123)
 
 ```
 
-###Reading data
+### Reading data
 
 ```{r}
 # your code here
@@ -46,9 +50,9 @@ data <- read_csv("C:/Users/SvenG/OneDrive/Sommersemester 2019/Experimental Psych
 data %>% glimpse()
 
 ```
-###Selecting only relevant columns and changing their data type
+### Selecting only relevant columns and changing their data type
 
-####Preparing for Analysis
+#### Preparing for Analysis
 
 ```{r}
 #selecting relevant columns
@@ -56,7 +60,7 @@ s_data <- select(data, submission_id, trial_name, id, type, response, RT, langua
 
 #here we change the types of the variables
 m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), exp_language= language, foreign_dominance = factor(foreign_dominance), subject_id = as.numeric(submission_id), response = factor(response, ordered=TRUE), experiment_id = NULL, language = NULL, submission_id = NULL, id = factor(id),native_language = factor(native_language), foreign_language=factor(foreign_language) , education = factor(education), gender = factor(gender))
-m_data
+
 
 #check if the foreign or native language is used in this experiment and add the new column
 m_data <- m_data %>% 
@@ -66,10 +70,10 @@ m_data <- m_data %>%
 m_data <- m_data %>% filter(trial_name == "ratingScaleTask")
 
 ```
-###Explanation and keys of the selected Variables
+### Explanation and keys of the selected Variables
 
 
-###General Overview of the dataset
+### General Overview of the dataset
 ```{r}
 d_individual_summary <- m_data  %>% group_by(subject_id) %>%  summarize(mean_RT = mean(RT), timeSpent=mean(timeSpent), writing_foreign = mean(writing_foreign), speaking_foreign= mean(speaking_foreign), listening_foreign = mean(listening_foreign), writing_native = mean(writing_native), speaking_native = mean(speaking_native),listening_native = mean(listening_native),reading_time = mean(reading_time), listening_time= mean(listening_time), speaking_time = mean(speaking_time), learning_time=mean(learning_time), age = mean(age), education = unique(education),gender = unique(gender), exp_language = unique(exp_language), native_language = unique(native_language), foreign_language= unique(foreign_language))
 
@@ -77,12 +81,14 @@ d_individual_summary <- m_data  %>% group_by(subject_id) %>%  summarize(mean_RT 
 #this translates the german version into english
 d_individual_summary$gender <- ifelse(d_individual_summary$gender == "männlich" & d_individual_summary$gender != "male" & d_individual_summary$gender != "female", "male","female")
 
+d_individual_summary
+
 #same with education:
 #TODO
 
 ```
 
-####Age Distribution
+#### Age Distribution
 
 ```{r}
 #Barplot
@@ -101,7 +107,7 @@ age_median))
 One can see that the majority of our participants is around 22 years old.
 
 
-####Language Levels
+#### Language Levels
 
 ```{r}
 ggplot(d_individual_summary, aes(x=native_language)) + theme_bw() + geom_bar()
@@ -110,18 +116,18 @@ ggplot(d_individual_summary, aes(x=foreign_language)) + theme_bw() + geom_bar()
 The majority of our participants are German native speaker with English as their foreign language
 
 
-#####Subjective Language Proficiency
+##### Subjective Language Proficiency
 ```{r}
 #MAKE CODE MORE EASY
 language_summary <- (colMeans( m_data[ , c("writing_foreign", "speaking_foreign", "listening_foreign", "writing_native", "listening_native","speaking_native")],na.rm = TRUE)) %>% as.matrix()
 colnames(language_summary) <- c("rating")
 
-library(reshape2)
+
 tmp<- melt(language_summary)
 names(tmp) = c("language_skill", "", "value")
 
 
-ggplot(a, aes(x=language_skill,y=value)) +
+ggplot(tmp, aes(x=language_skill,y=value)) +
   geom_bar(stat="identity", position="dodge", colour="black")  +
   theme_bw()
 
@@ -138,12 +144,12 @@ keys to the numbers:
 6 = "totally proficient".
 
 
-#####"Objective" language Proficiency
+##### "Objective" language Proficiency
 
 ----> TODO <----
 
 
-#Exclusion Criteria:
+# Exclusion Criteria:
 ```{r}
 #Counting number of overall excluded participants
 start_participants = nrow(unique(m_data[,"subject_id"]))
@@ -284,7 +290,7 @@ print(paste("Excluded: ", a-b))
 
 ```
 
-### criteria iii:
+### Criteria iii:
 We are going to look at the overall distribution of data and exclude every trial of a participant that deviates three standard deviations above and below the mean with respect to the participants' reaction time. If for one participant there are five trials or more where the reaction time deviates three standard deviations above and below the mean reaction time, the whole participant is going to be excluded from the analysis. We will also check how the analysis differs with and without these participants.
 
 ```{r}
@@ -318,7 +324,7 @@ print(paste("Excluded: ", a-b))
 ```
 
 
-### criteria iv:
+### Criteria iv:
 Any sentence that received the response “I don’t understand the sentence” is useless for our purpose of analysis, thus for each participant that was not excluded via ii. but made use of this choice, the respective sentence(s) are excluded from the participants analysis, however the remaining ones are used.
 
 ```{r}
@@ -331,7 +337,7 @@ print(paste("number of excluded sentences: ", b))
 ```
 
 
-## Results of Exclusion
+## Results of Exclusion:
 
 ```{r}
 # Count how many participants have been excluded:
@@ -346,8 +352,8 @@ print(paste("Remaining number of sentences", nrow(new_data)))
 
 ```
 
-#Bayesian Regression
-##Creating and comparing models
+# Bayesian Regression
+## Creating and comparing models
 
 ```{r}
 #brms model creation 
