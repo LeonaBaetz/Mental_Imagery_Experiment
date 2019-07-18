@@ -474,13 +474,17 @@ Moreover, we suggest that sensory experiences are easier (more vividly) to simul
 H3: More specific, we hypothesize that mental images evoked by visual simulations have higher vividness-ratings than those evoked by the other six modalities
 
 
+When only looking at the mean response of the different modalities one can see that the visual response rating is not the highest.
+```{r}
+analyse_data %>% group_by(type) %>% summarise(mean_response = mean(response))
+```
+
 
 If one looks at the output plot of the marginal effects2$type:language_eq:
 
 ```{r}
 effects2$`type:language_eq` %>% select(type, language_eq,estimate__,lower__,upper__)
 modality_language_plot
-
 ```
 
 it seems obvious that H3 is false. One can see clearly that the rating of vividness for "visual" is not significantly higher than all the other modalities.
