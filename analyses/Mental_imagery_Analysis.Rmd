@@ -30,14 +30,14 @@ set.seed(123)
 
 ```{r}
 # your code here
-#data <- read_csv("C:/Users/leado/XP_Lab/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
-#data %>% glimpse()
+data <- read_csv("C:/Users/leado/XP_Lab/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
+data %>% glimpse()
 #Sven PC1
 #data <- read_csv("C:/Users/Groen/Documents/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
 # data %>% glimpse()
 #Sven PC2
-data <- read_csv("C:/Users/SvenG/OneDrive/Sommersemester 2019/Experimental Psychology/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
-data %>% glimpse()
+# data <- read_csv("C:/Users/SvenG/OneDrive/Sommersemester 2019/Experimental Psychology/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
+# data %>% glimpse()
 ```
 ### Selecting only relevant columns and changing their data type
 
@@ -61,12 +61,28 @@ m_data <- m_data %>% filter(trial_name == "ratingScaleTask")
 ### General Overview of the dataset
 ```{r}
 d_individual_summary <- m_data  %>% group_by(subject_id) %>%  summarize(mean_RT = mean(RT), timeSpent=mean(timeSpent), writing_foreign = mean(writing_foreign), speaking_foreign= mean(speaking_foreign), listening_foreign = mean(listening_foreign), writing_native = mean(writing_native), speaking_native = mean(speaking_native),listening_native = mean(listening_native),reading_time = mean(reading_time), listening_time= mean(listening_time), speaking_time = mean(speaking_time), learning_time=mean(learning_time), age = mean(age), education = unique(education),gender = unique(gender), exp_language = unique(exp_language), native_language = unique(native_language), foreign_language= unique(foreign_language))
+#print(d_individual_summary)
+
 #gender was presented in German and English
 #this translates the german version into english
 d_individual_summary$gender <- ifelse(d_individual_summary$gender == "männlich" & d_individual_summary$gender != "male" & d_individual_summary$gender != "female", "male","female")
-d_individual_summary
+
+
 #same with education:
-#TODO
+for (i in 1:nrow(d_individual_summary)){
+  
+  if(!is.na(d_individual_summary[i,"education"]) & d_individual_summary[i,"education"] == "anderes")
+  {d_individual_summary[i,"education"] = "other"}
+  if(!is.na(d_individual_summary[i,"education"]) & d_individual_summary[i,"education"] == "Abitur")
+  {d_individual_summary[i,"education"] = "Graduated High School (Abitur)"}
+  if(!is.na(d_individual_summary[i,"education"]) & d_individual_summary[i,"education"] == "Hochschulabschluss (Bachelor/Master)")
+  {d_individual_summary[i,"education"] = "Graduated College"}
+  if(!is.na(d_individual_summary[i,"education"]) & d_individual_summary[i,"education"] == "Höherer Abschluss")
+  {d_individual_summary[i,"education"] = "Higher Degree"}
+}
+print(d_individual_summary)
+
+
 ```
 
 #### Age Distribution
