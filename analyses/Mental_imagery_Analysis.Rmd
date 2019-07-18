@@ -118,6 +118,8 @@ The majority of our participants are German native speaker with English as their
 
 ##### Subjective Language Proficiency
 ```{r}
+
+#spread/gather!!!!
 #MAKE CODE MORE EASY
 language_summary <- (colMeans( m_data[ , c("writing_foreign", "speaking_foreign", "listening_foreign", "writing_native", "listening_native","speaking_native")],na.rm = TRUE)) %>% as.matrix()
 colnames(language_summary) <- c("rating")
@@ -375,19 +377,69 @@ family = cumulative("logit")
 )
 ```
 
+```{r}
+fit_sc3 <- brm(
+formula = response ~ type * language_eq + (1|subject_id),
+data = m_data,
+family = cumulative("logit")
+)
+```
+
 
 ```{r}
 (loo(fit_sc1,fit_sc2))
 ```
 
 ```{r}
-post_samples <- posterior_samples(fit_sc2) %>% 
+post_samples <- posterior_samples(fit_sc3) %>% 
   as_tibble()
+
+fit_sc3
+post_samples
 ```
 
 ```{r}
-effects <- marginal_effects(fit_sc2)
-effects$language_eq
-effects$type
+effects2 <- marginal_effects(fit_sc3)
 ```
+## Testing the hypothesis
+
+### Main hypothesis:
+
+#### H1:
+We hypothesize that using a foreign language reduces the vividness of mental imagery or simulations compared to the vividness of mental imagery or stimulation evoked by the usage of the native language:
+H1: On average the overall-ratings for "vividness" in the condition "foreign language" are smaller than in the condition "native language".
+
+```{r}
+
+```
+
+
+#### H2:
+ Furthermore we hypothesize, that the vividness of mental imagery or simulation of a (sensory) experience differs across different modalities between the two types of language:
+H2: On average the modality-specific-ratings for "vividness" in the condition "foreign language" are smaller (less vivid) than in the condition "native language" (more vivid). 
+
+```{r}
+
+```
+
+
+### Hypothesis of relationships between variables:
+
+#### H3:
+Sensory experiences are (on average) for some modalities easier (more vividly) imagined or simulated mentally compared to other modalities, i.e. we hypothesize that visual experiences are easier to mentally imagine than imagining experiences by the other six modalities:
+H3: On average mental images evoked by visual experiences have higher vividness-ratings than those evoked by the other six modalities.
+
+```{r}
+
+```
+
+
+#### H4:
+Sensory experiences are (on average) harder (less vividly) imagined or simulated mentally for some modalities compared to other modalities, i.e. we hypothesize that olfactory and gustatory experiences are harder to imagine than the five other modalities: 
+H4: On average mental images evoked by olfactory or gustatory experiences have lower vividness-ratings than those evoked by the other five modalities
+
+```{r}
+
+```
+
 
