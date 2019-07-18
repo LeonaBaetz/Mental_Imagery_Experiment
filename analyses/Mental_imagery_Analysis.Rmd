@@ -438,16 +438,6 @@ new_data %>% group_by(type) %>% ggplot(aes(x=type)) + geom_bar()
 The amount of answered sentences for each modality varies. Therefore, we think it might be problematic to just use the mean() function to calculate the overall estimate + lower and upper bound. We are not sure if the result would still be accurate and correct.
 
 
-
-```{r}
-
-```
-
-
-
-
-
-
 #### H2:
  Furthermore we hypothesize, that the vividness of mental imagery or simulation of a (sensory) experience differs across different modalities between the two types of language:
 H2: On average the modality-specific-ratings for "vividness" in the condition "foreign language" are smaller (less vivid) than in the condition "native language" (more vivid).
@@ -517,7 +507,8 @@ family = cumulative("logit")
 )'
 
 
-emmeans(fit_sc2,~ type, type = "response")
+fit_sc2 %>% emmeans(~ language_eq, type = "response")
+
 #variable 'response' is absent, its contrast will be ignoredError in vcov(object)[nm, nm, drop = FALSE] : subscript out of bounds
 
 emmeans(fit_sc2, ~ type, type = response)
