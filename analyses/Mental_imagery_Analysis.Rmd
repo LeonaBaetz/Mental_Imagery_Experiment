@@ -376,37 +376,53 @@ The amount of answered sentences for each modality varies. Therefore, we think i
  Furthermore we hypothesize, that the vividness of mental imagery or simulation of a (sensory) experience differs across different modalities between the two types of language:
 H2: On average the modality-specific-ratings for "vividness" in the condition "foreign language" are smaller (less vivid) than in the condition "native language" (more vivid).
 
+Again we cannot make any real statement about this hypothesis, as we do not know if using the mean over the estimate, lower bound and upper bound is correct.
+Nevertheless, we want to present the results that would come out if it is correct:
+
 ```{r}
+#used later
+modality_effects <- effects2$`type:language_eq` %>% group_by(type) %>% summarise(estimate = mean(estimate__), low=mean(lower__), upper = mean(upper__))
+
+#check for each modality if estimate of language_eq = False is lower than the lower bound of language_eq = True
+modality_effects<-modality_effects %>% mutate(language_significants_within_modality = (effects2$`type:language_eq`[effects2$`type:language_eq`$language_eq == FALSE,]$estimate__ < effects2$`type:language_eq`[effects2$`type:language_eq`$language_eq == TRUE,]$lower__))
 
 ```
+
 
 
 
 ### Hypothesis of relationships between variables:
 
 #### H3:
-Sensory experiences are (on average) for some modalities easier (more vividly) imagined or simulated mentally compared to other modalities, i.e. we hypothesize that visual experiences are easier to mentally imagine than imagining experiences by the other six modalities:
-H3: On average mental images evoked by visual experiences have higher vividness-ratings than those evoked by the other six modalities.
+Moreover, we suggest that sensory experiences are easier (more vividly) to simulate for some modalities compared to other modalities. 
+H3: More specific, we hypothesize that mental images evoked by visual simulations have higher vividness-ratings than those evoked by the other six modalities
 
 
 
-If one looks at the ouput plot of the marginal effects$type:language_eq:
+If one looks at the output plot of the marginal effects2$type:language_eq:
 
 ```{r}
-ggplot(effects2$`type:language_eq`, aes(x=type,color=language_eq)) + geom_errorbar(position= position_dodge(0.5),aes(ymin=lower__,ymax=upper__),width = 0.3) +geom_point(position= position_dodge(0.5),aes(y=estimate__),size=4)
+modality_language_plot <-ggplot(effects2$`type:language_eq`, aes(x=type,color=language_eq)) + geom_errorbar(position= position_dodge(0.5),aes(ymin=lower__,ymax=upper__),width = 0.3) +geom_point(position= position_dodge(0.5),aes(y=estimate__),size=4)
+
 effects2$`type:language_eq` %>% select(type, language_eq,estimate__,lower__,upper__)
+modality_language_plot
+
 ```
 
 it seems obvious that H3 is false. One can see clearly that the rating of vividness for "visual" is not significantly higher than all the other modalities.
-
 If we assume, like in H1, that using the mean is a correct way to average over the language_eq we get the following result:
 
 ```{r}
 modality_effects <- effects2$`type:language_eq` %>% group_by(type) %>% summarise(estimate = mean(estimate__), low=mean(lower__), upper = mean(upper__))
-ggplot(modality_effects, aes(x=type,color=type)) + geom_errorbar(aes(ymin=low,ymax=upper),width = 0.2) +geom_point(aes(y=estimate),size=4)
+modality_plot <- ggplot(modality_effects, aes(x=type,color=type)) + geom_errorbar(aes(ymin=low,ymax=upper),width = 0.2) +geom_point(aes(y=estimate),size=4)
 modality_effects
+<<<<<<< HEAD
 
+=======
+modality_plot
+>>>>>>> 38497cf18fbcdbd84bffa7e6a95ed2da0da8c23b
 ```
+
 This result indicates that H3 is wrong since the estimate for type=visual is not significantly larger than the upper bound of all other modalities:
 ```{r}
 modality_effects %>% mutate(visual_significant = modality_effects[7,]$estimate >modality_effects$upper)
@@ -414,38 +430,44 @@ modality_effects %>% mutate(visual_significant = modality_effects[7,]$estimate >
 
 
 #### H4:
-Sensory experiences are (on average) harder (less vividly) imagined or simulated mentally for some modalities compared to other modalities, i.e. we hypothesize that olfactory and gustatory experiences are harder to imagine than the five other modalities: 
-H4: On average mental images evoked by olfactory or gustatory experiences have lower vividness-ratings than those evoked by the other five modalities
+We also think that sensory experiences are harder (less vividly) imagined for some modalities compared to other modalities. 
+H4: Here we think that mental simulations evoked by the olfactory or gustatory modality have lower vividness-ratings than those evoked by the other five modalities
 
 ```{r}
+<<<<<<< HEAD
+=======
+modality_language_plot
+effects2$`type:language_eq` %>% select(type, language_eq,estimate__,lower__,upper__)
+>>>>>>> 38497cf18fbcdbd84bffa7e6a95ed2da0da8c23b
 ```
 
+This hypothesis states that the olfactory estimate and gustatory ratings are significantly lower than the other modalities. In the given graph one can see that this does only hold for olfactory when also considering the language type. Within language_eq = Flase (orange) the olfactory ratings are significantly smaller than the other modalities. The same holds for language_eq = true. However, this is not the case for the gustatory modality. The gustatory modality is only significantly lower than auditory and motor modality but not organic, tactile and visual.
+```{r}
+modality_plot
+```
+If we compare this to the modality_plot that uses the mean to average over the language we can see a different result. Whereas olfactory shows the same result like the modality-language plot, gustatory shows a different result.
+In the modality-language plot gustatory is only significantly lower for native language and not for foreign language, whereas in the modality plot gustatory is indicated as overall significantly lower.
+
+We can say that H4 is partly true, since olfactory got a significantly lower vividness rating compared to the rest of the modalities. This however does not hold for the gustatory modality.
 
 
 
+## Further remarks
 
-
+<<<<<<< HEAD
 
 ## Trying something out!
+=======
+### Todo:
+- look for cause of organic:native_language "outlier"
+- go through comments of participants!
+- look at the "objective language" part
+- change german words in m_data into english (männlich/abitur/etc. )
+>>>>>>> 38497cf18fbcdbd84bffa7e6a95ed2da0da8c23b
 
 
 
-```{r}
-library(emmeans)
-'
-fit_sc2 <- brm(
-formula = response ~ type * language_eq  + (1|subject_id),
-data = m_data,
-family = cumulative("logit")
-)'
 
 
-fit_sc2 %>% emmeans(~ language_eq, type = "response")
-
-#variable 'response' is absent, its contrast will be ignoredError in vcov(object)[nm, nm, drop = FALSE] : subscript out of bounds
-
-emmeans(fit_sc2, ~ type, type = response)
-
-```
 
 
