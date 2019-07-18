@@ -45,9 +45,7 @@ data %>% glimpse()
 
 ```{r}
 #selecting relevant columns
-
 s_data <- select(data, submission_id, trial_name, id, type, response, RT, language, native_language, foreign_language, foreign_dominance, speaking_native, listening_native, writing_native, reading_native, speaking_foreign, listening_foreign, writing_foreign, reading_foreign, reading_time, listening_time, speaking_time, learning_time,age,education, gender,timeSpent) %>% filter(trial_name == "ratingScaleTask")
-
 #here we change the types of the variables
 m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), exp_language= language, foreign_dominance = factor(foreign_dominance), subject_id = as.numeric(submission_id), response = factor(response, ordered=TRUE), experiment_id = NULL, language = NULL, submission_id = NULL, id = factor(id),native_language = factor(native_language), foreign_language=factor(foreign_language) , education = factor(education), gender = factor(gender))
 #check if the foreign or native language is used in this experiment and add the new column
@@ -101,9 +99,7 @@ The majority of our participants are German native speaker with English as their
 #MAKE CODE MORE EASY
 language_summary <- (colMeans( m_data[ , c("writing_foreign", "speaking_foreign", "listening_foreign","reading_foreign", "writing_native", "listening_native","speaking_native","reading_native")],na.rm = TRUE)) %>% as.matrix()
 colnames(language_summary) <- c("rating")
-
 m_data
-
 tmp<- melt(language_summary)
 names(tmp) = c("language_skill", "", "value")
 ggplot(tmp, aes(x=language_skill,y=value)) +
@@ -339,7 +335,6 @@ H1: On average the overall-ratings for "vividness" in the condition "foreign lan
 
 
 We are not sure on how to deal with this hypothesis, since our model shows us the interaction of language with each modality (effects2$`type:language_eq):
-
 ```{r}
 effects2$`type:language_eq`
 ```
@@ -350,12 +345,10 @@ Our Hypothesis can be translated to:
 On average the overall-ratings for "vividness" in the condition language_eq=False are smaller than in the condition language_eq=True.
 To see if this hold we look at the average (mean) values over all modalities:
 ```{r}
-
 effects2$`type:language_eq`
 language_effects <- effects2$`type:language_eq` %>% group_by(language_eq) %>% summarise(est = mean(estimate__), low=mean(lower__), upper = mean(upper__))
 ggplot(language_effects, aes(x=language_eq,color=language_eq)) + geom_errorbar(aes(ymin=low,ymax=upper),width = 0.1) +geom_point(aes(y=est),size=4)
 language_effects
-
 ```
 
 One can see that for language_eq=False the estimate 6.04 is not withing the boundaries of language_eq=True (low=6.1 and upper=6.6).
@@ -382,10 +375,8 @@ Nevertheless, we want to present the results that would come out if it is correc
 ```{r}
 #used later
 modality_effects <- effects2$`type:language_eq` %>% group_by(type) %>% summarise(estimate = mean(estimate__), low=mean(lower__), upper = mean(upper__))
-
 #check for each modality if estimate of language_eq = False is lower than the lower bound of language_eq = True
 modality_effects<-modality_effects %>% mutate(language_significants_within_modality = (effects2$`type:language_eq`[effects2$`type:language_eq`$language_eq == FALSE,]$estimate__ < effects2$`type:language_eq`[effects2$`type:language_eq`$language_eq == TRUE,]$lower__))
-
 ```
 
 
@@ -403,10 +394,8 @@ If one looks at the output plot of the marginal effects2$type:language_eq:
 
 ```{r}
 modality_language_plot <-ggplot(effects2$`type:language_eq`, aes(x=type,color=language_eq)) + geom_errorbar(position= position_dodge(0.5),aes(ymin=lower__,ymax=upper__),width = 0.3) +geom_point(position= position_dodge(0.5),aes(y=estimate__),size=4)
-
 effects2$`type:language_eq` %>% select(type, language_eq,estimate__,lower__,upper__)
 modality_language_plot
-
 ```
 
 it seems obvious that H3 is false. One can see clearly that the rating of vividness for "visual" is not significantly higher than all the other modalities.
@@ -416,11 +405,7 @@ If we assume, like in H1, that using the mean is a correct way to average over t
 modality_effects <- effects2$`type:language_eq` %>% group_by(type) %>% summarise(estimate = mean(estimate__), low=mean(lower__), upper = mean(upper__))
 modality_plot <- ggplot(modality_effects, aes(x=type,color=type)) + geom_errorbar(aes(ymin=low,ymax=upper),width = 0.2) +geom_point(aes(y=estimate),size=4)
 modality_effects
-<<<<<<< HEAD
-
-=======
 modality_plot
->>>>>>> 38497cf18fbcdbd84bffa7e6a95ed2da0da8c23b
 ```
 
 This result indicates that H3 is wrong since the estimate for type=visual is not significantly larger than the upper bound of all other modalities:
@@ -434,11 +419,8 @@ We also think that sensory experiences are harder (less vividly) imagined for so
 H4: Here we think that mental simulations evoked by the olfactory or gustatory modality have lower vividness-ratings than those evoked by the other five modalities
 
 ```{r}
-<<<<<<< HEAD
-=======
 modality_language_plot
 effects2$`type:language_eq` %>% select(type, language_eq,estimate__,lower__,upper__)
->>>>>>> 38497cf18fbcdbd84bffa7e6a95ed2da0da8c23b
 ```
 
 This hypothesis states that the olfactory estimate and gustatory ratings are significantly lower than the other modalities. In the given graph one can see that this does only hold for olfactory when also considering the language type. Within language_eq = Flase (orange) the olfactory ratings are significantly smaller than the other modalities. The same holds for language_eq = true. However, this is not the case for the gustatory modality. The gustatory modality is only significantly lower than auditory and motor modality but not organic, tactile and visual.
@@ -454,20 +436,10 @@ We can say that H4 is partly true, since olfactory got a significantly lower viv
 
 ## Further remarks
 
-<<<<<<< HEAD
-
-## Trying something out!
-=======
 ### Todo:
 - look for cause of organic:native_language "outlier"
 - go through comments of participants!
 - look at the "objective language" part
 - change german words in m_data into english (männlich/abitur/etc. )
->>>>>>> 38497cf18fbcdbd84bffa7e6a95ed2da0da8c23b
-
-
-
-
-
 
 
