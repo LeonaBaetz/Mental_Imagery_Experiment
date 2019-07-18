@@ -56,7 +56,7 @@ data %>% glimpse()
 
 ```{r}
 #selecting relevant columns
-s_data <- select(data, submission_id, trial_name, id, type, response, RT, language, native_language, foreign_language, foreign_dominance, speaking_native, listening_native, writing_native, speaking_foreign, listening_foreign, writing_foreign, reading_time, listening_time, speaking_time, learning_time,age,education, gender,timeSpent) %>% filter(trial_name == "ratingScaleTask")
+s_data <- select(data, submission_id, trial_name, id, type, response, RT, language, native_language, foreign_language, foreign_dominance, speaking_native, listening_native, writing_native, reading_native, speaking_foreign, listening_foreign, writing_foreign, reading_foreign, reading_time, listening_time, speaking_time, learning_time,age,education, gender,timeSpent) %>% filter(trial_name == "ratingScaleTask")
 
 #here we change the types of the variables
 m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), exp_language= language, foreign_dominance = factor(foreign_dominance), subject_id = as.numeric(submission_id), response = factor(response, ordered=TRUE), experiment_id = NULL, language = NULL, submission_id = NULL, id = factor(id),native_language = factor(native_language), foreign_language=factor(foreign_language) , education = factor(education), gender = factor(gender))
@@ -122,9 +122,9 @@ The majority of our participants are German native speaker with English as their
 
 #spread/gather!!!!
 #MAKE CODE MORE EASY
-language_summary <- (colMeans( m_data[ , c("writing_foreign", "speaking_foreign", "listening_foreign", "writing_native", "listening_native","speaking_native")],na.rm = TRUE)) %>% as.matrix()
+language_summary <- (colMeans( m_data[ , c("writing_foreign", "speaking_foreign", "listening_foreign","reading_foreign", "writing_native", "listening_native","speaking_native","reading_native")],na.rm = TRUE)) %>% as.matrix()
 colnames(language_summary) <- c("rating")
-
+m_data
 
 tmp<- melt(language_summary)
 names(tmp) = c("language_skill", "", "value")
@@ -395,28 +395,67 @@ effects2
 ```
 ## Testing the hypothesis
 
+Remember: "language_eq" = TRUE means the participant performed the Experiment in their native language
+
 ### Main hypothesis:
 
 #### H1:
 We hypothesize that using a foreign language reduces the vividness of mental imagery or simulations compared to the vividness of mental imagery or stimulation evoked by the usage of the native language:
 H1: On average the overall-ratings for "vividness" in the condition "foreign language" are smaller than in the condition "native language".
 
-```{r}
 
-effects2$`type:language_eq` %>% group_by(language_eq) %>% summarise(est = mean(estimate__), low=mean(lower__), upper = mean(upper__))
+
+We are not sure on how to deal with this hypothesis, since our model shows us the interaction of language with each modality (effects2$`type:language_eq):
+
+```{r}
+effects2$`type:language_eq`
+```
+This shows us the overall possible combinations of each modality with either native or foreign language and their respective estimate, lower bound and upper bound. We will use this table for later hypothesis extensively. For H1 however, we need to know if the difference of language_eq=False and language_eq=True is significant over all hypothesis.
+Since we are not 100% sure how to do this precisely, we will not make any statement on whether H1 is true or not. However, we will briefly show what we think might be the correct way (and also explain why we doubt this beeing correct).
+
+Our Hypothesis can be translated to:
+On average the overall-ratings for "vividness" in the condition language_eq=False are smaller than in the condition language_eq=True.
+To see if this hold we look at the average (mean) values over all modalities:
+```{r}
+effects2$`type:language_eq`
+language_effects <- effects2$`type:language_eq` %>% group_by(language_eq) %>% summarise(est = mean(estimate__), low=mean(lower__), upper = mean(upper__))
+ggplot(language_effects, aes(x=language_eq,color=language_eq)) + geom_errorbar(aes(ymin=low,ymax=upper),width = 0.1) +geom_point(aes(y=est),size=4)
+language_effects
 
 ```
+
+One can see that for language_eq=False the estimate 6.04 is not withing the boundaries of language_eq=True (low=6.1 and upper=6.6).
+This would indicate that the difference in vividness for native and foreign language is significant but very low.
+We doupt the accuracy of the result for the following reason:
+
+In "Specific Criterion"->"Criteria iv" we excluded every sentence that received the answer "I don't know the answer" because this sentence does not include any information about vividness of the mental image the participant had, simply because he/she didn't understood the question. This results in the fact that the amount of answer for each modality we received is different of each modality!
+
+```{r}
+new_data %>% group_by(type) %>% summarise(response_count = n())
+new_data %>% group_by(type) %>% ggplot(aes(x=type)) + geom_bar()
+```
+
+The amount of answered sentences for each modality varies. Therefore, we think it might be problematic to just use the mean() function to calculate the overall estimate + lower and upper bound. We are not sure if the result would still be accurate and correct.
+
+
+
+```{r}
+
+```
+
+
+
+
 
 
 #### H2:
  Furthermore we hypothesize, that the vividness of mental imagery or simulation of a (sensory) experience differs across different modalities between the two types of language:
-H2: On average the modality-specific-ratings for "vividness" in the condition "foreign language" are smaller (less vivid) than in the condition "native language" (more vivid). 
+H2: On average the modality-specific-ratings for "vividness" in the condition "foreign language" are smaller (less vivid) than in the condition "native language" (more vivid).
 
 ```{r}
 
-effects2$`language_eq:type`
-
 ```
+
 
 
 ### Hypothesis of relationships between variables:
@@ -425,8 +464,29 @@ effects2$`language_eq:type`
 Sensory experiences are (on average) for some modalities easier (more vividly) imagined or simulated mentally compared to other modalities, i.e. we hypothesize that visual experiences are easier to mentally imagine than imagining experiences by the other six modalities:
 H3: On average mental images evoked by visual experiences have higher vividness-ratings than those evoked by the other six modalities.
 
-```{r}
 
+
+If one looks at the ouput plot of the marginal effects$type:language_eq:
+
+```{r}
+ggplot(effects2$`type:language_eq`, aes(x=type,color=language_eq)) + geom_errorbar(position= position_dodge(0.5),aes(ymin=lower__,ymax=upper__),width = 0.3) +geom_point(position= position_dodge(0.5),aes(y=estimate__),size=4)
+effects2$`type:language_eq` %>% select(type, language_eq,estimate__,lower__,upper__)
+```
+
+it seems obvious that H3 is false. One can see clearly that the rating of vividness for "visual" is not significantly higher than all the other modalities.
+
+If we assume, like in H1, that using the mean is a correct way to average over the language_eq we get the following result:
+
+```{r}
+modality_effects <- effects2$`type:language_eq` %>% group_by(type) %>% summarise(estimate = mean(estimate__), low=mean(lower__), upper = mean(upper__))
+ggplot(modality_effects, aes(x=type,color=type)) + geom_errorbar(aes(ymin=low,ymax=upper),width = 0.2) +geom_point(aes(y=estimate),size=4)
+modality_effects
+
+
+```
+This result indicates that H3 is wrong since the estimate for type=visual is not significantly larger than the upper bound of all other modalities:
+```{r}
+modality_effects %>% mutate(visual_significant = modality_effects[7,]$estimate >modality_effects$upper)
 ```
 
 
@@ -437,5 +497,49 @@ H4: On average mental images evoked by olfactory or gustatory experiences have l
 ```{r}
 
 ```
+
+
+
+
+
+
+## Trying something out!
+
+
+
+```{r}
+library(emmeans)
+'
+fit_sc2 <- brm(
+formula = response ~ type * language_eq  + (1|subject_id),
+data = m_data,
+family = cumulative("logit")
+)'
+
+
+emmeans(fit_sc2,~ type, type = "response")
+#variable 'response' is absent, its contrast will be ignoredError in vcov(object)[nm, nm, drop = FALSE] : subscript out of bounds
+
+emmeans(fit_sc2, ~ type, type = response)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
