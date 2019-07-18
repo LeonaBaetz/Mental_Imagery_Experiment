@@ -1,0 +1,361 @@
+---
+title: "Mental_Imagery_analysis"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+# Analysis
+## Preparing the Data
+### Librarys used
+
+```{r}
+#setwd("~/Mental_Imagery_Experiment")
+library(tidyverse)
+library(rstan)
+# set cores to use to the total number of cores (minimally 4)
+options(mc.cores = max(parallel::detectCores(), 4))
+# save a compiled version of the Stan model file
+rstan_options(auto_write = TRUE)
+library(brms)
+# install faintr with 
+#install.packages("HDInterval")
+#devtools::install_github('michael-franke/bayes_mixed_regression_tutorial/faintr', build_vignettes = TRUE)
+library(faintr)
+library(reshape2)
+set.seed(123)
+```
+
+### Reading data
+
+```{r}
+# your code here
+#data <- read_csv("C:/Users/leado/XP_Lab/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
+#data %>% glimpse()
+#Sven PC1
+#data <- read_csv("C:/Users/Groen/Documents/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
+# data %>% glimpse()
+#Sven PC2
+data <- read_csv("C:/Users/SvenG/OneDrive/Sommersemester 2019/Experimental Psychology/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
+data %>% glimpse()
+```
+### Selecting only relevant columns and changing their data type
+
+#### Preparing for Analysis
+
+```{r}
+#selecting relevant columns
+s_data <- select(data, submission_id, trial_name, id, type, response, RT, language, native_language, foreign_language, foreign_dominance, speaking_native, listening_native, writing_native, speaking_foreign, listening_foreign, writing_foreign, reading_time, listening_time, speaking_time, learning_time,age,education, gender,timeSpent) %>% filter(trial_name == "ratingScaleTask")
+#here we change the types of the variables
+m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), exp_language= language, foreign_dominance = factor(foreign_dominance), subject_id = as.numeric(submission_id), response = factor(response, ordered=TRUE), experiment_id = NULL, language = NULL, submission_id = NULL, id = factor(id),native_language = factor(native_language), foreign_language=factor(foreign_language) , education = factor(education), gender = factor(gender))
+#check if the foreign or native language is used in this experiment and add the new column
+# if TRUE than the experiment was performend in the native language, else it was performed in the foreign language
+m_data <- m_data %>% 
+  mutate(language_eq = (exp_language == native_language))
+#filter out the trial tasks as they are irrelevant for us
+m_data <- m_data %>% filter(trial_name == "ratingScaleTask")
+```
+### Explanation and keys of the selected Variables
+
+
+### General Overview of the dataset
+```{r}
+d_individual_summary <- m_data  %>% group_by(subject_id) %>%  summarize(mean_RT = mean(RT), timeSpent=mean(timeSpent), writing_foreign = mean(writing_foreign), speaking_foreign= mean(speaking_foreign), listening_foreign = mean(listening_foreign), writing_native = mean(writing_native), speaking_native = mean(speaking_native),listening_native = mean(listening_native),reading_time = mean(reading_time), listening_time= mean(listening_time), speaking_time = mean(speaking_time), learning_time=mean(learning_time), age = mean(age), education = unique(education),gender = unique(gender), exp_language = unique(exp_language), native_language = unique(native_language), foreign_language= unique(foreign_language))
+#gender was presented in German and English
+#this translates the german version into english
+d_individual_summary$gender <- ifelse(d_individual_summary$gender == "männlich" & d_individual_summary$gender != "male" & d_individual_summary$gender != "female", "male","female")
+d_individual_summary
+#same with education:
+#TODO
+```
+
+#### Age Distribution
+
+```{r}
+#Barplot
+ggplot(d_individual_summary, aes(x=age)) + theme_bw() + geom_bar() 
+age_mean <- d_individual_summary[ , c("age")] %>% na.omit() %>% apply(2, FUN = mean)
+age_median <- d_individual_summary[ , c("age")] %>% na.omit() %>% apply(2, FUN = median)
+print(paste("The average age of our participants is: ", 
+age_mean, "years"))
+print(paste("and the media age of our participants is: ", 
+age_median))
+```
+One can see that the majority of our participants is around 22 years old.
+
+
+#### Language Levels
+
+```{r}
+ggplot(d_individual_summary, aes(x=native_language)) + theme_bw() + geom_bar()
+ggplot(d_individual_summary, aes(x=foreign_language)) + theme_bw() + geom_bar()
+```
+The majority of our participants are German native speaker with English as their foreign language
+
+
+##### Subjective Language Proficiency
+```{r}
+#spread/gather!!!!
+#MAKE CODE MORE EASY
+language_summary <- (colMeans( m_data[ , c("writing_foreign", "speaking_foreign", "listening_foreign", "writing_native", "listening_native","speaking_native")],na.rm = TRUE)) %>% as.matrix()
+colnames(language_summary) <- c("rating")
+tmp<- melt(language_summary)
+names(tmp) = c("language_skill", "", "value")
+ggplot(tmp, aes(x=language_skill,y=value)) +
+  geom_bar(stat="identity", position="dodge", colour="black")  +
+  theme_bw()
+print("The subjective language Ratings: ")
+print(language_summary)
+```
+keys to the numbers:
+0 = "not at all proficient",
+1 = "very little proficient",
+2 = "little proficient",
+3 = "average proficient",
+4 = "good proficient",
+5 = "very good proficient",
+6 = "totally proficient".
+
+
+##### "Objective" language Proficiency
+
+----> TODO <----
+
+
+# Exclusion Criteria:
+```{r}
+#Counting number of overall excluded participants
+start_participants = nrow(unique(m_data[,"subject_id"]))
+start_num_sentences = nrow(m_data)
+```
+## a. Excluding Criteria regarding the participants:
+
+### Criteria i:
+Participants having neither English nor German as native language are going to be excluded from the analysis
+```{r}
+a = nrow(unique(m_data[,"subject_id"]))
+print(paste("Number of Participants before exclusion i: ", a))
+#Exclude
+new_data <- m_data %>% filter(native_language == "German" | native_language == "English")
+b= nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants after exclusion i: ", b))
+print(paste("Excluded: ", a-b))
+```
+
+### Criteria ii:
+Participants having neither English nor German as a foreign language are going to be excluded from the analysis
+```{r}
+a = nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants before exclusion ii: ", a))
+#Exclude
+new_data <- new_data %>% filter(foreign_language == "German" | foreign_language == "English")
+b= nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants after exclusion ii: ", b))
+print(paste("Excluded: ", a-b))
+```
+
+### Criteria iii:
+Participants where their foreign language is their dominant language are going to be excluded: Participants that have spoken their foreign language in their homes and/or if they are speaking in their foreign language more often (in their daily life) than their actual native language are going to be excluded from the analysis
+```{r}
+a = nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants before exclusion iii: ", a))
+#Exclude
+new_data <- new_data %>% filter(foreign_dominance == 'no')
+b= nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants after exclusion iii: ", b))
+print(paste("Excluded: ", a-b))
+```
+
+### Criteria iv:
+Exclude any participant which native language is equal to their foreign language
+```{r}
+a = nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants before exclusion iV: ",nrow(unique(new_data[,"subject_id"]))))
+#transform to string so they can be compared
+new_data <- new_data %>%  mutate(native_language = as.character(native_language), foreign_language = as.character(foreign_language))
+#Exclude
+new_data <- new_data %>% filter(native_language != foreign_language)
+b= nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants after exclusion iV: ", b))
+print(paste("Excluded: ", a-b))
+```
+
+## Specific Criteria:
+
+### Criteria i:
+If a participant has chosen the exact same rating in 95% or more of the 35 stimuli (≥ 95% of the same rate), then this participant is going to be excluded from the analysis
+
+```{r}
+a = nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants before exclusion i: ", a))
+# CHECK 95% the same answer
+# only check main trials and look at subject id
+e_data <- group_by(new_data, subject_id)
+e_data <- subset(e_data,select = c(response, subject_id))
+# get matrix that shows how often a subject clicked each level of vividness
+t1 <- table(e_data)
+t1 <- as.data.frame.matrix(t1)
+# check if one level was chosen more than 95% (>= 33) and safe index
+b <- which(t1 >= 32, arr.ind=T)
+# save name of columns that have to be deleted
+col_names <-colnames(t1[unique(b[,"col"])])
+new_data <- new_data[!(new_data$subject_id %in% col_names),]
+b= nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants after exclusion i: ", b))
+print(paste("Excluded: ", a-b))
+```
+
+### Criteria ii:
+If a participant has chosen the option “I don’t understand the sentence” 5 times or more (≥ 5x “I don’t understand”), then this participant is going to be excluded from the analysis
+
+
+```{r}
+a = nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants before exclusion ii: ", a))
+# only check main trials and look at subject id
+e_data2 <- group_by(new_data, subject_id)
+e_data2 <- subset(e_data2,select = c(response, subject_id))
+# CHECK IF 5 or more times "i dont know the answer" was chosen
+t2 <- table(e_data2) 
+t2 <- as.data.frame.matrix(t2)
+# check given row was chosen more 5 times and safe index
+row <- 1
+c <- which(t2[row,] >= 5, arr.ind=T)
+# save name of columns that have to be deleted
+col_names2 <- colnames(t2[unique(c[,"col"])])
+new_data <- new_data[!(new_data$subject_id %in% col_names2),]
+b= nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants after exclusion ii: ", b))
+print(paste("Excluded: ", a-b))
+```
+
+### Criteria iii:
+We are going to look at the overall distribution of data and exclude every trial of a participant that deviates three standard deviations above and below the mean with respect to the participants' reaction time. If for one participant there are five trials or more where the reaction time deviates three standard deviations above and below the mean reaction time, the whole participant is going to be excluded from the analysis. We will also check how the analysis differs with and without these participants.
+
+```{r}
+a = nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants before exclusion iii: ", a))
+#get sd and mean
+std<-apply(new_data[5], 2, sd)
+mean <- apply(new_data[5], 2, mean)
+lower_bound = mean-3*std
+upper_bound = mean+3*std
+std_excl <- new_data %>% mutate(RT_exc_critieria =RT <= lower_bound || RT >= upper_bound)%>% group_by(subject_id) %>% subset(select = c(RT_exc_critieria, subject_id))
+t3 <- table(std_excl) %>% as.data.frame.matrix()
+# only continue if there are at least one exclusions at all (else the table does not have the TRUE row)
+if(nrow(t3 == 2)){
+  d <- which(t3["TRUE",] >= 5, arr.ind=T)
+  # save name of columns that have to be deleted
+  col_names3 <- colnames(t3[unique(d[,"col"])])
+  #exclude
+  new_data <- new_data[!(new_data$subject_id %in% col_names3),]
+}
+b= nrow(unique(new_data[,"subject_id"]))
+print(paste("Number of Participants after exclusion iii: ", b))
+print(paste("Excluded: ", a-b))
+```
+
+
+### Criteria iv:
+Any sentence that received the response “I don’t understand the sentence” is useless for our purpose of analysis, thus for each participant that was not excluded via ii. but made use of this choice, the respective sentence(s) are excluded from the participants analysis, however the remaining ones are used.
+
+```{r}
+a = nrow(new_data)
+new_data <- new_data %>% filter(response != 0)
+b = a - nrow(new_data)
+print(paste("number of excluded sentences: ", b))
+```
+
+
+## Results of Exclusion:
+
+```{r}
+# Count how many participants have been excluded:
+num_excluded = nrow(unique(m_data[,"subject_id"]))-nrow(unique(new_data[,"subject_id"]))
+print(paste("Started with ", start_participants, " participants"))
+print(paste("Overall Number of excluded participants: ", num_excluded))
+print(paste("Remaining number of Participants: ", start_participants - num_excluded))
+exc_sentences = start_num_sentences - nrow(new_data)
+print(paste("Started with ", start_num_sentences, " sentences"))
+print(paste("Overall number of removed sentences", exc_sentences))
+print(paste("Remaining number of sentences", nrow(new_data)))
+```
+
+# Bayesian Regression
+## Creating and comparing models
+
+```{r}
+#brms model creation 
+fit_sc1 <- brm(
+formula = response ~ type*language_eq,
+data = m_data,
+family = cumulative("logit")
+)
+```
+
+
+```{r}
+fit_sc2 <- brm(
+formula = response ~ type * language_eq  + (1|subject_id),
+data = m_data,
+family = cumulative("logit")
+)
+```
+
+
+```{r}
+(loo(fit_sc1,fit_sc2))
+```
+
+In the model comparisons we see fit_sc2 with elpd_diff and se_diff of 0.Therefore, we will continue our analysis with fit_sc2 
+
+
+```{r}
+post_samples <- posterior_samples(fit_sc2) %>% 
+  as_tibble()
+fit_sc2
+post_samples
+```
+
+```{r}
+effects2 <- marginal_effects(fit_sc2)
+effects2
+```
+## Testing the hypothesis
+
+### Main hypothesis:
+
+#### H1:
+We hypothesize that using a foreign language reduces the vividness of mental imagery or simulations compared to the vividness of mental imagery or stimulation evoked by the usage of the native language:
+H1: On average the overall-ratings for "vividness" in the condition "foreign language" are smaller than in the condition "native language".
+
+```{r}
+effects2$`type:language_eq` %>% group_by(language_eq) %>% summarise(est = mean(estimate__), low=mean(lower__), upper = mean(upper__))
+```
+
+
+#### H2:
+ Furthermore we hypothesize, that the vividness of mental imagery or simulation of a (sensory) experience differs across different modalities between the two types of language:
+H2: On average the modality-specific-ratings for "vividness" in the condition "foreign language" are smaller (less vivid) than in the condition "native language" (more vivid). 
+
+```{r}
+effects2$`language_eq:type`
+```
+
+
+### Hypothesis of relationships between variables:
+
+#### H3:
+Sensory experiences are (on average) for some modalities easier (more vividly) imagined or simulated mentally compared to other modalities, i.e. we hypothesize that visual experiences are easier to mentally imagine than imagining experiences by the other six modalities:
+H3: On average mental images evoked by visual experiences have higher vividness-ratings than those evoked by the other six modalities.
+
+```{r}
+```
+
+
+#### H4:
+Sensory experiences are (on average) harder (less vividly) imagined or simulated mentally for some modalities compared to other modalities, i.e. we hypothesize that olfactory and gustatory experiences are harder to imagine than the five other modalities: 
+H4: On average mental images evoked by olfactory or gustatory experiences have lower vividness-ratings than those evoked by the other five modalities
+
+```{r}
+```
