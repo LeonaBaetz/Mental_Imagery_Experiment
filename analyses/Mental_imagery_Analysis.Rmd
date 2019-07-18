@@ -308,7 +308,7 @@ family = cumulative("logit")
 
 
 ```{r}
-fit_sc1
+#fit_sc1
 ```
 ```{r}
 fit_sc2 <- brm(
