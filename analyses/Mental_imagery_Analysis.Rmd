@@ -421,7 +421,6 @@ effects2$`type:language_eq`
 language_effects <- effects2$`type:language_eq` %>% group_by(language_eq) %>% summarise(est = mean(estimate__), low=mean(lower__), upper = mean(upper__))
 ggplot(language_effects, aes(x=language_eq,color=language_eq)) + geom_errorbar(aes(ymin=low,ymax=upper),width = 0.1) +geom_point(aes(y=est),size=4)
 language_effects
-
 ```
 
 One can see that for language_eq=False the estimate 6.04 is not withing the boundaries of language_eq=True (low=6.1 and upper=6.6).
@@ -442,9 +441,18 @@ The amount of answered sentences for each modality varies. Therefore, we think i
  Furthermore we hypothesize, that the vividness of mental imagery or simulation of a (sensory) experience differs across different modalities between the two types of language:
 H2: On average the modality-specific-ratings for "vividness" in the condition "foreign language" are smaller (less vivid) than in the condition "native language" (more vivid).
 
+Again we cannot make any real statement about this hypothesis, as we do not know if using the mean over the estimate, lower bound and upper bound is correct.
+Nevertheless, we want to present the results that would come out if it is correct:
+
 ```{r}
+#used later
+modality_effects <- effects2$`type:language_eq` %>% group_by(type) %>% summarise(estimate = mean(estimate__), low=mean(lower__), upper = mean(upper__))
+
+#check for each modality if estimate of language_eq = False is lower than the lower bound of language_eq = True
+modality_effects %>% mutate(language_significants_within_modality = (effects2$`type:language_eq`[effects2$`type:language_eq`$language_eq == FALSE,]$estimate__ < effects2$`type:language_eq`[effects2$`type:language_eq`$language_eq == TRUE,]$lower__))
 
 ```
+
 
 
 
@@ -493,27 +501,6 @@ H4: On average mental images evoked by olfactory or gustatory experiences have l
 
 
 
-## Trying something out!
-
-
-
-```{r}
-library(emmeans)
-'
-fit_sc2 <- brm(
-formula = response ~ type * language_eq  + (1|subject_id),
-data = m_data,
-family = cumulative("logit")
-)'
-
-
-fit_sc2 %>% emmeans(~ language_eq, type = "response")
-
-#variable 'response' is absent, its contrast will be ignoredError in vcov(object)[nm, nm, drop = FALSE] : subscript out of bounds
-
-emmeans(fit_sc2, ~ type, type = response)
-
-```
 
 
 
