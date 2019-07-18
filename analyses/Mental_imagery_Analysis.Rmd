@@ -358,7 +358,7 @@ print(paste("Remaining number of sentences", nrow(new_data)))
 
 fit_sc1 <- brm(
 formula = response ~ type*language_eq,
-data = m_data,
+data = new_data,
 family = cumulative("logit")
 )
 
@@ -368,7 +368,7 @@ family = cumulative("logit")
 ```{r}
 fit_sc2 <- brm(
 formula = response ~ type * language_eq  + (1|subject_id),
-data = m_data,
+data = new_data,
 family = cumulative("logit")
 )
 ```
@@ -404,7 +404,13 @@ We hypothesize that using a foreign language reduces the vividness of mental ima
 H1: On average the overall-ratings for "vividness" in the condition "foreign language" are smaller than in the condition "native language".
 
 
+First look at the average responses:
+```{r}
+analyse_data <- new_data %>% mutate(response = as.integer(response))
+analyse_data %>% group_by(language_eq) %>% summarise(mean_response=mean(response), median_response = median((response)))
+```
 
+##### testing for significance
 We are not sure on how to deal with this hypothesis, since our model shows us the interaction of language with each modality (effects2$`type:language_eq):
 
 ```{r}
@@ -417,17 +423,18 @@ Our Hypothesis can be translated to:
 On average the overall-ratings for "vividness" in the condition language_eq=False are smaller than in the condition language_eq=True.
 To see if this hold we look at the average (mean) values over all modalities:
 ```{r}
-effects2$`type:language_eq`
 language_effects <- effects2$`type:language_eq` %>% group_by(language_eq) %>% summarise(est = mean(estimate__), low=mean(lower__), upper = mean(upper__))
-ggplot(language_effects, aes(x=language_eq,color=language_eq)) + geom_errorbar(aes(ymin=low,ymax=upper),width = 0.1) +geom_point(aes(y=est),size=4)
+language_effects_plot<-ggplot(language_effects, aes(x=language_eq,color=language_eq)) + geom_errorbar(aes(ymin=low,ymax=upper),width = 0.1) +geom_point(aes(y=est),size=4)
+language_effects_plot
 language_effects
 
 ```
 
-One can see that for language_eq=False the estimate 6.04 is not withing the boundaries of language_eq=True (low=6.1 and upper=6.6).
-This would indicate that the difference in vividness for native and foreign language is significant but very low.
+One can see that for language_eq=False the estimate 5.171 is barely withing the boundaries of language_eq=True (low=5.170 and upper=5.67).
+This would indicate that the difference in vividness for native and foreign language is not significant.
 We doupt the accuracy of the result for the following reason:
 
+##### The (probable) problem of using the mean:
 In "Specific Criterion"->"Criteria iv" we excluded every sentence that received the answer "I don't know the answer" because this sentence does not include any information about vividness of the mental image the participant had, simply because he/she didn't understood the question. This results in the fact that the amount of answer for each modality we received is different of each modality!
 
 ```{r}
@@ -435,27 +442,30 @@ new_data %>% group_by(type) %>% summarise(response_count = n())
 new_data %>% group_by(type) %>% ggplot(aes(x=type)) + geom_bar()
 ```
 
-The amount of answered sentences for each modality varies. Therefore, we think it might be problematic to just use the mean() function to calculate the overall estimate + lower and upper bound. We are not sure if the result would still be accurate and correct.
+The amount of answered sentences for each modality varies. Therefore, we think it might be problematic to just use the mean() function to calculate the overall estimate + lower and upper bound. We are not sure if the result would still be accurate and correct since we are dealing with probabilities and marginals.
 
 
 #### H2:
- Furthermore we hypothesize, that the vividness of mental imagery or simulation of a (sensory) experience differs across different modalities between the two types of language:
+Furthermore we hypothesize, that the vividness of mental imagery or simulation of a (sensory) experience differs across different modalities between the two types of language:
 H2: On average the modality-specific-ratings for "vividness" in the condition "foreign language" are smaller (less vivid) than in the condition "native language" (more vivid).
 
-Again we cannot make any real statement about this hypothesis, as we do not know if using the mean over the estimate, lower bound and upper bound is correct.
-Nevertheless, we want to present the results that would come out if it is correct:
 
+Here compare if the estimate of each modality for the condition language_eq=False is within the boundaries of language_eq=True of the same modality.
 ```{r}
-#used later
+
 modality_effects <- effects2$`type:language_eq` %>% group_by(type) %>% summarise(estimate = mean(estimate__), low=mean(lower__), upper = mean(upper__))
 
 #check for each modality if estimate of language_eq = False is lower than the lower bound of language_eq = True
 modality_effects<-modality_effects %>% mutate(language_significants_within_modality = (effects2$`type:language_eq`[effects2$`type:language_eq`$language_eq == FALSE,]$estimate__ < effects2$`type:language_eq`[effects2$`type:language_eq`$language_eq == TRUE,]$lower__))
 
+#Plotting for visualisation
+modality_language_plot <-ggplot(effects2$`type:language_eq`, aes(x=type,color=language_eq)) + geom_errorbar(position= position_dodge(0.5),aes(ymin=lower__,ymax=upper__),width = 0.3) +geom_point(position= position_dodge(0.5),aes(y=estimate__),size=4)
+
+modality_language_plot
+modality_effects
 ```
 
-
-
+One can see that this holds only for gustatory and organic. In conclusion, H2 is false. It does hold for some, but not for all modalities!
 
 ### Hypothesis of relationships between variables:
 
@@ -468,14 +478,14 @@ H3: More specific, we hypothesize that mental images evoked by visual simulation
 If one looks at the output plot of the marginal effects2$type:language_eq:
 
 ```{r}
-modality_language_plot <-ggplot(effects2$`type:language_eq`, aes(x=type,color=language_eq)) + geom_errorbar(position= position_dodge(0.5),aes(ymin=lower__,ymax=upper__),width = 0.3) +geom_point(position= position_dodge(0.5),aes(y=estimate__),size=4)
-
 effects2$`type:language_eq` %>% select(type, language_eq,estimate__,lower__,upper__)
 modality_language_plot
 
 ```
 
 it seems obvious that H3 is false. One can see clearly that the rating of vividness for "visual" is not significantly higher than all the other modalities.
+It is significantly higher than olfactory for both native and foreign language and significantly higher than gustatory for foreign laguage but not native language.
+
 If we assume, like in H1, that using the mean is a correct way to average over the language_eq we get the following result:
 
 ```{r}
@@ -489,7 +499,7 @@ This result indicates that H3 is wrong since the estimate for type=visual is not
 ```{r}
 modality_effects %>% mutate(visual_significant = modality_effects[7,]$estimate >modality_effects$upper)
 ```
-
+However it would also classify visual as significantly higher as gustatory. So the result is similiar to the one using effects2$`type:language_eq`
 
 #### H4:
 We also think that sensory experiences are harder (less vividly) imagined for some modalities compared to other modalities. 
@@ -497,15 +507,15 @@ H4: Here we think that mental simulations evoked by the olfactory or gustatory m
 
 ```{r}
 modality_language_plot
-effects2$`type:language_eq` %>% select(type, language_eq,estimate__,lower__,upper__)
 ```
 
-This hypothesis states that the olfactory estimate and gustatory ratings are significantly lower than the other modalities. In the given graph one can see that this does only hold for olfactory when also considering the language type. Within language_eq = Flase (orange) the olfactory ratings are significantly smaller than the other modalities. The same holds for language_eq = true. However, this is not the case for the gustatory modality. The gustatory modality is only significantly lower than auditory and motor modality but not organic, tactile and visual.
+This hypothesis states that the olfactory estimate and gustatory ratings are significantly lower than the other modalities. In the given graph one can see that this does only hold for olfactory when also considering the language type. Within language_eq = Flase (orange) the olfactory ratings are significantly smaller than the other modalities (exepct gustatory). For language_eq = true (native) it is significantly compared to all modalities. However, this is not the case for the gustatory modality. The gustatory modality is only significantly lower than auditory, motor and organic modality but not organic, tactile. Comparing gustatory and visual than gustatory is only significantly smaller for foreign langue but not for native language
 ```{r}
 modality_plot
+modality_effects %>%  mutate(gustatory_significant_lower = modality_effects[2,]$estimate < modality_effects$low,olfactory_significant_lower = modality_effects[4,]$estimate < modality_effects$low)
 ```
-If we compare this to the modality_plot that uses the mean to average over the language we can see a different result. Whereas olfactory shows the same result like the modality-language plot, gustatory shows a different result.
-In the modality-language plot gustatory is only significantly lower for native language and not for foreign language, whereas in the modality plot gustatory is indicated as overall significantly lower.
+If we compare this to the modality_plot that uses the mean to average over the language we can see a different result. The olfactory rating is significantly smaller than all other modalities in the modeality plot.
+In the case of gustatory, it is significantly lower than auditory, motor, organic and also visual (which was only the case for foreign language in modality_language_plot)
 
 We can say that H4 is partly true, since olfactory got a significantly lower vividness rating compared to the rest of the modalities. This however does not hold for the gustatory modality.
 
