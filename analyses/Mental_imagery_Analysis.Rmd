@@ -63,6 +63,7 @@ m_data <- mutate(s_data, trial_name = factor(trial_name), type = factor(type), e
 
 
 #check if the foreign or native language is used in this experiment and add the new column
+# if TRUE than the experiment was performend in the native language, else it was performed in the foreign language
 m_data <- m_data %>% 
   mutate(language_eq = (exp_language == native_language))
 
@@ -156,8 +157,6 @@ keys to the numbers:
 #Counting number of overall excluded participants
 start_participants = nrow(unique(m_data[,"subject_id"]))
 start_num_sentences = nrow(m_data)
-
-
 ```
 ## a. Excluding Criteria regarding the participants:
 
@@ -192,7 +191,6 @@ print(paste("Excluded: ", a-b))
 
 ```
 
-
 ### Criteria iii:
 Participants where their foreign language is their dominant language are going to be excluded: Participants that have spoken their foreign language in their homes and/or if they are speaking in their foreign language more often (in their daily life) than their actual native language are going to be excluded from the analysis
 ```{r}
@@ -224,8 +222,6 @@ b= nrow(unique(new_data[,"subject_id"]))
 print(paste("Number of Participants after exclusion iV: ", b))
 print(paste("Excluded: ", a-b))
 ```
-
-
 
 ## Specific Criteria:
 
@@ -361,7 +357,7 @@ print(paste("Remaining number of sentences", nrow(new_data)))
 #brms model creation 
 
 fit_sc1 <- brm(
-formula = response ~ language_eq + type,
+formula = response ~ type*language_eq,
 data = m_data,
 family = cumulative("logit")
 )
@@ -371,15 +367,7 @@ family = cumulative("logit")
 
 ```{r}
 fit_sc2 <- brm(
-formula = response ~ language_eq + type + (1|subject_id),
-data = m_data,
-family = cumulative("logit")
-)
-```
-
-```{r}
-fit_sc3 <- brm(
-formula = response ~ type * language_eq + (1|subject_id),
+formula = response ~ type * language_eq  + (1|subject_id),
 data = m_data,
 family = cumulative("logit")
 )
@@ -390,16 +378,20 @@ family = cumulative("logit")
 (loo(fit_sc1,fit_sc2))
 ```
 
+In the model comparisons we see fit_sc2 with elpd_diff and se_diff of 0.Therefore, we will continue our analysis with fit_sc2 
+
+
 ```{r}
-post_samples <- posterior_samples(fit_sc3) %>% 
+post_samples <- posterior_samples(fit_sc2) %>% 
   as_tibble()
 
-fit_sc3
+fit_sc2
 post_samples
 ```
 
 ```{r}
-effects2 <- marginal_effects(fit_sc3)
+effects2 <- marginal_effects(fit_sc2)
+effects2
 ```
 ## Testing the hypothesis
 
@@ -411,6 +403,8 @@ H1: On average the overall-ratings for "vividness" in the condition "foreign lan
 
 ```{r}
 
+effects2$`type:language_eq` %>% group_by(language_eq) %>% summarise(est = mean(estimate__), low=mean(lower__), upper = mean(upper__))
+
 ```
 
 
@@ -419,6 +413,8 @@ H1: On average the overall-ratings for "vividness" in the condition "foreign lan
 H2: On average the modality-specific-ratings for "vividness" in the condition "foreign language" are smaller (less vivid) than in the condition "native language" (more vivid). 
 
 ```{r}
+
+effects2$`language_eq:type`
 
 ```
 
