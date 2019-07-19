@@ -50,9 +50,7 @@ data %>% glimpse()
 data %>% glimpse()
 
 ```
-### Selecting only relevant columns and changing their data type
-
-#### Preparing for Analysis
+### Preparing for Analysis
 
 ```{r}
 #selecting relevant columns
@@ -71,8 +69,6 @@ m_data <- m_data %>%
 m_data <- m_data %>% filter(trial_name == "ratingScaleTask")
 
 ```
-### Explanation and keys of the selected Variables
-
 
 ### Looking at the data for each participant
 ```{r}
@@ -96,120 +92,17 @@ for (i in 1:nrow(d_individual_summary)){
 }
 print(d_individual_summary)
 ```
-#### Gender distribution
-
-```{r}
-d_individual_summary %>% ggplot(aes(x=gender)) + theme_bw() + geom_bar()
-d_individual_summary %>% group_by(gender) %>% summarise(gender_count = n())
-```
 
 
-#### Education Distribution
-
-```{r}
-d_individual_summary %>% ggplot(aes(x=education, fill = gender)) + theme_bw() + geom_bar()
-d_individual_summary %>% group_by(education,gender) %>% summarise(education_count = n())
-d_individual_summary %>% group_by(education) %>% summarise(education_count = n())
-
-```
-
-
-#### Age Distribution
-
-```{r}
-#Barplot
-ggplot(d_individual_summary, aes(x=age, fill=gender)) + theme_bw() + geom_bar() 
-
-age_mean <- d_individual_summary[ , c("age")] %>% na.omit() %>% apply(2, FUN = mean)
-age_median <- d_individual_summary[ , c("age")] %>% na.omit() %>% apply(2, FUN = median)
-
-
-print(paste("The average age of our participants is: ", 
-age_mean, "years"))
-print(paste("and the media age of our participants is: ", 
-age_median))
-
-```
-One can see that the majority of our participants is around 22 years old.
-
-#### Participants' Comments
-
-```{r}
-comm <- setNames(data.frame(matrix(ncol = 6, nrow = 0)), c("comments", "submission_id", "education", "native_language", "foreign_language", "foreign_dominance"))
-
-for (i in 1:nrow(data)){
-  if (!is.na(data[i,"comments"])){
-    new_row <- data.frame("comments" = data[i,"comments"], "submission_id" = data[i,"submission_id"], "education" = data[i,"education"], "native_language" = data[i,"native_language"], "foreign_language" = data[i,"foreign_language"], "foreign_dominance" = data[i,"foreign_dominance"])
-    
-    comm <- rbind(comm, new_row) %>% unique()
-  }
-}
-
-comm
-
-```
-
-#### Language Levels
-
-```{r}
-d_individual_summary %>%  group_by(exp_language) %>% summarise(language_exp_count = n())
-d_individual_summary %>%  group_by(language_eq) %>% summarise(language_eq_count = n())
-ggplot(d_individual_summary, aes(x=native_language)) + theme_bw() + geom_bar()
-ggplot(d_individual_summary, aes(x=foreign_language)) + theme_bw() + geom_bar()
-```
-The majority of our participants are German native speaker with English as their foreign language
-
-
-##### Subjective Language Proficiency
-```{r}
-
-#spread/gather!!!!
-#MAKE CODE MORE EASY
-language_summary <- (colMeans( m_data[ , c("writing_foreign", "speaking_foreign", "listening_foreign","reading_foreign", "writing_native", "listening_native","speaking_native","reading_native")],na.rm = TRUE)) %>% as.matrix()
-colnames(language_summary) <- c("rating")
-m_data
-
-tmp<- melt(language_summary)
-names(tmp) = c("language_skill", "", "value")
-
-
-ggplot(tmp, aes(x=language_skill,y=value)) +
-  geom_bar(stat="identity", position="dodge", colour="black")  +
-  theme_bw()
-
-print("The subjective language Ratings: ")
-print(language_summary)
-```
-keys to the numbers:
-0 = "not at all proficient",
-1 = "very little proficient",
-2 = "little proficient",
-3 = "average proficient",
-4 = "good proficient",
-5 = "very good proficient",
-6 = "totally proficient".
-
-
-##### "Objective" language Proficiency
-
-```{r}
-objective_language <- d_individual_summary %>% gather(key=variable, value = value, c("reading_time","listening_time", "speaking_time", "learning_time"))  
-objective_language_count <- objective_language %>% group_by(variable) %>% summarise(mean_answer = mean(value))
-objective_language_count
-objective_language_count %>% ggplot() + geom_bar(mapping = aes(x=variable,y =mean_answer),stat = "identity") + theme_bw()
-```
-
-
-
-# Exclusion Criteria:
+## Exclusion Criteria:
 ```{r}
 #Counting number of overall excluded participants
 start_participants = nrow(unique(m_data[,"subject_id"]))
 start_num_sentences = nrow(m_data)
 ```
-## a. Excluding Criteria regarding the participants:
+### a. Excluding Criteria regarding the participants:
 
-### Criteria i:
+#### Criteria i:
 Participants having neither English nor German as native language are going to be excluded from the analysis
 ```{r}
 a = nrow(unique(m_data[,"subject_id"]))
@@ -224,7 +117,7 @@ print(paste("Excluded: ", a-b))
 
 ```
 
-### Criteria ii:
+#### Criteria ii:
 Participants having neither English nor German as a foreign language are going to be excluded from the analysis
 ```{r}
 a = nrow(unique(new_data[,"subject_id"]))
@@ -240,7 +133,7 @@ print(paste("Excluded: ", a-b))
 
 ```
 
-### Criteria iii:
+#### Criteria iii:
 Participants where their foreign language is their dominant language are going to be excluded: Participants that have spoken their foreign language in their homes and/or if they are speaking in their foreign language more often (in their daily life) than their actual native language are going to be excluded from the analysis
 ```{r}
 a = nrow(unique(new_data[,"subject_id"]))
@@ -255,7 +148,7 @@ print(paste("Number of Participants after exclusion iii: ", b))
 print(paste("Excluded: ", a-b))
 ```
 
-### Criteria iv:
+#### Criteria iv:
 Exclude any participant which native language is equal to their foreign language
 ```{r}
 a = nrow(unique(new_data[,"subject_id"]))
@@ -272,9 +165,9 @@ print(paste("Number of Participants after exclusion iV: ", b))
 print(paste("Excluded: ", a-b))
 ```
 
-## Specific Criteria:
+### Specific Criteria:
 
-### Criteria i:
+#### Criteria i:
 If a participant has chosen the exact same rating in 95% or more of the 35 stimuli (≥ 95% of the same rate), then this participant is going to be excluded from the analysis
 
 ```{r}
@@ -307,7 +200,7 @@ print(paste("Excluded: ", a-b))
 
 ```
 
-### Criteria ii:
+#### Criteria ii:
 If a participant has chosen the option “I don’t understand the sentence” 5 times or more (≥ 5x “I don’t understand”), then this participant is going to be excluded from the analysis
 
 
@@ -337,7 +230,7 @@ print(paste("Excluded: ", a-b))
 
 ```
 
-### Criteria iii:
+#### Criteria iii:
 We are going to look at the overall distribution of data and exclude every trial of a participant that deviates three standard deviations above and below the mean with respect to the participants' reaction time. If for one participant there are five trials or more where the reaction time deviates three standard deviations above and below the mean reaction time, the whole participant is going to be excluded from the analysis. We will also check how the analysis differs with and without these participants.
 
 ```{r}
@@ -371,7 +264,7 @@ print(paste("Excluded: ", a-b))
 ```
 
 
-### Criteria iv:
+#### Criteria iv:
 Any sentence that received the response “I don’t understand the sentence” is useless for our purpose of analysis, thus for each participant that was not excluded via ii. but made use of this choice, the respective sentence(s) are excluded from the participants analysis, however the remaining ones are used.
 
 ```{r}
@@ -384,7 +277,7 @@ print(paste("number of excluded sentences: ", b))
 ```
 
 
-## Results of Exclusion:
+### Results of Exclusion:
 
 ```{r}
 # Count how many participants have been excluded:
@@ -398,6 +291,113 @@ print(paste("Overall number of removed sentences", exc_sentences))
 print(paste("Remaining number of sentences", nrow(new_data)))
 
 ```
+
+
+## Getting an Overview of the Data
+
+### Gender distribution
+
+```{r}
+d_individual_summary %>% ggplot(aes(x=gender)) + theme_bw() + geom_bar()
+d_individual_summary %>% group_by(gender) %>% summarise(gender_count = n())
+```
+
+
+### Education Distribution
+
+```{r}
+d_individual_summary %>% ggplot(aes(x=education, fill = gender)) + theme_bw() + geom_bar()
+d_individual_summary %>% group_by(education,gender) %>% summarise(education_count = n())
+d_individual_summary %>% group_by(education) %>% summarise(education_count = n())
+
+```
+
+
+### Age Distribution
+
+```{r}
+#Barplot
+ggplot(d_individual_summary, aes(x=age, fill=gender)) + theme_bw() + geom_bar() 
+
+age_mean <- d_individual_summary[ , c("age")] %>% na.omit() %>% apply(2, FUN = mean)
+age_median <- d_individual_summary[ , c("age")] %>% na.omit() %>% apply(2, FUN = median)
+
+
+print(paste("The average age of our participants is: ", 
+age_mean, "years"))
+print(paste("and the media age of our participants is: ", 
+age_median))
+
+```
+One can see that the majority of our participants is around 22 years old.
+
+### Participants' Comments
+
+```{r}
+comm <- setNames(data.frame(matrix(ncol = 6, nrow = 0)), c("comments", "submission_id", "education", "native_language", "foreign_language", "foreign_dominance"))
+
+for (i in 1:nrow(data)){
+  if (!is.na(data[i,"comments"])){
+    new_row <- data.frame("comments" = data[i,"comments"], "submission_id" = data[i,"submission_id"], "education" = data[i,"education"], "native_language" = data[i,"native_language"], "foreign_language" = data[i,"foreign_language"], "foreign_dominance" = data[i,"foreign_dominance"])
+    
+    comm <- rbind(comm, new_row) %>% unique()
+  }
+}
+
+comm
+
+```
+
+### Language Levels
+
+```{r}
+d_individual_summary %>%  group_by(exp_language) %>% summarise(language_exp_count = n())
+d_individual_summary %>%  group_by(language_eq) %>% summarise(language_eq_count = n())
+ggplot(d_individual_summary, aes(x=native_language)) + theme_bw() + geom_bar()
+ggplot(d_individual_summary, aes(x=foreign_language)) + theme_bw() + geom_bar()
+```
+The majority of our participants are German native speaker with English as their foreign language
+
+
+#### Subjective Language Proficiency
+```{r}
+
+#spread/gather!!!!
+#MAKE CODE MORE EASY
+language_summary <- (colMeans( m_data[ , c("writing_foreign", "speaking_foreign", "listening_foreign","reading_foreign", "writing_native", "listening_native","speaking_native","reading_native")],na.rm = TRUE)) %>% as.matrix()
+colnames(language_summary) <- c("rating")
+m_data
+
+tmp<- melt(language_summary)
+names(tmp) = c("language_skill", "", "value")
+
+
+ggplot(tmp, aes(x=language_skill,y=value)) +
+  geom_bar(stat="identity", position="dodge", colour="black")  +
+  theme_bw()
+
+print("The subjective language Ratings: ")
+print(language_summary)
+```
+keys to the numbers:
+0 = "not at all proficient",
+1 = "very little proficient",
+2 = "little proficient",
+3 = "average proficient",
+4 = "good proficient",
+5 = "very good proficient",
+6 = "totally proficient".
+
+
+#### "Objective" language Proficiency
+
+```{r}
+objective_language <- d_individual_summary %>% gather(key=variable, value = value, c("reading_time","listening_time", "speaking_time", "learning_time"))  
+objective_language_count <- objective_language %>% group_by(variable) %>% summarise(mean_answer = mean(value))
+objective_language_count
+objective_language_count %>% ggplot() + geom_bar(mapping = aes(x=variable,y =mean_answer),stat = "identity") + theme_bw()
+```
+
 
 # Bayesian Regression
 ## Creating and comparing models
