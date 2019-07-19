@@ -37,15 +37,15 @@ set.seed(123)
 ```{r}
 # your code here
 
-#data <- read_csv("C:/Users/leado/XP_Lab/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
-#data %>% glimpse()
+data <- read_csv("C:/Users/leado/XP_Lab/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
+data %>% glimpse()
 
 #Sven PC1
 #data <- read_csv("C:/Users/Groen/Documents/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
 # data %>% glimpse()
 
 #Sven PC2
-data <- read_csv("C:/Users/SvenG/OneDrive/Sommersemester 2019/Experimental Psychology/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
+# data <- read_csv("C:/Users/SvenG/OneDrive/Sommersemester 2019/Experimental Psychology/Mental_Imagery_Experiment/data/results_72_Mental_Imagery_Experiment_Sveana+Spellbanovicz.csv")
 
 data %>% glimpse()
 
@@ -132,6 +132,22 @@ age_median))
 ```
 One can see that the majority of our participants is around 22 years old.
 
+#### Participants' Comments
+
+```{r}
+comm <- setNames(data.frame(matrix(ncol = 6, nrow = 0)), c("comments", "submission_id", "education", "native_language", "foreign_language", "foreign_dominance"))
+
+for (i in 1:nrow(data)){
+  if (!is.na(data[i,"comments"])){
+    new_row <- data.frame("comments" = data[i,"comments"], "submission_id" = data[i,"submission_id"], "education" = data[i,"education"], "native_language" = data[i,"native_language"], "foreign_language" = data[i,"foreign_language"], "foreign_dominance" = data[i,"foreign_dominance"])
+    
+    comm <- rbind(comm, new_row) %>% unique()
+  }
+}
+
+comm
+
+```
 
 #### Language Levels
 
@@ -564,7 +580,6 @@ We can say that H4 is partly true, since olfactory got a significantly lower viv
 - look for cause of organic:native_language "outlier"
 - go through comments of participants!
 - look at the "objective language" part
-- change german words in m_data into english (männlich/abitur/etc. )
 
 
 
