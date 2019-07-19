@@ -74,9 +74,9 @@ m_data <- m_data %>% filter(trial_name == "ratingScaleTask")
 ### Explanation and keys of the selected Variables
 
 
-### General Overview of the dataset
+### Looking at the data for each participant
 ```{r}
-d_individual_summary <- m_data  %>% group_by(subject_id) %>%  summarize(mean_RT = mean(RT), timeSpent=mean(timeSpent), writing_foreign = mean(writing_foreign), speaking_foreign= mean(speaking_foreign), listening_foreign = mean(listening_foreign), writing_native = mean(writing_native), speaking_native = mean(speaking_native),listening_native = mean(listening_native),reading_time = mean(reading_time), listening_time= mean(listening_time), speaking_time = mean(speaking_time), learning_time=mean(learning_time), age = mean(age), education = unique(education),gender = unique(gender), exp_language = unique(exp_language), native_language = unique(native_language), foreign_language= unique(foreign_language))
+d_individual_summary <- m_data  %>% group_by(subject_id) %>%  summarize(mean_RT = mean(RT), timeSpent=mean(timeSpent), writing_foreign = mean(writing_foreign), speaking_foreign= mean(speaking_foreign), listening_foreign = mean(listening_foreign), writing_native = mean(writing_native), speaking_native = mean(speaking_native),listening_native = mean(listening_native),reading_time = mean(reading_time), listening_time= mean(listening_time), speaking_time = mean(speaking_time), learning_time=mean(learning_time), age = mean(age), education = unique(education),gender = unique(gender), exp_language = unique(exp_language), native_language = unique(native_language), foreign_language= unique(foreign_language), language_eq = (exp_language == native_language))
 
 #gender was presented in German and English
 #this translates the german version into english
@@ -95,14 +95,30 @@ for (i in 1:nrow(d_individual_summary)){
   {d_individual_summary[i,"education"] = "Higher Degree"}
 }
 print(d_individual_summary)
+```
+#### Gender distribution
+
+```{r}
+d_individual_summary %>% ggplot(aes(x=gender)) + theme_bw() + geom_bar()
+d_individual_summary %>% group_by(gender) %>% summarise(gender_count = n())
+```
+
+
+#### Education Distribution
+
+```{r}
+d_individual_summary %>% ggplot(aes(x=education, fill = gender)) + theme_bw() + geom_bar()
+d_individual_summary %>% group_by(education,gender) %>% summarise(education_count = n())
+d_individual_summary %>% group_by(education) %>% summarise(education_count = n())
 
 ```
+
 
 #### Age Distribution
 
 ```{r}
 #Barplot
-ggplot(d_individual_summary, aes(x=age)) + theme_bw() + geom_bar() 
+ggplot(d_individual_summary, aes(x=age, fill=gender)) + theme_bw() + geom_bar() 
 
 age_mean <- d_individual_summary[ , c("age")] %>% na.omit() %>% apply(2, FUN = mean)
 age_median <- d_individual_summary[ , c("age")] %>% na.omit() %>% apply(2, FUN = median)
@@ -120,6 +136,8 @@ One can see that the majority of our participants is around 22 years old.
 #### Language Levels
 
 ```{r}
+d_individual_summary %>%  group_by(exp_language) %>% summarise(language_exp_count = n())
+d_individual_summary %>%  group_by(language_eq) %>% summarise(language_eq_count = n())
 ggplot(d_individual_summary, aes(x=native_language)) + theme_bw() + geom_bar()
 ggplot(d_individual_summary, aes(x=foreign_language)) + theme_bw() + geom_bar()
 ```
@@ -158,7 +176,13 @@ keys to the numbers:
 
 ##### "Objective" language Proficiency
 
-----> TODO <----
+```{r}
+objective_language <- d_individual_summary %>% gather(key=variable, value = value, c("reading_time","listening_time", "speaking_time", "learning_time"))  
+objective_language_count <- objective_language %>% group_by(variable) %>% summarise(mean_answer = mean(value))
+objective_language_count
+objective_language_count %>% ggplot() + geom_bar(mapping = aes(x=variable,y =mean_answer),stat = "identity") + theme_bw()
+```
+
 
 
 # Exclusion Criteria:
