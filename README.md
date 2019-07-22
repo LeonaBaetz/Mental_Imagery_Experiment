@@ -24,7 +24,8 @@ First we thougth, having too less participants for our study at a certain point 
 
 As we will earliest meet at the 22nd July, we apoligize that our very final report will be earliest send at the 23th July, latest 23:59.
 
+### Experiment
+Since we gathered all the necessary data for our analysis (thanks everyone for participating!)we took the experiment offline. If you still want to once go through the experiment please use it locally via the index.html <br/> Thank you!
+
 ### What went wrong and we did not understand in our Analysis:
 
-
-### Structure of our Folders:
