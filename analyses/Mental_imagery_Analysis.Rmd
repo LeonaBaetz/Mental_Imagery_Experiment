@@ -5,6 +5,10 @@ output:
   pdf_document: default
   word_document: default
 ---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,warning=FALSE,message = FALSE,results = "hold")
+```
+
 # Analysis
 ## Preparing the Data
 ### Librarys used
@@ -141,6 +145,7 @@ print(paste("Number of Participants after exclusion iV: ", b))
 print(paste("Excluded: ", a-b))
 ```
 
+
 ### Specific Criteria:
 
 #### Criteria i:
@@ -178,7 +183,6 @@ print(paste("Excluded: ", a-b))
 
 #### Criteria ii:
 If a participant has chosen the option “I don’t understand the sentence” 5 times or more (≥ 5x “I don’t understand”), then this participant is going to be excluded from the analysis
-
 
 ```{r}
 a = nrow(unique(new_data[,"subject_id"]))
@@ -239,7 +243,6 @@ print(paste("Number of Participants after exclusion iii: ", b))
 print(paste("Excluded: ", a-b))
 ```
 
-
 #### Criteria iv:
 Any sentence that received the response “I don’t understand the sentence” is useless for our purpose of analysis, thus for each participant that was not excluded via ii. but made use of this choice, the respective sentence(s) are excluded from the participants analysis, however the remaining ones are used.
 
@@ -265,7 +268,6 @@ exc_sentences = start_num_sentences - nrow(new_data)
 print(paste("Started with ", start_num_sentences, " sentences"))
 print(paste("Overall number of removed sentences", exc_sentences))
 print(paste("Remaining number of sentences", nrow(new_data)))
-
 ```
 
 
@@ -291,7 +293,7 @@ for (i in 1:nrow(d_individual_summary)){
   if(!is.na(d_individual_summary[i,"education"]) & d_individual_summary[i,"education"] == "Höherer Abschluss")
   {d_individual_summary[i,"education"] = "Higher Degree"}
 }
-print(d_individual_summary)
+d_individual_summary
 ```
 
 ### Gender distribution
@@ -301,14 +303,11 @@ d_individual_summary %>% ggplot(aes(x=gender)) + theme_bw() + geom_bar()
 d_individual_summary %>% group_by(gender) %>% summarise(gender_count = n())
 ```
 
-
 ### Education Distribution
 
 ```{r}
-d_individual_summary %>% ggplot(aes(x=education, fill = gender)) + theme_bw() + geom_bar()
-d_individual_summary %>% group_by(education,gender) %>% summarise(education_count = n())
+d_individual_summary %>% ggplot(aes(x=education, fill = gender)) + theme_bw() + geom_bar() +  scale_x_discrete(labels=c("Grad. College", "Grad. High School", "Higher Degree", "other","NA"))
 d_individual_summary %>% group_by(education) %>% summarise(education_count = n())
-
 ```
 
 
@@ -350,20 +349,17 @@ comm
 ### Language Levels
 
 ```{r}
-d_individual_summary %>%  group_by(exp_language) %>% summarise(language_exp_count = n())
+
+d_individual_summary %>%  group_by(native_language) %>% summarise(language_exp_count = n())
 d_individual_summary %>%  group_by(language_eq) %>% summarise(language_eq_count = n())
 ```
-The majority of our participants are German native speaker with English as their foreign language
-
+We have only German native speaking participants. 27 participants performed the experiment in their foreign language (english) and 47 performed the experiment in their native language (47)
 
 #### Subjective Language Proficiency
 ```{r}
-
-#spread/gather!!!!
-#MAKE CODE MORE EASY
 language_summary <- (colMeans( m_data[ , c("writing_foreign", "speaking_foreign", "listening_foreign","reading_foreign", "writing_native", "listening_native","speaking_native","reading_native")],na.rm = TRUE)) %>% as.matrix()
 colnames(language_summary) <- c("rating")
-m_data
+
 
 tmp<- melt(language_summary)
 names(tmp) = c("language_skill", "", "value")
@@ -394,7 +390,13 @@ objective_language_count <- objective_language %>% group_by(variable) %>% summar
 objective_language_count
 objective_language_count %>% ggplot() + geom_bar(mapping = aes(x=variable,y =mean_answer),stat = "identity") + theme_bw()
 ```
+For Learning time:
 
+(1: 0-2 years, 2: 2-5 years, 3:  5-7 years, 4:  7-10 years, 5: 10-15 years, 6: more than 15 years)
+
+For Reading/Listening/Speaking time:
+
+(1: 0-4 hours/month, 2:  1-2 hours/week, 3:  3-5 hours/week, 4: 6-10 hours/week, 5: more than 10 hours/week)
 
 # Bayesian Regression
 ## Creating and comparing models
@@ -428,17 +430,15 @@ In the model comparisons we see fit_sc2 with elpd_diff and se_diff of 0.Therefor
 
 
 ```{r}
-post_samples <- posterior_samples(fit_sc2) %>% 
-  as_tibble()
-
 fit_sc2
-post_samples
 ```
 
 ```{r}
 effects2 <- marginal_effects(fit_sc2)
 effects2
 ```
+
+
 ## Testing the hypothesis
 
 Remember: "language_eq" = TRUE means the participant performed the Experiment in their native language
@@ -450,7 +450,7 @@ We hypothesize that using a foreign language reduces the vividness of mental ima
 H1: On average the overall-ratings for "vividness" in the condition "foreign language" are smaller than in the condition "native language".
 
 
-First look at the average responses:
+##### First look at the average responses:
 ```{r}
 analyse_data <- new_data %>% mutate(response = as.integer(response))
 analyse_data %>% group_by(language_eq) %>% summarise(mean_response=mean(response), median_response = median((response)))
@@ -460,17 +460,17 @@ analyse_data %>% group_by(language_eq) %>% summarise(mean_response=mean(response
 We are not sure on how to deal with this hypothesis, since our model shows us the interaction of language with each modality (effects2$`type:language_eq):
 
 ```{r}
-effects2$`type:language_eq`
+effects2$`type:language_eq` %>% select(type, language_eq, estimate__,lower__,upper__,se__)
 ```
 This shows us the overall possible combinations of each modality with either native or foreign language and their respective estimate, lower bound and upper bound. We will use this table for later hypothesis extensively. For H1 however, we need to know if the difference of language_eq=False and language_eq=True is significant over all hypothesis.
-Since we are not 100% sure how to do this precisely, we will not make any statement on whether H1 is true or not. However, we will briefly show what we think might be the correct way (and also explain why we doubt this beeing correct).
+
 
 Our Hypothesis can be translated to:
 On average the overall-ratings for "vividness" in the condition language_eq=False are smaller than in the condition language_eq=True.
 To see if this hold we look at the average (mean) values over all modalities:
 ```{r}
 language_effects <- effects2$`type:language_eq` %>% group_by(language_eq) %>% summarise(est = mean(estimate__), low=mean(lower__), upper = mean(upper__))
-language_effects_plot<-ggplot(language_effects, aes(x=language_eq,color=language_eq)) + geom_errorbar(aes(ymin=low,ymax=upper),width = 0.1) +geom_point(aes(y=est),size=4)
+language_effects_plot<-ggplot(language_effects, aes(x=language_eq,color=language_eq)) + geom_errorbar(aes(ymin=low,ymax=upper),width = 0.3) +geom_point(aes(y=est),size=4)
 language_effects_plot
 language_effects
 
@@ -478,6 +478,7 @@ language_effects
 
 One can see that for language_eq=False the estimate 5.171 is barely withing the boundaries of language_eq=True (low=5.170 and upper=5.67).
 This would indicate that the difference in vividness for native and foreign language is not significant.
+
 We doupt the accuracy of the result for the following reason:
 
 ##### The (probable) problem of using the mean:
@@ -488,8 +489,8 @@ new_data %>% group_by(type) %>% summarise(response_count = n())
 new_data %>% group_by(type) %>% ggplot(aes(x=type)) + geom_bar()
 ```
 
-The amount of answered sentences for each modality varies. Therefore, we think it might be problematic to just use the mean() function to calculate the overall estimate + lower and upper bound. We are not sure if the result would still be accurate and correct since we are dealing with probabilities and marginals.
 
+The amount of answered sentences for each modality varies. Therefore, we think it might be problematic to just use the mean() function to calculate the overall estimate + lower and upper bound. 
 
 #### H2:
 Furthermore we hypothesize, that the vividness of mental imagery or simulation of a (sensory) experience differs across different modalities between the two types of language:
@@ -511,7 +512,7 @@ modality_language_plot
 modality_effects
 ```
 
-One can see that this holds only for gustatory and organic. In conclusion, H2 is false. It does hold for some, but not for all modalities!
+One can see that this holds only for gustatory, organic and tactile. We conclude that H2 is false. It does hold for some, but not for all modalities!
 
 ### Hypothesis of relationships between variables:
 
@@ -546,12 +547,16 @@ modality_plot
 ```
 
 This result indicates that H3 is wrong since the estimate for type=visual is not significantly larger than the upper bound of all other modalities:
+
 ```{r}
 modality_effects %>% mutate(visual_significant = modality_effects[7,]$estimate >modality_effects$upper)
 ```
-However it would also classify visual as significantly higher as gustatory. So the result is similiar to the one using effects2$`type:language_eq`
+
+However it would also classify visual as significantly higher as gustatory. So the result is similiar to the one using effects2$`type:language_eq`.
+
 
 #### H4:
+
 We also think that sensory experiences are harder (less vividly) imagined for some modalities compared to other modalities. 
 H4: Here we think that mental simulations evoked by the olfactory or gustatory modality have lower vividness-ratings than those evoked by the other five modalities
 
@@ -559,21 +564,22 @@ H4: Here we think that mental simulations evoked by the olfactory or gustatory m
 modality_language_plot
 ```
 
-This hypothesis states that the olfactory estimate and gustatory ratings are significantly lower than the other modalities. In the given graph one can see that this does only hold for olfactory when also considering the language type. Within language_eq = Flase (orange) the olfactory ratings are significantly smaller than the other modalities (exepct gustatory). For language_eq = true (native) it is significantly compared to all modalities. However, this is not the case for the gustatory modality. The gustatory modality is only significantly lower than auditory, motor and organic modality but not organic, tactile. Comparing gustatory and visual than gustatory is only significantly smaller for foreign langue but not for native language
+This hypothesis states that the olfactory estimate and gustatory ratings are significantly lower than the other modalities. In the given graph one can see that this does only hold for olfactory when also considering the language type. Within language_eq = Flase (orange) the olfactory ratings are significantly smaller than the other modalities (exepct gustatory). For language_eq = true (native) it is significantly smaller compared to all modalities. 
 ```{r}
 modality_plot
 modality_effects %>%  mutate(gustatory_significant_lower = modality_effects[2,]$estimate < modality_effects$low,olfactory_significant_lower = modality_effects[4,]$estimate < modality_effects$low)
 ```
+
 If we compare this to the modality_plot that uses the mean to average over the language we can see a different result. The olfactory rating is significantly smaller than all other modalities in the modeality plot.
+
 In the case of gustatory, it is significantly lower than auditory, motor, organic and also visual (which was only the case for foreign language in modality_language_plot)
 
 We can say that H4 is partly true, since olfactory got a significantly lower vividness rating compared to the rest of the modalities. This however does not hold for the gustatory modality.
 
 
-
 ## Further remarks
 
-### Trying alternative Methods/Mpdels 
+### Trying alternative Methods/Models 
 As H1 stated, we are interested of the influence on vividness when using a foreign language. Above we used a brm model that showed us the interaction of type and language_eq (fit_sc2). In order to get the information about language_eq without the influence of the modality types, we average over the modalities. We are not sure whether this is methodological correct.
 
 #### foreign vs. native Language
@@ -602,7 +608,6 @@ language_effects2 <- effects3$language_eq %>%  select(language_eq,estimate__,low
 #compute the difference for each cell
 result <- language_effects2[,2:4] - language_effects[,2:4]
 result
-
 ```
 One can see that the difference is very small! So using the mean() to create langauge_effects seems to be a way to approximate language_effects2.
 We are, however, not sure if this is still the correct model to test for significance.
@@ -634,12 +639,33 @@ modality_effects2 <- effects4$type %>%  select(type,estimate__,lower__,upper__)
 
 modality_effects
 #compute the difference for each cell
-result2 <- language_effects3[,2:4] - modality_effects[,2:4]
+result2 <- modality_effects2[,2:4] - modality_effects[,2:4]
 result2
 
 ```
+
 Like above, the difference is very small. fit_sc4 seems to approximate fit_sc2 with averaging over the language
 
+#### Visualising both
+
+```{r}
+#plotting the data before deleting and after
+plot1<- language_effects_plot + ggtitle("using the mean")
+
+plot2<-ggplot(language_effects2, aes(x=language_eq,color=language_eq)) + geom_errorbar(position= position_dodge(0.5),aes(ymin=lower__,ymax=upper__),width = 0.3) + geom_point(position= position_dodge(0.5),aes(y=estimate__),size=4) + ggtitle("using a model with 1 dependent variable")
+
+plot3<- modality_plot + ggtitle("using the mean")
+
+plot4<- ggplot(modality_effects2, aes(x=type ,color=type)) + geom_errorbar(position= position_dodge(0.5),aes(ymin=lower__,ymax=upper__),width = 0.3) + geom_point(position= position_dodge(0.5),aes(y=estimate__),size=4) + ggtitle("using a model with 1 dependent variable")
+ 
+  
+
+require(gridExtra)
+grid.arrange(plot1,plot2,ncol=2)
+grid.arrange(plot3,plot4,ncol=2)
+#grid.arrange(plot1,plot2,plot3,plot4,ncol=2,nrow=2)
+
+```
 
 #### Mann-Whitney-U test
 
@@ -650,8 +676,8 @@ In the original experiment the authors used a U-test to test for significance. H
 new_data_manu <- new_data %>% mutate(response=as.integer(response))
 
 #testing
-manu_language<-wilcox.test(ch$response ~ ch$language_eq)
-
+manu_language<-wilcox.test(new_data_manu$response ~ new_data_manu$language_eq)
+manu_language
 ```
 
 ### Restricting the participants
@@ -698,4 +724,4 @@ grid.arrange(plot1,plot2,ncol=2)
 difference
 ```
 
-The difference is very small! There are differences but they are not meaningfull. 
+The difference is very small! There are differences but we do not consider them meaningfull. 
