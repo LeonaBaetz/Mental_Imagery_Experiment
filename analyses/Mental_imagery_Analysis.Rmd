@@ -573,32 +573,129 @@ We can say that H4 is partly true, since olfactory got a significantly lower viv
 
 ## Further remarks
 
-### Todo:
-- look for cause of organic:native_language "outlier"
-- go through comments of participants!
-- look at the "objective language" part
+### Trying alternative Methods/Mpdels 
+As H1 stated, we are interested of the influence on vividness when using a foreign language. Above we used a brm model that showed us the interaction of type and language_eq (fit_sc2). In order to get the information about language_eq without the influence of the modality types, we average over the modalities. We are not sure whether this is methodological correct.
+
+#### foreign vs. native Language
+Below we use a brm model that completly ignores the type of modalities. We want to know whether the results would be similiar to the ones from fit_sc2 and averaging 
+
+```{r}
+fit_sc3  <- brm(
+formula = response ~ language_eq + (1|subject_id),
+data = new_data,
+family = cumulative("logit")
+)
+
+'fit_sc2 <- brm(
+formula = response ~ type * language_eq  + (1|subject_id),
+data = new_data,
+family = cumulative("logit")
+)
+
+and 
+
+language_effects <- effects2$`type:language_eq` %>% group_by(language_eq) %>% summarise(est = mean(estimate__), low=mean(lower__), upper = mean(upper__))'
+
+effects3 <- marginal_effects(fit_sc3)
+language_effects2 <- effects3$language_eq %>%  select(language_eq,estimate__,lower__,upper__)
+
+#compute the difference for each cell
+result <- language_effects2[,2:4] - language_effects[,2:4]
+result
+
+```
+One can see that the difference is very small! So using the mean() to create langauge_effects seems to be a way to approximate language_effects2.
+We are, however, not sure if this is still the correct model to test for significance.
 
 
+#### Modality comparison
+Below, we try out the same like above to see if the same observation can be made for the modalities.
+
+```{r}
+fit_sc4  <- brm(
+formula = response ~ type + (1|subject_id),
+data = new_data,
+family = cumulative("logit")
+)
+
+'fit_sc2 <- brm(
+formula = response ~ type * language_eq  + (1|subject_id),
+data = new_data,
+family = cumulative("logit")
+)
+
+and 
+
+language_effects <- effects2$`type:language_eq` %>% group_by(language_eq) %>% summarise(est = mean(estimate__), low=mean(lower__), upper = mean(upper__))'
+
+effects4 <- marginal_effects(fit_sc4)
+effects4
+modality_effects2 <- effects4$type %>%  select(type,estimate__,lower__,upper__)
+
+modality_effects
+#compute the difference for each cell
+result2 <- language_effects3[,2:4] - modality_effects[,2:4]
+result2
+
+```
+Like above, the difference is very small. fit_sc4 seems to approximate fit_sc2 with averaging over the language
 
 
+#### Mann-Whitney-U test
 
+In the original experiment the authors used a U-test to test for significance. Hence, below we tried if using a U test would show similiar results:
 
+```{r}
+#transform since the wilcox function requires numeric input
+new_data_manu <- new_data %>% mutate(response=as.integer(response))
 
+#testing
+manu_language<-wilcox.test(ch$response ~ ch$language_eq)
 
+```
 
+### Restricting the participants
 
+Our distribution of participants who did the experiment in their nativ vs foreign language is not equal. Below we delete randomly 20 participants who did the experiment in German and see if our model changes.
 
+```{r}
+#collecting 20 random subject_id's
+d_individual_summary %>% group_by(exp_language) %>%  summarise(count = n())
+tmp <- new_data %>% filter(exp_language == "German")
+index <- tmp$subject_id
+index <- sample(unique(index),20)
 
+#randomly delete 20:
+equal_data <- new_data[!(new_data$subject_id %in% index),]
+equal_data %>% group_by(exp_language) %>%  summarise(count = n())
 
+#check if equal number of german and english
+after_individual_summary <- group_by(equal_data,subject_id) %>%  summarise(exp_language = unique(exp_language))
+after_individual_summary %>% group_by(exp_language) %>% summarise(count=n())
 
+#run new model
+fit_sc5 <-brm(
+formula = response ~ type*language_eq   + (1|subject_id),
+data = equal_data,
+family = cumulative("logit")
+)
+effects5 <- marginal_effects(fit_sc5)
 
+#get data
+after_rndm_delete <- effects5$`type:language_eq` %>% select(type,language_eq,estimate__,lower__,upper__)
+before_rndm_delete <- effects2$`type:language_eq` %>% select(type,language_eq,estimate__,lower__,upper__)
 
+#calculate difference
+difference <- before_rndm_delete[,3:5] - after_rndm_delete[,3:5]
 
+#plotting the data before deleting and after
+plot1<-ggplot(before_rndm_delete, aes(x=type,color=language_eq)) + geom_errorbar(position= position_dodge(0.5),aes(ymin=lower__,ymax=upper__),width = 0.3) + geom_point(position= position_dodge(0.5),aes(y=estimate__),size=4)+ ggtitle("before random deleting")
 
+plot2<-ggplot(after_rndm_delete, aes(x=type,color=language_eq)) + geom_errorbar(position= position_dodge(0.5),aes(ymin=lower__,ymax=upper__),width = 0.3) + geom_point(position= position_dodge(0.5),aes(y=estimate__),size=4) + ggtitle("after random deleting")
 
+require(gridExtra)
+grid.arrange(plot1,plot2,ncol=2)
+difference
+```
 
-
-
-
-
-
+The difference is very small! There are differences but they are not meaningfull. 
