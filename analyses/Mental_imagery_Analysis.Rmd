@@ -248,7 +248,8 @@ Any sentence that received the response “I don’t understand the sentence” 
 
 ```{r}
 a = nrow(new_data)
-new_data <- new_data %>% filter(response != 0)
+new_data <- new_data %>% filter(response != 0) %>%  mutate(response=factor(response,levels = c(1,2,3,4,5,6,7)))
+
 b = a - nrow(new_data)
 
 print(paste("number of excluded sentences: ", b))
@@ -275,7 +276,7 @@ print(paste("Remaining number of sentences", nrow(new_data)))
 
 ### Looking at the data for each participant
 ```{r}
-d_individual_summary <- new_data  %>% group_by(subject_id) %>%  summarize(mean_RT = mean(RT), timeSpent=mean(timeSpent), writing_foreign = mean(writing_foreign), speaking_foreign= mean(speaking_foreign), listening_foreign = mean(listening_foreign), writing_native = mean(writing_native), speaking_native = mean(speaking_native),listening_native = mean(listening_native),reading_time = mean(reading_time), listening_time= mean(listening_time), speaking_time = mean(speaking_time), learning_time=mean(learning_time), age = mean(age), education = unique(education),gender = unique(gender), exp_language = unique(exp_language), native_language = unique(native_language), foreign_language= unique(foreign_language), language_eq = (exp_language == native_language))
+d_individual_summary <- new_data  %>% group_by(subject_id) %>% mutate(response=as.integer(response)) %>% summarize(mean_RT = mean(RT), timeSpent=mean(timeSpent), writing_foreign = mean(writing_foreign), speaking_foreign= mean(speaking_foreign), listening_foreign = mean(listening_foreign), writing_native = mean(writing_native), speaking_native = mean(speaking_native),listening_native = mean(listening_native),reading_time = mean(reading_time), listening_time= mean(listening_time), speaking_time = mean(speaking_time), learning_time=mean(learning_time), age = mean(age), education = unique(education),gender = unique(gender), exp_language = unique(exp_language), native_language = unique(native_language), foreign_language= unique(foreign_language), language_eq = (exp_language == native_language),response=mean(response))
 
 #gender was presented in German and English
 #this translates the german version into english
@@ -652,11 +653,11 @@ Like above, the difference is very small. fit_sc4 seems to approximate fit_sc2 w
 #plotting the data before deleting and after
 plot1<- language_effects_plot + ggtitle("using the mean")
 
-plot2<-ggplot(language_effects2, aes(x=language_eq,color=language_eq)) + geom_errorbar(position= position_dodge(0.5),aes(ymin=lower__,ymax=upper__),width = 0.3) + geom_point(position= position_dodge(0.5),aes(y=estimate__),size=4) + ggtitle("using a model with 1 dependent variable")
+plot2<-ggplot(language_effects2, aes(x=language_eq,color=language_eq)) + geom_errorbar(position= position_dodge(0.5),aes(ymin=lower__,ymax=upper__),width = 0.3) + geom_point(position= position_dodge(0.5),aes(y=estimate__),size=4) + ggtitle("using a model with language as dependent variable")
 
 plot3<- modality_plot + ggtitle("using the mean")
 
-plot4<- ggplot(modality_effects2, aes(x=type ,color=type)) + geom_errorbar(position= position_dodge(0.5),aes(ymin=lower__,ymax=upper__),width = 0.3) + geom_point(position= position_dodge(0.5),aes(y=estimate__),size=4) + ggtitle("using a model with 1 dependent variable")
+plot4<- ggplot(modality_effects2, aes(x=type ,color=type)) + geom_errorbar(position= position_dodge(0.5),aes(ymin=lower__,ymax=upper__),width = 0.3) + geom_point(position= position_dodge(0.5),aes(y=estimate__),size=4) + ggtitle("using a model with type as dependent variable")
  
   
 
@@ -673,12 +674,69 @@ In the original experiment the authors used a U-test to test for significance. H
 
 ```{r}
 #transform since the wilcox function requires numeric input
-new_data_manu <- new_data %>% mutate(response=as.integer(response))
+
+new_data_manu <- d_individual_summary %>%  select(response,language_eq)
+new_data_manu
 
 #testing
-manu_language<-wilcox.test(new_data_manu$response ~ new_data_manu$language_eq)
+manu_language<-wilcox.test(new_data_manu$response ~ new_data_manu$language_eq, conf.level=0.95)
 manu_language
+n1=27
+n2=47
+U=452
+
+# we need to calculate the z value because our n is larger than 20
+z=(U-(n1*n2)/2)/sqrt((n1*n2*(n1+n2+1))/12)
+z
+abs(z)>1.96
 ```
+The result of the Mann-Whitney-U test indicates a significant difference between foreign and native language. alpha = 0.05, p = `r manu_language$p.value`.
+
+
+#### ANOVA
+
+```{r}
+new_data_anova <- new_data %>% select(response,type) 
+new_data_anova <- new_data_anova[order(new_data_anova$type),] %>% mutate(response=as.integer(response))
+
+
+
+boxplot(new_data_anova$response~new_data_anova$type)
+summary(aov(data= new_data_anova, formula = response~type))
+
+```
+The result suggest that there is a significant difference between the different modalities.
+
+##### Determine between which groups the difference is significant
+
+```{r}
+post_hoc<-TukeyHSD(aov(data= new_data_anova, formula = response~type))
+post_hoc
+```
+the result suggest that there is not significant difference for:
+
+- motor-auditory
+- organic-auditory
+- tactile-gustatory
+- visual-gustatory
+- organic-motor
+- visual-tactile
+
+```{r}
+modality_plot
+```
+Our data Suggest not a significant difference for:
+
+- auditory - motor 
+- auditory - organic
+- gustatory - tactile
+- gustatory - visual
+- motor - organic
+- tactile - visual
+
+
+The results are exactly the same. We are not sure however, if the anova package was used correctly and do not want to make any statement about it.
+
 
 ### Restricting the participants
 
@@ -693,7 +751,6 @@ index <- sample(unique(index),20)
 
 #randomly delete 20:
 equal_data <- new_data[!(new_data$subject_id %in% index),]
-equal_data %>% group_by(exp_language) %>%  summarise(count = n())
 
 #check if equal number of german and english
 after_individual_summary <- group_by(equal_data,subject_id) %>%  summarise(exp_language = unique(exp_language))
